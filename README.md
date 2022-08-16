@@ -3,9 +3,9 @@ Collaboration tool for crowd-contribution, discussion purpose.
 
 
 ## Required tool:
-- Node.js (for now, please use/downgrade to node version `14`)
-- wings CLI, install via `npm i -g wings-cli`
+- Node.js, suggested version 16 
+- wings CLI, install via `npm i --location=global metacraft` or `yarn global add metacraft`
 
 
 ## Development
-- run `wings` under project's root
+- run `metacraft` under project's root
