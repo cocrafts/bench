@@ -2,7 +2,7 @@ module.exports = {
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 2021,
-		ecmaFeatures: {jsx: true},
+		ecmaFeatures: { jsx: true },
 		sourceType: 'module',
 	},
 	plugins: [
@@ -55,7 +55,7 @@ module.exports = {
 		],
 	},
 	settings: {
-		react: {version: 'detect'},
+		react: { version: 'detect' },
 	},
 	ignorePatterns: ['src/utils/types/graphql.ts'],
 	globals: {

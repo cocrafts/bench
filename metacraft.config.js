@@ -1,11 +1,11 @@
 const setEnvironments = (configs, internal) => {
-	const {webpack} = internal.modules;
-	const {DefinePlugin} = webpack;
+	const { webpack } = internal.modules;
+	const { DefinePlugin } = webpack;
 	const env = internal.configs.env();
 	const isProduction = internal.configs.isProduction(env);
 
 	configs.plugins[0] = new DefinePlugin({
-		process: {env: {}},
+		process: { env: {} },
 		__DEV__: !isProduction,
 		ENV: JSON.stringify(env),
 	});
@@ -14,8 +14,9 @@ const setEnvironments = (configs, internal) => {
 };
 
 module.exports = {
+	useBabel: true,
 	buildId: () => 'buildApp',
-	webpackConfigs: [setEnvironments],
+	webpackMiddlewares: [setEnvironments],
 	moduleAlias: {
 		global: {
 			'react-native': 'react-native-web',
