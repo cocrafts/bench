@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '@metacraft/ui';
+
+import QuickThread from './QuickThread';
 
 export const BuildDashboard: FC = () => {
 	return (
 		<View style={styles.container}>
-			<Text>BuildDashboard</Text>
+			<QuickThread />
 		</View>
 	);
 };
