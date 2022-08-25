@@ -15,8 +15,13 @@ export const BellIcon: FC<Props> = ({
 	color = '#7fc4bc',
 	isHavingUpdate = false,
 }) => {
+	const containerStyle: ViewStyle = {
+		width: size,
+		height: size,
+	};
+
 	return (
-		<View style={{ width: size, height: size }}>
+		<View style={containerStyle}>
 			{isHavingUpdate && <View style={styles.redDot} />}
 			<Svg
 				style={style}
