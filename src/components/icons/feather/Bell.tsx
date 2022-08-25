@@ -7,6 +7,7 @@ interface Props {
 	size?: number;
 	color?: string;
 	isHavingUpdate?: boolean;
+	isFilled?: boolean;
 }
 
 export const BellIcon: FC<Props> = ({
@@ -14,6 +15,7 @@ export const BellIcon: FC<Props> = ({
 	size = 20,
 	color = '#7fc4bc',
 	isHavingUpdate = false,
+	isFilled = false,
 }) => {
 	const containerStyle: ViewStyle = {
 		width: size,
@@ -28,7 +30,7 @@ export const BellIcon: FC<Props> = ({
 				width={size}
 				height={size}
 				viewBox="0 0 24 24"
-				fill="none"
+				fill={isFilled ? color : 'none'}
 				stroke={color}
 				strokeWidth="2"
 				strokeLinecap="round"
