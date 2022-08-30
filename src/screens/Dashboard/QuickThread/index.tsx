@@ -9,12 +9,12 @@ import { useInput } from '../../../utils/hook';
 export const QuickThread: FC = () => {
 	const input = useInput('');
 	const { colors } = useSnapshot(themeState);
+
 	const backgroundColor = darken(colors.background, 0.05);
 
 	const innerStyle: ViewStyle = {
 		backgroundColor,
 		borderRadius: 8,
-		marginHorizontal: 18,
 	};
 
 	return (
@@ -42,10 +42,6 @@ export default QuickThread;
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
-		maxWidth: 1025,
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		paddingTop: 32,
 	},
 	input: {
 		fontFamily: 'Poppins',
