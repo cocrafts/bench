@@ -22,8 +22,8 @@ export const ControllerRow: FC = () => {
 				{user ? (
 					<Avatar
 						size={ICON_SIZE}
-						userName={user.firstName}
-						uri={user.avatarUrl}
+						userName={user.name || ''}
+						uri={user.avatarUrl || ''}
 					/>
 				) : (
 					<UserIcon size={ICON_SIZE} color={'#222222'} />
