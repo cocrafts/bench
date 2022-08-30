@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
+import UserIcon from 'components/icons/feather/User';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../../../components/avatar';
@@ -18,12 +19,14 @@ export const ControllerRow: FC = () => {
 				<BellIcon size={ICON_SIZE} />
 			</View>
 			<View style={styles.iconContainer}>
-				{user && (
+				{user ? (
 					<Avatar
 						size={ICON_SIZE}
 						userName={user.firstName}
 						uri={user.avatarUrl}
 					/>
+				) : (
+					<UserIcon size={ICON_SIZE} color={'#222222'} />
 				)}
 			</View>
 		</View>
