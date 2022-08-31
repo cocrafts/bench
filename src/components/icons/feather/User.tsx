@@ -8,7 +8,11 @@ interface Props {
 	color?: string;
 }
 
-export const UserIcon: FC<Props> = ({ style, size = 24, color = 'white' }) => {
+export const UserIcon: FC<Props> = ({
+	style,
+	size = 24,
+	color = 'white',
+}: Props) => {
 	return (
 		<Svg
 			style={style}

@@ -12,7 +12,7 @@ export const SearchIcon: FC<Props> = ({
 	style,
 	size = 28,
 	color = 'white',
-}) => {
+}: Props) => {
 	return (
 		<Svg
 			style={style}

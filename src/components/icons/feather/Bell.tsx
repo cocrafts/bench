@@ -16,7 +16,7 @@ export const BellIcon: FC<Props> = ({
 	color = '#7fc4bc',
 	isHavingUpdate = false,
 	isFilled = false,
-}) => {
+}: Props) => {
 	const containerStyle: ViewStyle = {
 		width: size,
 		height: size,

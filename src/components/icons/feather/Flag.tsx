@@ -14,7 +14,7 @@ export const FlagIcon: FC<Props> = ({
 	size = 14,
 	color = '#EAFCE0',
 	isFilled = true,
-}) => {
+}: Props) => {
 	return (
 		<Svg
 			style={style}
