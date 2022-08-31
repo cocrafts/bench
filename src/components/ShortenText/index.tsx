@@ -1,11 +1,6 @@
 import React, { FC } from 'react';
-import {
-	StyleSheet,
-	Text,
-	TextStyle,
-	TouchableOpacity,
-	View,
-} from 'react-native';
+import { StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
+import { Text } from '@metacraft/ui';
 
 interface Props {
 	text: string;
@@ -14,7 +9,7 @@ interface Props {
 	onSeeMorePressed: () => void;
 }
 
-export const ShortenedText: FC<Props> = ({
+export const ShortenText: FC<Props> = ({
 	text = '',
 	numberOfLines = 1,
 	style = {},
@@ -36,4 +31,4 @@ const styles = StyleSheet.create({
 	textStyle: { fontFamily: 'Poppins', fontWeight: '400', lineHeight: 18 },
 });
 
-export default ShortenedText;
+export default ShortenText;
