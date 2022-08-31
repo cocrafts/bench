@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 		maxWidth: MAX_WIDTH,
 		alignSelf: 'center',
 		paddingTop: 32,
+		paddingHorizontal: 15,
 	},
 	quickThreadContainer: {
 		marginTop: 46,

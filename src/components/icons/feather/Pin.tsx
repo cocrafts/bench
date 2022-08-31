@@ -14,7 +14,7 @@ export const PinIcon: FC<Props> = ({
 	size = 15,
 	color = '#EAFCE0',
 	isFilled = false,
-}) => {
+}: Props) => {
 	return (
 		<Svg
 			style={style}

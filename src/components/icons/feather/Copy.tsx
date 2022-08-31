@@ -8,7 +8,7 @@ interface Props {
 	color?: string;
 }
 
-export const CopyIcon: FC<Props> = ({ style, size, color }) => {
+export const CopyIcon: FC<Props> = ({ style, size, color }: Props) => {
 	return (
 		<Svg
 			style={style}

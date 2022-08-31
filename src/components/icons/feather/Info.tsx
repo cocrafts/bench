@@ -12,7 +12,7 @@ export const InfoIcon: FC<Props> = ({
 	style,
 	size = 16,
 	color = '#666666',
-}) => {
+}: Props) => {
 	return (
 		<Svg
 			style={style}
