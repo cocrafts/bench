@@ -24,7 +24,7 @@ export const QuickThread: FC = () => {
 					multiline
 					numberOfLines={6}
 					style={styles.input}
-					placeholder="Create a post"
+					placeholder="What's your thoughts"
 					placeholderTextColor="rgba(255, 255, 255, 0.2)"
 					{...input}
 				/>
@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
 		paddingTop: 12,
 		paddingBottom: 24,
 		paddingHorizontal: 18,
+		height: 60,
 		color: '#FFFFFF',
 	},
 	markdownContainer: {
