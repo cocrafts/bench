@@ -24,6 +24,7 @@ export const threads: Array<Thread> = [
 		id: '1',
 		isPinned: true,
 		isFollowed: true,
+		isLiked: true,
 	},
 	{
 		name: 'Tinh Nguyen',
@@ -37,5 +38,6 @@ export const threads: Array<Thread> = [
 		id: '2',
 		isPinned: false,
 		isFollowed: false,
+		isLiked: false,
 	},
 ];

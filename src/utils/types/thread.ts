@@ -8,4 +8,5 @@ export type Thread = {
 	id: string;
 	isPinned: boolean;
 	isFollowed: boolean;
+	isLiked: boolean;
 };
