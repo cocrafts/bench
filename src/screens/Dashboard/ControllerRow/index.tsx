@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import UserIcon from 'components/icons/feather/User';
 import { useSnapshot } from 'valtio';
 
-import Avatar from '../../../components/avatar';
+import Avatar from '../../../components/Avatar';
 import BellIcon from '../../../components/icons/feather/Bell';
 import SearchIcon from '../../../components/icons/feather/Search';
 import { appState } from '../../../utils/state/app';
