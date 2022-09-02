@@ -10,12 +10,12 @@ import {
 } from 'react-native';
 
 interface Props {
-	uri?: string;
+	uri: string;
 	userName?: string;
-	size?: number;
+	size: number;
 }
 
-export const Avatar: FC<Props> = ({ uri, userName, size = 22 }) => {
+export const Avatar: FC<Props> = ({ uri, userName = '', size = 22 }) => {
 	const imageStyle: ImageStyle = {
 		width: size,
 		height: size,

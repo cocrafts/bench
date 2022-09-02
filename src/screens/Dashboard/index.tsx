@@ -5,6 +5,7 @@ import { MAX_WIDTH } from '../../utils/constants';
 
 import ControllerRow from './ControllerRow';
 import QuickThread from './QuickThread';
+import ThreadList from './ThreadList';
 
 export const BuildDashboard: FC = () => {
 	return (
@@ -12,6 +13,9 @@ export const BuildDashboard: FC = () => {
 			<ControllerRow />
 			<View style={styles.quickThreadContainer}>
 				<QuickThread />
+			</View>
+			<View style={styles.threadListContainer}>
+				<ThreadList />
 			</View>
 		</View>
 	);
@@ -29,5 +33,8 @@ const styles = StyleSheet.create({
 	},
 	quickThreadContainer: {
 		marginTop: 46,
+	},
+	threadListContainer: {
+		marginTop: 24,
 	},
 });
