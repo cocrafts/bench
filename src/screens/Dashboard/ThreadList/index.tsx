@@ -39,6 +39,7 @@ export const ThreadList: FC = () => {
 					nbComments={item.nbComments}
 					isPinned={item.isPinned}
 					isFollowed={item.isFollowed}
+					isLiked={item.isLiked}
 				/>
 			)}
 			keyExtractor={(item) => item.id}

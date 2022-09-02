@@ -1,11 +1,13 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import { abbreviateNumber } from 'utils/functions';
 
 import BellIcon from '../../../../components/icons/feather/Bell';
 import PinIcon from '../../../../components/icons/feather/Pin';
 import { blackPearl } from '../../../../utils/colors';
 
+import SocialRow from './SocialRow';
 import UserInfo from './UserInfo';
 
 interface Props {
@@ -17,6 +19,7 @@ interface Props {
 	nbComments: number;
 	isPinned: boolean;
 	isFollowed: boolean;
+	isLiked: boolean;
 }
 
 const ThreadItem: FC<Props> = ({
@@ -28,6 +31,7 @@ const ThreadItem: FC<Props> = ({
 	nbComments = 0,
 	isPinned = false,
 	isFollowed = false,
+	isLiked = false,
 }: Props) => {
 	return (
 		<View style={styles.container}>
@@ -46,6 +50,13 @@ const ThreadItem: FC<Props> = ({
 				<Text numberOfLines={4} style={styles.shortenedText}>
 					{thread}
 				</Text>
+			</View>
+			<View style={styles.socialRowContainer}>
+				<SocialRow
+					nbLikes={nbLikes}
+					nbComments={nbComments}
+					isLiked={isLiked}
+				/>
 			</View>
 		</View>
 	);
@@ -82,6 +93,9 @@ const styles = StyleSheet.create({
 		fontWeight: '400',
 		color: 'rgba(255,255,255,0.6)',
 		lineHeight: 18,
+	},
+	socialRowContainer: {
+		marginTop: 8,
 	},
 });
 

@@ -32,7 +32,7 @@ export const threads: Array<Thread> = [
 			'https://ca.slack-edge.com/T16AT245P-U027NNBM1A7-8cfc5e4a99a4-512',
 		thread:
 			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris, Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris',
-		nbLikes: 1412,
+		nbLikes: 13,
 		nbComments: 12,
 		postedTime: '2022-08-28T10:17:28.593Z',
 		id: '2',
