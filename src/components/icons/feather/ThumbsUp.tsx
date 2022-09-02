@@ -9,7 +9,7 @@ interface Props {
     isFilled?: boolean;
 }
 
-export const ThumbsUp: FC<Props> = ({
+export const ThumbsUpIcon: FC<Props> = ({
 	style,
 	size = 28,
 	color = 'white',
@@ -32,4 +32,4 @@ export const ThumbsUp: FC<Props> = ({
 	);
 };
 
-export default ThumbsUp;
+export default ThumbsUpIcon;
