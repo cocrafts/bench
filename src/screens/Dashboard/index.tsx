@@ -1,9 +1,7 @@
-import React, { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import { MAX_WIDTH } from '../../utils/constants';
-import { threads } from '../../utils/mockupData';
-import { Thread } from '../../utils/types/thread';
 
 import ControllerRow from './ControllerRow';
 import QuickThread from './QuickThread';

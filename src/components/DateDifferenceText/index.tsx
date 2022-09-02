@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TextStyle } from 'react-native';
 import { Text } from '@metacraft/ui';
 
 interface Props {

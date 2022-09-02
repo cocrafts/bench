@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 import { abbreviateNumber } from 'utils/functions';
 

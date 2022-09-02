@@ -1,18 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet } from 'react-native';
-import UserIcon from 'components/icons/feather/User';
-import { useSnapshot } from 'valtio';
+import { ActivityIndicator, FlatList } from 'react-native';
 
-import Avatar from '../../../components/Avatar';
-import BellIcon from '../../../components/icons/feather/Bell';
-import SearchIcon from '../../../components/icons/feather/Search';
 import { threads } from '../../../utils/mockupData';
-import { appState } from '../../../utils/state/app';
 import { Thread } from '../../../utils/types/thread';
 
 import ThreadItem from './ThreadItem';
 
-const ICON_SIZE = 29;
 export const ThreadList: FC = () => {
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 
@@ -48,5 +41,3 @@ export const ThreadList: FC = () => {
 };
 
 export default ThreadList;
-
-const styles = StyleSheet.create({});

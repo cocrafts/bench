@@ -1,7 +1,6 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
-import { abbreviateNumber } from 'utils/functions';
 
 import BellIcon from '../../../../components/icons/feather/Bell';
 import PinIcon from '../../../../components/icons/feather/Pin';
