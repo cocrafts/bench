@@ -8,7 +8,7 @@ import BellIcon from '../../../components/icons/feather/Bell';
 import SearchIcon from '../../../components/icons/feather/Search';
 import { appState } from '../../../utils/state/app';
 
-const ICON_SIZE = 29;
+const ICON_SIZE = 22;
 export const ControllerRow: FC = () => {
 	const { user } = useSnapshot(appState);
 

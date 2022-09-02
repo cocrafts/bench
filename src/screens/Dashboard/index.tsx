@@ -1,10 +1,13 @@
-import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { FC, useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 
 import { MAX_WIDTH } from '../../utils/constants';
+import { threads } from '../../utils/mockupData';
+import { Thread } from '../../utils/types/thread';
 
 import ControllerRow from './ControllerRow';
 import QuickThread from './QuickThread';
+import ThreadList from './ThreadList';
 
 export const BuildDashboard: FC = () => {
 	return (
@@ -12,6 +15,9 @@ export const BuildDashboard: FC = () => {
 			<ControllerRow />
 			<View style={styles.quickThreadContainer}>
 				<QuickThread />
+			</View>
+			<View style={styles.threadListContainer}>
+				<ThreadList />
 			</View>
 		</View>
 	);
@@ -29,5 +35,8 @@ const styles = StyleSheet.create({
 	},
 	quickThreadContainer: {
 		marginTop: 46,
+	},
+	threadListContainer: {
+		marginTop: 24,
 	},
 });
