@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import UserIcon from 'components/icons/feather/User';
 import { useSnapshot } from 'valtio';
@@ -34,7 +34,9 @@ export const ControllerRow: FC = () => {
 						uri={user.avatarUrl || ''}
 					/>
 				) : (
-					<UserIcon onPress={onPress} size={ICON_SIZE} color={'#222222'} />
+					<TouchableOpacity onPress={onPress}>
+						<UserIcon size={ICON_SIZE} color={'#222222'} />
+					</TouchableOpacity>
 				)}
 			</View>
 		</View>
