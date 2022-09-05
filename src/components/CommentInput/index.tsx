@@ -8,10 +8,7 @@ interface Props {
 	containerStyle?: ViewStyle;
 }
 
-export const CommentInput: FC = ({
-	style = {},
-	containerStyle = {},
-}: Props) => {
+export const CommentInput: FC<Props> = ({ style, containerStyle }: Props) => {
 	const input = useInput('');
 	return (
 		<View style={[styles.container, containerStyle]}>
