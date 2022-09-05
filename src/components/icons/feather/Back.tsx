@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const BackIcon: FC<Props> = ({
-	style = {},
+	style,
 	size = 24,
 	color = 'white',
 }: Props) => {
