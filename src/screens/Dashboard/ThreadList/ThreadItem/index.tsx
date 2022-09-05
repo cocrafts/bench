@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import { useNavigation } from '@react-navigation/native';
 
 import BellIcon from '../../../../components/icons/feather/Bell';
 import PinIcon from '../../../../components/icons/feather/Pin';
@@ -32,6 +33,11 @@ const ThreadItem: FC<Props> = ({
 	isFollowed = false,
 	isLiked = false,
 }: Props) => {
+	const navigation = useNavigation();
+	const onThreadPress = () => {
+		navigation.navigate('DetailPost');
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerRow}>
@@ -45,11 +51,14 @@ const ThreadItem: FC<Props> = ({
 					<BellIcon size={15} isFilled={isFollowed} style={styles.bellIcon} />
 				</View>
 			</View>
-			<View style={styles.shortenedTextContainer}>
+			<TouchableOpacity
+				onPress={onThreadPress}
+				style={styles.shortenedTextContainer}
+			>
 				<Text numberOfLines={4} style={styles.shortenedText}>
 					{thread}
 				</Text>
-			</View>
+			</TouchableOpacity>
 			<View style={styles.socialRowContainer}>
 				<SocialRow
 					nbLikes={nbLikes}

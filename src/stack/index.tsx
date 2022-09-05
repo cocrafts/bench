@@ -4,6 +4,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import DashboardScreen from '../screens/Dashboard';
+import DetailPost from '../screens/DetailPost';
 
 import { screenOptions } from './shared';
 
@@ -19,6 +20,7 @@ export const BuildStack: FC = () => {
 	return (
 		<Stack.Navigator screenOptions={screenOptions}>
 			<Stack.Screen name="Dashboard" component={DashboardScreen} />
+			<Stack.Screen name="DetailPost" component={DetailPost} />
 		</Stack.Navigator>
 	);
 };

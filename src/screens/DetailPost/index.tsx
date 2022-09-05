@@ -4,24 +4,15 @@ import { StyleSheet, View } from 'react-native';
 import ControllerRow from '../../components/ControllerRow';
 import { MAX_WIDTH } from '../../utils/constants';
 
-import QuickThread from './QuickThread';
-import ThreadList from './ThreadList';
-
-export const BuildDashboard: FC = () => {
+export const DetailPostScreen: FC = () => {
 	return (
 		<View style={styles.container}>
 			<ControllerRow />
-			<View style={styles.quickThreadContainer}>
-				<QuickThread />
-			</View>
-			<View style={styles.threadListContainer}>
-				<ThreadList />
-			</View>
 		</View>
 	);
 };
 
-export default BuildDashboard;
+export default DetailPostScreen;
 
 const styles = StyleSheet.create({
 	container: {
