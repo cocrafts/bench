@@ -1,10 +1,12 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
-import UserIcon from 'components/icons/feather/User';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { useSnapshot } from 'valtio';
 
+import UserIcon from '../../components/icons/feather/User';
 import { appState } from '../../utils/state/app';
 import Avatar from '../Avatar';
+import BackIcon from '../icons/feather/Back';
 import BellIcon from '../icons/feather/Bell';
 import SearchIcon from '../icons/feather/Search';
 
@@ -13,11 +15,19 @@ const ICON_SIZE = 22;
 interface Props {
 	canGoBack?: boolean;
 }
-export const ControllerRow: FC = ({ canGoBack = false }: Props) => {
+export const ControllerRow: FC<Props> = ({ canGoBack = false }: Props) => {
 	const { user } = useSnapshot(appState);
+	const navigation = useNavigation();
+
+	const goBack = () => navigation.goBack();
 
 	return (
 		<View style={styles.container}>
+			{canGoBack && (
+				<TouchableOpacity onPress={goBack}>
+					<BackIcon />
+				</TouchableOpacity>
+			)}
 			<View
 				style={{
 					flexDirection: 'row',

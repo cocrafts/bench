@@ -1,6 +1,5 @@
 import { proxy } from 'valtio';
 
-import { userInfo } from '../../utils/mockupData';
 import { Profile } from '../../utils/types/graphql';
 
 export interface AppState {
@@ -10,7 +9,7 @@ export interface AppState {
 
 export const appState = proxy<AppState>({
 	counter: 0,
-	user: userInfo,
+	user: null,
 });
 
 export const appActions = {

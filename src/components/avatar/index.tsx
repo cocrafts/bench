@@ -5,7 +5,7 @@ import {
 	StyleSheet,
 	Text,
 	TextStyle,
-	View,
+	TouchableOpacity,
 	ViewStyle,
 } from 'react-native';
 
@@ -13,9 +13,15 @@ interface Props {
 	uri: string;
 	userName?: string;
 	size: number;
+	onPress?: () => void;
 }
 
-export const Avatar: FC<Props> = ({ uri, userName = '', size = 22 }) => {
+export const Avatar: FC<Props> = ({
+	uri,
+	userName = '',
+	size = 22,
+	onPress,
+}) => {
 	const imageStyle: ImageStyle = {
 		width: size,
 		height: size,
@@ -44,9 +50,12 @@ export const Avatar: FC<Props> = ({ uri, userName = '', size = 22 }) => {
 		);
 	} else if (userName) {
 		return (
-			<View style={[containerStyle, styles.container]}>
+			<TouchableOpacity
+				onPress={onPress}
+				style={[containerStyle, styles.container]}
+			>
 				<Text style={textStyle}>{userName.charAt(0)}</Text>
-			</View>
+			</TouchableOpacity>
 		);
 	} else {
 		return null;

@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 import { useNavigation } from '@react-navigation/native';
 
-import BellIcon from '../../../../components/icons/feather/Bell';
-import PinIcon from '../../../../components/icons/feather/Pin';
-import { blackPearl } from '../../../../utils/colors';
+import { blackPearl } from '../../utils/colors';
+import BellIcon from '../icons/feather/Bell';
+import PinIcon from '../icons/feather/Pin';
 
 import SocialRow from './SocialRow';
 import UserInfo from './UserInfo';
@@ -20,9 +20,10 @@ interface Props {
 	isPinned: boolean;
 	isFollowed: boolean;
 	isLiked: boolean;
+	isShortForm?: boolean;
 }
 
-const ThreadItem: FC<Props> = ({
+const Post: FC<Props> = ({
 	avatarUrl = '',
 	name = '',
 	postedTime = '',
@@ -32,10 +33,21 @@ const ThreadItem: FC<Props> = ({
 	isPinned = false,
 	isFollowed = false,
 	isLiked = false,
+	isShortForm = true,
 }: Props) => {
 	const navigation = useNavigation();
 	const onThreadPress = () => {
-		navigation.navigate('DetailPost');
+		navigation.navigate('DetailPost', {
+			avatarUrl,
+			name,
+			postedTime,
+			thread,
+			nbLikes,
+			nbComments,
+			isPinned,
+			isFollowed,
+			isLiked,
+		});
 	};
 
 	return (
@@ -52,10 +64,11 @@ const ThreadItem: FC<Props> = ({
 				</View>
 			</View>
 			<TouchableOpacity
+				disabled={!isShortForm}
 				onPress={onThreadPress}
 				style={styles.shortenedTextContainer}
 			>
-				<Text numberOfLines={4} style={styles.shortenedText}>
+				<Text numberOfLines={isShortForm ? 4 : 0} style={styles.shortenedText}>
 					{thread}
 				</Text>
 			</TouchableOpacity>
@@ -107,4 +120,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default memo(ThreadItem);
+export default memo(Post);
