@@ -1,10 +1,10 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
-import CommentInput from 'components/CommentInput';
-import BellIcon from 'components/icons/feather/Bell';
-import PinIcon from 'components/icons/feather/Pin';
 
+import CommentInput from '../../../../components/CommentInput';
+import BellIcon from '../../../../components/icons/feather/Bell';
+import PinIcon from '../../../../components/icons/feather/Pin';
 import { blackPearl } from '../../../../utils/colors';
 
 import SocialRow from './SocialRow';
