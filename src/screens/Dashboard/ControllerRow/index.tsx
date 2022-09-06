@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import UserIcon from 'components/icons/feather/User';
 import { useSnapshot } from 'valtio';
 
@@ -11,6 +12,13 @@ import { appState } from '../../../utils/state/app';
 const ICON_SIZE = 22;
 export const ControllerRow: FC = () => {
 	const { user } = useSnapshot(appState);
+	const navigation = useNavigation();
+
+	const onPress = () => {
+		if (!user) {
+			navigation.navigate('SignIn');
+		}
+	};
 
 	return (
 		<View style={styles.container}>
@@ -26,7 +34,9 @@ export const ControllerRow: FC = () => {
 						uri={user.avatarUrl || ''}
 					/>
 				) : (
-					<UserIcon size={ICON_SIZE} color={'#222222'} />
+					<TouchableOpacity onPress={onPress}>
+						<UserIcon size={ICON_SIZE} color={'#222222'} />
+					</TouchableOpacity>
 				)}
 			</View>
 		</View>
