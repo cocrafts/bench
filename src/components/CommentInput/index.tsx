@@ -28,7 +28,6 @@ export default CommentInput;
 
 const styles = StyleSheet.create({
 	container: {
-		width: '100%',
 		height: 32,
 		backgroundColor: 'rgba(5,52,73,0.3)',
 		borderRadius: 10,
