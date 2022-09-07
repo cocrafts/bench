@@ -1,14 +1,18 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackParamList } from 'src/stack';
 
+import CommentInput from '../../components/CommentInput';
+import BellIcon from '../../components/icons/feather/Bell';
+import PinIcon from '../../components/icons/feather/Pin';
 import { blackPearl } from '../../utils/colors';
-import BellIcon from '../icons/feather/Bell';
-import PinIcon from '../icons/feather/Pin';
 
 import SocialRow from './SocialRow';
 import UserInfo from './UserInfo';
+
+type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
 interface Props {
 	avatarUrl: string;
@@ -21,6 +25,7 @@ interface Props {
 	isFollowed: boolean;
 	isLiked: boolean;
 	isShortForm?: boolean;
+	navigation?: DetailPostStackProp;
 }
 
 const Post: FC<Props> = ({
@@ -35,7 +40,7 @@ const Post: FC<Props> = ({
 	isLiked = false,
 	isShortForm = true,
 }: Props) => {
-	const navigation = useNavigation();
+	const navigation = useNavigation<DetailPostStackProp>();
 	const onThreadPress = () => {
 		navigation.navigate('DetailPost', {
 			avatarUrl,
@@ -79,6 +84,9 @@ const Post: FC<Props> = ({
 					isLiked={isLiked}
 				/>
 			</View>
+			<View style={styles.commentInputContainer}>
+				<CommentInput />
+			</View>
 		</View>
 	);
 };
@@ -108,6 +116,9 @@ const styles = StyleSheet.create({
 	},
 	shortenedTextContainer: {
 		marginTop: 7,
+	},
+	commentInputContainer: {
+		marginTop: 8,
 	},
 	shortenedText: {
 		fontSize: 12,
