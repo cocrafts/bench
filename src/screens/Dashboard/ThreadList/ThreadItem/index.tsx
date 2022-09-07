@@ -2,6 +2,7 @@ import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 
+import CommentInput from '../../../../components/CommentInput';
 import BellIcon from '../../../../components/icons/feather/Bell';
 import PinIcon from '../../../../components/icons/feather/Pin';
 import { blackPearl } from '../../../../utils/colors';
@@ -57,6 +58,9 @@ const ThreadItem: FC<Props> = ({
 					isLiked={isLiked}
 				/>
 			</View>
+			<View style={styles.commentInputContainer}>
+				<CommentInput />
+			</View>
 		</View>
 	);
 };
@@ -86,6 +90,9 @@ const styles = StyleSheet.create({
 	},
 	shortenedTextContainer: {
 		marginTop: 7,
+	},
+	commentInputContainer: {
+		marginTop: 8,
 	},
 	shortenedText: {
 		fontSize: 12,
