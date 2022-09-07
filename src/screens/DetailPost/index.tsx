@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import CommentInput from 'components/CommentInput';
+import { blackPearl } from 'utils/colors';
 
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
@@ -44,6 +46,9 @@ export const DetailPostScreen: FC<Props> = () => {
 					isShortForm={false}
 				/>
 			</View>
+			<View style={styles.commentInputContainer}>
+				<CommentInput containerStyle={styles.commentInput} />
+			</View>
 		</View>
 	);
 };
@@ -57,6 +62,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		paddingTop: 32,
 		paddingHorizontal: 15,
+		height: '100%',
 	},
 	quickThreadContainer: {
 		marginTop: 46,
@@ -66,5 +72,11 @@ const styles = StyleSheet.create({
 	},
 	postDetailContainer: {
 		marginTop: 13,
+	},
+	commentInputContainer: {
+		marginTop: 12,
+	},
+	commentInput: {
+		backgroundColor: blackPearl,
 	},
 });

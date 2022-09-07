@@ -84,9 +84,11 @@ const Post: FC<Props> = ({
 					isLiked={isLiked}
 				/>
 			</View>
-			<View style={styles.commentInputContainer}>
-				<CommentInput />
-			</View>
+			{isShortForm && (
+				<View style={styles.commentInputContainer}>
+					<CommentInput />
+				</View>
+			)}
 		</View>
 	);
 };
