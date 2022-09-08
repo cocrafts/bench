@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import CommentInput from 'components/CommentInput';
 import { blackPearl } from 'utils/colors';
@@ -27,29 +27,40 @@ export const DetailPostScreen: FC<Props> = () => {
 		isPinned = false,
 		isFollowed = false,
 		isLiked = false,
+		replies = [],
 	} = route.params;
 
 	return (
-		<View style={styles.container}>
-			<ControllerRow canGoBack={true} />
-			<View style={styles.postDetailContainer}>
-				<Post
-					avatarUrl={avatarUrl}
-					name={name}
-					postedTime={postedTime}
-					thread={thread}
-					nbLikes={nbLikes}
-					nbComments={nbComments}
-					isPinned={isPinned}
-					isFollowed={isFollowed}
-					isLiked={isLiked}
-					isShortForm={false}
-				/>
-			</View>
-			<View style={styles.commentInputContainer}>
-				<CommentInput containerStyle={styles.commentInput} />
-			</View>
-		</View>
+		<FlatList
+			style={styles.container}
+			showsVerticalScrollIndicator={false}
+			ListHeaderComponent={
+				<View>
+					<ControllerRow canGoBack={true} />
+					<View style={styles.postDetailContainer}>
+						<Post
+							avatarUrl={avatarUrl}
+							name={name}
+							postedTime={postedTime}
+							thread={thread}
+							nbLikes={nbLikes}
+							nbComments={nbComments}
+							isPinned={isPinned}
+							isFollowed={isFollowed}
+							isLiked={isLiked}
+							isShortForm={false}
+						/>
+					</View>
+				</View>
+			}
+			ListFooterComponent={
+				<View style={styles.commentInputContainer}>
+					<CommentInput containerStyle={styles.commentInput} />
+				</View>
+			}
+			data={replies}
+			renderItem={({ item }) => <Reply />}
+		/>
 	);
 };
 
