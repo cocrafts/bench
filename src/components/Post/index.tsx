@@ -8,6 +8,7 @@ import CommentInput from '../../components/CommentInput';
 import BellIcon from '../../components/icons/feather/Bell';
 import PinIcon from '../../components/icons/feather/Pin';
 import { blackPearl } from '../../utils/colors';
+import { Reply } from '../../utils/types/thread';
 
 import SocialRow from './SocialRow';
 import UserInfo from './UserInfo';
@@ -25,6 +26,7 @@ interface Props {
 	isFollowed: boolean;
 	isLiked: boolean;
 	isShortForm?: boolean;
+	replies?: Array<Reply>;
 	navigation?: DetailPostStackProp;
 }
 
@@ -39,6 +41,7 @@ const Post: FC<Props> = ({
 	isFollowed = false,
 	isLiked = false,
 	isShortForm = true,
+	replies = [],
 }: Props) => {
 	const navigation = useNavigation<DetailPostStackProp>();
 	const onThreadPress = () => {
@@ -52,6 +55,7 @@ const Post: FC<Props> = ({
 			isPinned,
 			isFollowed,
 			isLiked,
+			replies,
 		});
 	};
 
