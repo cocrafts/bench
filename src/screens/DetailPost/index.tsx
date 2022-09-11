@@ -1,20 +1,27 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { RouteProp, useRoute } from '@react-navigation/native';
+import {
+	NavigationProp,
+	RouteProp,
+	useNavigation,
+	useRoute,
+} from '@react-navigation/native';
 
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
 import { StackParamList } from '../../stack';
 import { MAX_WIDTH } from '../../utils/constants';
 
-type DetailPostStackProp = RouteProp<StackParamList, 'DetailPost'>;
-
+type DetailPostStackRouteProp = RouteProp<StackParamList, 'DetailPost'>;
+type DetailPostNavigationProp = NavigationProp<StackParamList, 'DetailPost'>;
 interface Props {
-	route?: DetailPostStackProp;
+	route?: DetailPostStackRouteProp;
 }
 
 export const DetailPostScreen: FC<Props> = () => {
-	const route = useRoute<DetailPostStackProp>();
+	const route = useRoute<DetailPostStackRouteProp>();
+	const navigation = useNavigation<DetailPostNavigationProp>();
+
 	const {
 		avatarUrl = '',
 		name = '',
@@ -27,9 +34,13 @@ export const DetailPostScreen: FC<Props> = () => {
 		isLiked = false,
 	} = route.params;
 
+	const onAvatarPress = () => {
+		navigation.navigate('SignIn');
+	};
+
 	return (
 		<View style={styles.container}>
-			<ControllerRow canGoBack={true} />
+			<ControllerRow canGoBack={true} onAvatarPress={onAvatarPress} />
 			<View style={styles.postDetailContainer}>
 				<Post
 					avatarUrl={avatarUrl}

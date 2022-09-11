@@ -1,16 +1,25 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
+import { StackParamList } from '../../../src/stack';
+import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
 import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
 
-import ControllerRow from './ControllerRow';
 import QuickThread from './QuickThread';
+
+type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
 export const BuildDashboard: FC = () => {
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
+	const navigation = useNavigation<DetailPostStackProp>();
+
+	const onAvatarPress = () => {
+		navigation.navigate('SignIn');
+	};
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -24,7 +33,7 @@ export const BuildDashboard: FC = () => {
 			showsVerticalScrollIndicator={false}
 			ListHeaderComponent={
 				<View>
-					<ControllerRow />
+					<ControllerRow canGoBack={true} onAvatarPress={onAvatarPress} />
 					<View style={styles.quickThreadContainer}>
 						<QuickThread />
 					</View>
