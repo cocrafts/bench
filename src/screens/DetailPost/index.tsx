@@ -9,13 +9,15 @@ import Post from '../../components/Post';
 import { StackParamList } from '../../stack';
 import { MAX_WIDTH } from '../../utils/constants';
 
+import Reply from './Reply';
+
 type DetailPostStackProp = RouteProp<StackParamList, 'DetailPost'>;
 
 interface Props {
 	route?: DetailPostStackProp;
 }
 
-export const DetailPostScreen: FC<Props> = () => {
+const DetailPostScreen: FC<Props> = () => {
 	const route = useRoute<DetailPostStackProp>();
 	const {
 		avatarUrl = '',
@@ -59,7 +61,17 @@ export const DetailPostScreen: FC<Props> = () => {
 				</View>
 			}
 			data={replies}
-			renderItem={({ item }) => <Reply />}
+			renderItem={({ item }) => (
+				<View style={styles.replyContainer}>
+					<Reply
+						avatarUrl={item.avatarUrl}
+						name={item.name}
+						postedTime={item.postedTime}
+						thread={item.content}
+						nbLikes={item.nbLikes || 0}
+					/>
+				</View>
+			)}
 		/>
 	);
 };
@@ -67,6 +79,9 @@ export const DetailPostScreen: FC<Props> = () => {
 export default DetailPostScreen;
 
 const styles = StyleSheet.create({
+	replyContainer: {
+		marginTop: 16,
+	},
 	container: {
 		width: '100%',
 		maxWidth: MAX_WIDTH,

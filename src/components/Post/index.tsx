@@ -9,9 +9,9 @@ import BellIcon from '../../components/icons/feather/Bell';
 import PinIcon from '../../components/icons/feather/Pin';
 import { blackPearl } from '../../utils/colors';
 import { Reply } from '../../utils/types/thread';
+import UserInfo from '../UserInfo';
 
 import SocialRow from './SocialRow';
-import UserInfo from './UserInfo';
 
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
