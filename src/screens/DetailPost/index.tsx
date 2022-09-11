@@ -69,6 +69,7 @@ const DetailPostScreen: FC<Props> = () => {
 						postedTime={item.postedTime}
 						thread={item.content}
 						nbLikes={item.nbLikes || 0}
+						originReply={item.originReply}
 					/>
 				</View>
 			)}
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
 		marginTop: 13,
 	},
 	commentInputContainer: {
-		marginTop: 12,
+		marginVertical: 12,
 	},
 	commentInput: {
 		backgroundColor: blackPearl,

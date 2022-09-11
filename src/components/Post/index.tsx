@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 	},
 	shortenedText: {
-		fontSize: 12,
+		fontSize: 16,
 		fontWeight: '400',
 		color: 'rgba(255,255,255,0.6)',
-		lineHeight: 18,
+		lineHeight: 24,
 	},
 	socialRowContainer: {
 		marginTop: 8,
