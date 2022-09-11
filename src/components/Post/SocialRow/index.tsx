@@ -1,7 +1,8 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
-import ThumbsUpNumber from 'components/ThumbsUpNumber';
+
+import ThumbsUpNumber from '../../../components/ThumbsUpNumber';
 
 interface Props {
 	nbLikes: number;

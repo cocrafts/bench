@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import UserIcon from 'components/icons/feather/User';
 import { useSnapshot } from 'valtio';
 
 import Avatar from '../../../components/Avatar';
 import BellIcon from '../../../components/icons/feather/Bell';
 import SearchIcon from '../../../components/icons/feather/Search';
+import UserIcon from '../../../components/icons/feather/User';
 import { appState } from '../../../utils/state/app';
 
 const ICON_SIZE = 22;

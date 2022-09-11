@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
 
+import Post from '../../components/Post';
 import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
 
-import ThreadItem from './ThreadList/ThreadItem';
 import ControllerRow from './ControllerRow';
 import QuickThread from './QuickThread';
 
@@ -36,7 +36,7 @@ export const BuildDashboard: FC = () => {
 			ListFooterComponent={<View style={styles.footer} />}
 			data={simpleThreads}
 			renderItem={({ item }) => (
-				<ThreadItem
+				<Post
 					avatarUrl={item.avatarUrl}
 					name={item.name}
 					postedTime={item.postedTime}

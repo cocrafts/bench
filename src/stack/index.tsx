@@ -4,11 +4,28 @@ import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import DashboardScreen from '../screens/Dashboard';
+import DetailPostScreen from '../screens/DetailPost';
 import SignInScreen from '../screens/SignIn';
 
 import { screenOptions } from './shared';
 
-const Stack = createStackNavigator();
+export type StackParamList = {
+	Dashboard: undefined;
+	DetailPost: {
+		avatarUrl: string;
+		name: string;
+		postedTime: string;
+		thread: string;
+		nbLikes: number;
+		nbComments: number;
+		isPinned: boolean;
+		isFollowed: boolean;
+		isLiked: boolean;
+	};
+	SignIn: undefined;
+};
+
+const Stack = createStackNavigator<StackParamList>();
 
 export const BuildStack: FC = () => {
 	useFocusEffect(
@@ -20,6 +37,7 @@ export const BuildStack: FC = () => {
 	return (
 		<Stack.Navigator screenOptions={screenOptions}>
 			<Stack.Screen name="Dashboard" component={DashboardScreen} />
+			<Stack.Screen name="DetailPost" component={DetailPostScreen} />
 			<Stack.Screen name="SignIn" component={SignInScreen} />
 		</Stack.Navigator>
 	);
