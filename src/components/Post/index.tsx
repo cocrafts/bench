@@ -1,14 +1,18 @@
 import React, { FC, memo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackParamList } from 'src/stack';
 
-import CommentInput from '../../../../components/CommentInput';
-import BellIcon from '../../../../components/icons/feather/Bell';
-import PinIcon from '../../../../components/icons/feather/Pin';
-import { blackPearl } from '../../../../utils/colors';
+import CommentInput from '../../components/CommentInput';
+import BellIcon from '../../components/icons/feather/Bell';
+import PinIcon from '../../components/icons/feather/Pin';
+import { blackPearl } from '../../utils/colors';
 
 import SocialRow from './SocialRow';
 import UserInfo from './UserInfo';
+
+type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
 interface Props {
 	avatarUrl: string;
@@ -20,9 +24,11 @@ interface Props {
 	isPinned: boolean;
 	isFollowed: boolean;
 	isLiked: boolean;
+	isShortForm?: boolean;
+	navigation?: DetailPostStackProp;
 }
 
-const ThreadItem: FC<Props> = ({
+const Post: FC<Props> = ({
 	avatarUrl = '',
 	name = '',
 	postedTime = '',
@@ -32,7 +38,23 @@ const ThreadItem: FC<Props> = ({
 	isPinned = false,
 	isFollowed = false,
 	isLiked = false,
+	isShortForm = true,
 }: Props) => {
+	const navigation = useNavigation<DetailPostStackProp>();
+	const onThreadPress = () => {
+		navigation.navigate('DetailPost', {
+			avatarUrl,
+			name,
+			postedTime,
+			thread,
+			nbLikes,
+			nbComments,
+			isPinned,
+			isFollowed,
+			isLiked,
+		});
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerRow}>
@@ -46,11 +68,15 @@ const ThreadItem: FC<Props> = ({
 					<BellIcon size={15} isFilled={isFollowed} style={styles.bellIcon} />
 				</View>
 			</View>
-			<View style={styles.shortenedTextContainer}>
-				<Text numberOfLines={4} style={styles.shortenedText}>
+			<TouchableOpacity
+				disabled={!isShortForm}
+				onPress={onThreadPress}
+				style={styles.shortenedTextContainer}
+			>
+				<Text numberOfLines={isShortForm ? 4 : 0} style={styles.shortenedText}>
 					{thread}
 				</Text>
-			</View>
+			</TouchableOpacity>
 			<View style={styles.socialRowContainer}>
 				<SocialRow
 					nbLikes={nbLikes}
@@ -105,4 +131,4 @@ const styles = StyleSheet.create({
 	},
 });
 
-export default memo(ThreadItem);
+export default memo(Post);

@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import ControllerRow from '../../components/ControllerRow';
 import { MAX_WIDTH } from '../../utils/constants';
 
-import ControllerRow from './ControllerRow';
 import QuickThread from './QuickThread';
 import ThreadList from './ThreadList';
 
