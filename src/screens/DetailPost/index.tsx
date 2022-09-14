@@ -6,6 +6,7 @@ import {
 	useNavigation,
 	useRoute,
 } from '@react-navigation/native';
+import { blackPearl } from 'utils/colors';
 
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
@@ -64,10 +65,12 @@ export default DetailPostScreen;
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
+		height: '100%',
 		maxWidth: MAX_WIDTH,
 		alignSelf: 'center',
 		paddingTop: 32,
 		paddingHorizontal: 15,
+		backgroundColor: blackPearl,
 	},
 	quickThreadContainer: {
 		marginTop: 46,

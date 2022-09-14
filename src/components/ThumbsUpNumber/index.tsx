@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
-import { abbreviateNumber } from 'utils/functions';
 
 import ThumbsUpIcon from '../../components/icons/feather/ThumbsUp';
+import { blueGrey, grey } from '../../utils/colors';
+import { abbreviateNumber } from '../../utils/functions';
 
 interface Props {
 	number: number;
@@ -16,11 +17,7 @@ export const ThumbsUpNumber: FC<Props> = ({
 }: Props) => {
 	return (
 		<View style={styles.container}>
-			<ThumbsUpIcon
-				isFilled={isLiked}
-				size={7}
-				color={'rgba(255,255,255,0.8)'}
-			/>
+			<ThumbsUpIcon isFilled={isLiked} size={12} color={blueGrey} />
 			<Text style={styles.textStyle}>{abbreviateNumber(number)}</Text>
 		</View>
 	);
@@ -35,8 +32,9 @@ const styles = StyleSheet.create({
 		marginLeft: 2,
 		fontFamily: 'Poppins',
 		fontWeight: '400',
-		fontSize: 10,
-		lineHeight: 15,
+		fontSize: 13,
+		lineHeight: 19.5,
+		color: grey,
 	},
 });
 

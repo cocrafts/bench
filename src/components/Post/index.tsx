@@ -7,7 +7,7 @@ import { StackParamList } from 'src/stack';
 import CommentInput from '../../components/CommentInput';
 import BellIcon from '../../components/icons/feather/Bell';
 import PinIcon from '../../components/icons/feather/Pin';
-import { blackPearl } from '../../utils/colors';
+import { midnightDream } from '../../utils/colors';
 
 import SocialRow from './SocialRow';
 import UserInfo from './UserInfo';
@@ -73,7 +73,7 @@ const Post: FC<Props> = ({
 				onPress={onThreadPress}
 				style={styles.shortenedTextContainer}
 			>
-				<Text numberOfLines={isShortForm ? 4 : 0} style={styles.shortenedText}>
+				<Text numberOfLines={isShortForm ? 3 : 0} style={styles.shortenedText}>
 					{thread}
 				</Text>
 			</TouchableOpacity>
@@ -94,7 +94,7 @@ const Post: FC<Props> = ({
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: blackPearl,
+		backgroundColor: midnightDream,
 		paddingVertical: 12,
 		paddingHorizontal: 16,
 		marginTop: 12,
@@ -121,10 +121,10 @@ const styles = StyleSheet.create({
 		marginTop: 8,
 	},
 	shortenedText: {
-		fontSize: 12,
+		fontSize: 16,
 		fontWeight: '400',
-		color: 'rgba(255,255,255,0.6)',
-		lineHeight: 18,
+		color: 'white',
+		lineHeight: 24,
 	},
 	socialRowContainer: {
 		marginTop: 8,

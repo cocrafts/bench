@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, TextInput, View, ViewStyle } from 'react-native';
 
+import { blueWhale, grey } from '../../utils/colors';
 import { useInput } from '../../utils/hook';
 
 interface Props {
@@ -17,7 +18,7 @@ export const CommentInput: FC<Props> = ({ style, containerStyle }: Props) => {
 				numberOfLines={6}
 				style={[styles.input, style]}
 				placeholder="Write your comment..."
-				placeholderTextColor="rgba(255, 255, 255, 0.2)"
+				placeholderTextColor={grey}
 				{...input}
 			/>
 		</View>
@@ -28,17 +29,17 @@ export default CommentInput;
 
 const styles = StyleSheet.create({
 	container: {
-		height: 32,
-		backgroundColor: 'rgba(5,52,73,0.3)',
+		height: 26,
+		backgroundColor: blueWhale,
 		borderRadius: 10,
 	},
 	input: {
 		fontFamily: 'Poppins',
-		fontSize: 12,
-		paddingVertical: 7,
+		fontSize: 14,
+		paddingVertical: 2,
 		paddingHorizontal: 14,
 		height: 32,
-		lineHeight: 18,
+		lineHeight: 21,
 		color: 'rgba(255,255,255,0.5)',
 		fontWeight: '400',
 	},
