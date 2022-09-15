@@ -14,8 +14,12 @@ const ICON_SIZE = 22;
 
 interface Props {
 	canGoBack?: boolean;
+	onAvatarPress: () => void;
 }
-export const ControllerRow: FC<Props> = ({ canGoBack = false }: Props) => {
+export const ControllerRow: FC<Props> = ({
+	canGoBack = false,
+	onAvatarPress,
+}: Props) => {
 	const { user } = useSnapshot(appState);
 	const navigation = useNavigation();
 
@@ -38,7 +42,7 @@ export const ControllerRow: FC<Props> = ({ canGoBack = false }: Props) => {
 				<View style={styles.iconContainer}>
 					<BellIcon size={ICON_SIZE} />
 				</View>
-				<View style={styles.iconContainer}>
+				<TouchableOpacity onPress={onAvatarPress} style={styles.iconContainer}>
 					{user ? (
 						<Avatar
 							size={ICON_SIZE}
@@ -48,7 +52,7 @@ export const ControllerRow: FC<Props> = ({ canGoBack = false }: Props) => {
 					) : (
 						<UserIcon size={ICON_SIZE} color={'#222222'} />
 					)}
-				</View>
+				</TouchableOpacity>
 			</View>
 		</View>
 	);
