@@ -1,35 +1,36 @@
 import React, { FC } from 'react';
 import { ViewStyle } from 'react-native';
-import { Circle, Line, Svg } from 'react-native-svg';
+import { Circle, Path, Svg } from 'react-native-svg';
 
 interface Props {
 	style?: ViewStyle;
 	size?: number;
 	color?: string;
+	isFilled?: boolean;
 }
 
-export const SearchIcon: FC<Props> = ({
+export const UserIcon: FC<Props> = ({
 	style,
-	size = 28,
+	size = 24,
 	color = 'white',
+	isFilled = false,
 }: Props) => {
 	return (
 		<Svg
 			style={style}
-			height={size}
-			stroke={color}
 			width={size}
+			height={size}
 			viewBox="0 0 24 24"
-			fill="none"
-			strokeOpacity={0.8}
+			fill={isFilled ? color : 'none'}
+			stroke={color}
 			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
 		>
-			<Circle cx="11" cy="11" r="8"></Circle>
-			<Line x1="21" y1="21" x2="16.65" y2="16.65"></Line>
+			<Path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></Path>
+			<Circle cx="12" cy="7" r="4"></Circle>
 		</Svg>
 	);
 };
 
-export default SearchIcon;
+export default UserIcon;

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { ViewStyle } from 'react-native';
-import { Circle, Line, Svg } from 'react-native-svg';
+import { Polyline, Svg } from 'react-native-svg';
 
 interface Props {
 	style?: ViewStyle;
@@ -8,28 +8,26 @@ interface Props {
 	color?: string;
 }
 
-export const InfoIcon: FC<Props> = ({
+export const BackIcon: FC<Props> = ({
 	style,
-	size = 16,
-	color = '#666666',
+	size = 24,
+	color = 'white',
 }: Props) => {
 	return (
 		<Svg
 			style={style}
 			width={size}
 			height={size}
+			viewBox="0 0 24 24"
 			fill="none"
 			stroke={color}
-			strokeWidth={2}
+			strokeWidth="2"
 			strokeLinecap="round"
 			strokeLinejoin="round"
-			viewBox="0 0 24 24"
 		>
-			<Circle cx={12} cy={12} r={10} />
-			<Line x1={12} y1={16} x2={12} y2={12} />
-			<Line x1={12} y1={8} x2={12.01} y2={8} />
+			<Polyline points="15 18 9 12 15 6"></Polyline>
 		</Svg>
 	);
 };
 
-export default InfoIcon;
+export default BackIcon;

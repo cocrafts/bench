@@ -1,38 +1,24 @@
 import React, { FC } from 'react';
-import { StyleSheet, TextInput, View, ViewStyle } from 'react-native';
-import { Markdown, themeState } from '@metacraft/ui';
-import { darken } from 'color2k';
-import { useSnapshot } from 'valtio';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { Markdown } from '@metacraft/ui';
 
+import { blueWhale, grey } from '../../../utils/colors';
 import { useInput } from '../../../utils/hook';
 
 export const QuickThread: FC = () => {
 	const input = useInput('');
-	const { colors } = useSnapshot(themeState);
-	const backgroundColor = darken(colors.background, 0.05);
-
-	const innerStyle: ViewStyle = {
-		backgroundColor,
-		borderRadius: 8,
-		marginHorizontal: 18,
-	};
 
 	return (
 		<View style={styles.container}>
-			<View style={innerStyle}>
-				<TextInput
-					multiline
-					numberOfLines={6}
-					style={styles.input}
-					placeholder="Create a post"
-					placeholderTextColor="rgba(255, 255, 255, 0.2)"
-					{...input}
-				/>
-				<Markdown
-					style={styles.markdownContainer}
-					content={input.value || ' '}
-				/>
-			</View>
+			<TextInput
+				multiline
+				numberOfLines={6}
+				style={styles.input}
+				placeholder="What's your thoughts"
+				placeholderTextColor={grey}
+				{...input}
+			/>
+			<Markdown style={styles.markdownContainer} content={input.value || ' '} />
 		</View>
 	);
 };
@@ -42,10 +28,8 @@ export default QuickThread;
 const styles = StyleSheet.create({
 	container: {
 		width: '100%',
-		maxWidth: 1025,
-		marginLeft: 'auto',
-		marginRight: 'auto',
-		paddingTop: 32,
+		borderRadius: 8,
+		backgroundColor: blueWhale,
 	},
 	input: {
 		fontFamily: 'Poppins',
@@ -53,6 +37,7 @@ const styles = StyleSheet.create({
 		paddingTop: 12,
 		paddingBottom: 24,
 		paddingHorizontal: 18,
+		height: 60,
 		color: '#FFFFFF',
 	},
 	markdownContainer: {

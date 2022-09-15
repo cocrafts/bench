@@ -1,9 +1,10 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { AppRegistry } from 'react-native';
 
+import { name as appName } from './app.json';
 import App from './src';
 
-const container = document.getElementById('root');
-const root = createRoot(container);
-
-root.render(<App />);
+AppRegistry.registerComponent(appName, () => App);
+AppRegistry.runApplication(appName, {
+	initialProps: {},
+	rootTag: document.getElementById('root'),
+});

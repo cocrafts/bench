@@ -2,6 +2,12 @@
 #
 .DS_Store
 
+metacraft
+
+.terraform
+.terraform.lock.hcl
+main.tf
+
 # Xcode
 #
 build/
