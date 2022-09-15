@@ -4,13 +4,14 @@ import { useNavigation } from '@react-navigation/native';
 import { useSnapshot } from 'valtio';
 
 import UserIcon from '../../components/icons/feather/User';
+import { grey } from '../../utils/colors';
 import { appState } from '../../utils/state/app';
 import Avatar from '../Avatar';
 import BackIcon from '../icons/feather/Back';
 import BellIcon from '../icons/feather/Bell';
 import SearchIcon from '../icons/feather/Search';
 
-const ICON_SIZE = 22;
+const ICON_SIZE = 25;
 
 interface Props {
 	canGoBack?: boolean;
@@ -27,10 +28,12 @@ export const ControllerRow: FC<Props> = ({
 
 	return (
 		<View style={styles.container}>
-			{canGoBack && (
+			{canGoBack ? (
 				<TouchableOpacity onPress={goBack}>
-					<BackIcon />
+					<BackIcon size={36} color={grey} />
 				</TouchableOpacity>
+			) : (
+				<View />
 			)}
 			<View
 				style={{
@@ -40,7 +43,7 @@ export const ControllerRow: FC<Props> = ({
 			>
 				<SearchIcon size={ICON_SIZE} />
 				<View style={styles.iconContainer}>
-					<BellIcon size={ICON_SIZE} />
+					<BellIcon size={ICON_SIZE} isFilled={true} color={'white'} />
 				</View>
 				<TouchableOpacity onPress={onAvatarPress} style={styles.iconContainer}>
 					{user ? (
@@ -50,7 +53,7 @@ export const ControllerRow: FC<Props> = ({
 							uri={user.avatarUrl || ''}
 						/>
 					) : (
-						<UserIcon size={ICON_SIZE} color={'#222222'} />
+						<UserIcon size={ICON_SIZE} color={'#222222'} isFilled={true} />
 					)}
 				</TouchableOpacity>
 			</View>

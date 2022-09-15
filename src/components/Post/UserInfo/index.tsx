@@ -2,6 +2,7 @@ import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 
+import { blue } from '../../../utils/colors';
 import Avatar from '../../Avatar';
 import DateDifferenceText from '../../DateDifferenceText';
 
@@ -18,7 +19,7 @@ const UserInfo: FC<Props> = ({
 }: Props) => {
 	return (
 		<View style={styles.container}>
-			<Avatar uri={avatarUrl} size={21} userName={name} />
+			<Avatar uri={avatarUrl} size={25} userName={name} />
 			<View style={styles.nameTimeContainer}>
 				<Text style={styles.name}>{name}</Text>
 				<DateDifferenceText
@@ -41,17 +42,17 @@ const styles = StyleSheet.create({
 	},
 	name: {
 		fontWeight: '600',
-		fontSize: 10,
-		lineHeight: 15,
+		fontSize: 12,
+		lineHeight: 18,
 		color: 'white',
 		fontFamily: 'Poppins',
 	},
 	dateDifference: {
 		fontFamily: 'Poppins',
 		fontWeight: '400',
-		fontSize: 7,
-		lineHeight: 10.5,
-		color: 'rgba(255,255,255,0.8)',
+		fontSize: 10,
+		lineHeight: 15,
+		color: blue,
 	},
 });
 

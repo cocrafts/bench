@@ -5,6 +5,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
+import { blackPearl } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
@@ -33,7 +34,7 @@ export const BuildDashboard: FC = () => {
 			showsVerticalScrollIndicator={false}
 			ListHeaderComponent={
 				<View>
-					<ControllerRow canGoBack={true} onAvatarPress={onAvatarPress} />
+					<ControllerRow canGoBack={false} onAvatarPress={onAvatarPress} />
 					<View style={styles.quickThreadContainer}>
 						<QuickThread />
 					</View>
@@ -75,6 +76,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		paddingTop: 32,
 		paddingHorizontal: 15,
+		backgroundColor: blackPearl,
 	},
 	quickThreadContainer: {
 		marginTop: 46,

@@ -1,6 +1,7 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import { grey } from 'utils/colors';
 
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber';
 
@@ -57,7 +58,9 @@ const styles = StyleSheet.create({
 	commentNumberText: {
 		fontFamily: 'Poppins',
 		fontWeight: '400',
-		fontSize: 10,
+		color: grey,
+		fontSize: 13,
+		lineHeight: 20,
 	},
 });
 
