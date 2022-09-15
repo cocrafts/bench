@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { Button } from '@metacraft/ui';
 
-import { blackPearl } from '../../../utils/colors';
+import { midnightDream } from '../../../utils/colors';
 
 interface Props {
 	text: string;
@@ -18,14 +18,16 @@ const styles = StyleSheet.create({
 	container: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingVertical: 10,
-		backgroundColor: blackPearl,
+		backgroundColor: midnightDream,
+		paddingVertical: 2,
+		borderRadius: 10,
 	},
 	text: {
 		textAlign: 'center',
 		fontSize: 18,
 		fontFamily: 'Poppins',
 		fontWeight: '700',
+		lineHeight: 28,
 	},
 });
 

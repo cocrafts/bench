@@ -2,6 +2,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 
+import { blackPearl } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
 
 import MainButton from './Button';
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
 		paddingTop: 32,
 		paddingHorizontal: 15,
 		height: '100%',
+		backgroundColor: blackPearl,
 	},
 	contentContainer: {
 		flex: 1,

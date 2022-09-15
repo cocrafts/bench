@@ -6,12 +6,14 @@ interface Props {
 	style?: ViewStyle;
 	size?: number;
 	color?: string;
+	isFilled?: boolean;
 }
 
 export const UserIcon: FC<Props> = ({
 	style,
 	size = 24,
 	color = 'white',
+	isFilled = false,
 }: Props) => {
 	return (
 		<Svg
@@ -19,7 +21,7 @@ export const UserIcon: FC<Props> = ({
 			width={size}
 			height={size}
 			viewBox="0 0 24 24"
-			fill="none"
+			fill={isFilled ? color : 'none'}
 			stroke={color}
 			strokeWidth="2"
 			strokeLinecap="round"

@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import CloseIcon from '../../../components/icons/feather/Close';
-import { gray } from '../../../utils/colors';
+import { grey } from '../../../utils/colors';
 
 const Header = () => {
 	const navigation = useNavigation();
@@ -18,7 +18,7 @@ const Header = () => {
 				<Text style={styles.signInText}>Sign-in</Text>
 			</View>
 			<View style={styles.closeIconContainer}>
-				<CloseIcon size={16} color={gray} />
+				<CloseIcon size={30} color={grey} />
 			</View>
 		</TouchableOpacity>
 	);

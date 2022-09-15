@@ -14,7 +14,7 @@ import Reply from './Reply';
 type DetailPostStackProp = RouteProp<StackParamList, 'DetailPost'>;
 
 interface Props {
-	route?: DetailPostStackProp;
+	route?: DetailPostStackRouteProp;
 }
 
 const DetailPostScreen: FC<Props> = () => {
@@ -31,6 +31,10 @@ const DetailPostScreen: FC<Props> = () => {
 		isLiked = false,
 		replies = [],
 	} = route.params;
+
+	const onAvatarPress = () => {
+		navigation.navigate('SignIn');
+	};
 
 	return (
 		<FlatList
@@ -85,6 +89,7 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		width: '100%',
+		height: '100%',
 		maxWidth: MAX_WIDTH,
 		alignSelf: 'center',
 		paddingTop: 32,
