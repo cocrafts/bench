@@ -15,7 +15,7 @@ const setEnvironments = (configs, internal) => {
 
 module.exports = {
 	useBabel: true,
-	buildId: () => 'buildApp',
+	buildId: () => 'app',
 	webpackMiddlewares: [setEnvironments],
 	moduleAlias: {
 		global: {
