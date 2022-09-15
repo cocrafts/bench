@@ -61,7 +61,7 @@ jobs:
 
       - uses: shallwefootball/s3-upload-action@master
         with:
-          aws_bucket: "metacraft-docs-${{ steps.branch.outputs.BRANCH_NAME }}"
+          aws_bucket: "metacraft-craft-${{ steps.branch.outputs.BRANCH_NAME }}"
           aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           source_dir: metacraft
