@@ -1,3 +1,6 @@
+const { resolve } = require('path');
+const CopyPlugin = require('copy-webpack-plugin');
+
 const setEnvironments = (configs, internal) => {
 	const { webpack } = internal.modules;
 	const { DefinePlugin } = webpack;
@@ -13,10 +16,42 @@ const setEnvironments = (configs, internal) => {
 	return configs;
 };
 
+const copyAssets = (configs) => {
+	configs.plugins.push(
+		new CopyPlugin({
+			patterns: [
+				{
+					from: resolve(process.cwd(), 'assets/'),
+					to: './',
+					filter: (uri) => {
+						const isFont = uri.indexOf('/fonts/') >= 0;
+						const isTemplate = uri.endsWith('.ejs') || uri.endsWith('.sass');
+
+						return !isFont && !isTemplate;
+					},
+				},
+			],
+		}),
+	);
+
+	return configs;
+};
+
+const externals = (configs) => {
+	configs.externals = {
+		react: 'React',
+		lodash: '_',
+		'react-dom': 'ReactDOM',
+		'react-art': 'ReactART',
+	};
+
+	return configs;
+};
+
 module.exports = {
 	useBabel: true,
 	buildId: () => 'app',
-	webpackMiddlewares: [setEnvironments],
+	webpackMiddlewares: [setEnvironments, copyAssets, externals],
 	moduleAlias: {
 		global: {
 			'react-native': 'react-native-web',
