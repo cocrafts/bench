@@ -1,8 +1,10 @@
 import React from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack/';
+import { StackParamList } from 'src/stack';
 import { appActions } from 'utils/actions';
-import { appState } from 'utils/state/app';
 
 import { blackPearl } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
@@ -12,8 +14,11 @@ import Header from './Header';
 const windowHeight = Dimensions.get('window').height;
 
 const SignInScreen = () => {
+	const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+
 	const onPress = () => {
 		appActions.signIn();
+		navigation.replace('Dashboard');
 	};
 	return (
 		<View style={styles.container}>
