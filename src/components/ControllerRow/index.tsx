@@ -53,7 +53,7 @@ export const ControllerRow: FC<Props> = ({
 							uri={user.avatarUrl || ''}
 						/>
 					) : (
-						<UserIcon size={ICON_SIZE} color={'#222222'} isFilled={true} />
+						<UserIcon size={ICON_SIZE} color={'white'} isFilled={true} />
 					)}
 				</TouchableOpacity>
 			</View>
