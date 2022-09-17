@@ -5,7 +5,11 @@ import { Markdown } from '@metacraft/ui';
 import { blueWhale, grey } from '../../../utils/colors';
 import { useInput } from '../../../utils/hook';
 
-export const QuickThread: FC = () => {
+interface Props {
+	size: number;
+}
+
+export const QuickThread: FC<Props> = ({ size }: Props) => {
 	const input = useInput('');
 
 	return (
@@ -13,12 +17,12 @@ export const QuickThread: FC = () => {
 			<TextInput
 				multiline
 				numberOfLines={6}
-				style={styles.input}
+				style={[styles.input, { height: size }]}
 				placeholder="What's your thoughts"
 				placeholderTextColor={grey}
 				{...input}
 			/>
-			<Markdown style={styles.markdownContainer} content={input.value || ' '} />
+			{/* <Markdown style={styles.markdownContainer} content={input.value || ' '} /> */}
 		</View>
 	);
 };
