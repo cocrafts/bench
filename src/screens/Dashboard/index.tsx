@@ -1,5 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import {
+	ActivityIndicator,
+	FlatList,
+	Modal,
+	StyleSheet,
+	View,
+} from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 import { StackParamList } from '../../../src/stack';
@@ -29,37 +35,42 @@ export const BuildDashboard: FC = () => {
 	}, []);
 
 	return (
-		<FlatList
-			style={styles.container}
-			showsVerticalScrollIndicator={false}
-			ListHeaderComponent={
-				<View>
-					<ControllerRow canGoBack={false} onAvatarPress={onAvatarPress} />
-					<View style={styles.quickThreadContainer}>
-						<QuickThread />
+		<View>
+			<Modal visible={false}>
+				<View style={{ backgroundColor: 'white', flex: 1 }}></View>
+			</Modal>
+			<FlatList
+				style={styles.container}
+				showsVerticalScrollIndicator={false}
+				ListHeaderComponent={
+					<View>
+						<ControllerRow canGoBack={false} onAvatarPress={onAvatarPress} />
+						<View style={styles.quickThreadContainer}>
+							<QuickThread />
+						</View>
+						<View style={styles.activityIndicatorContainer}>
+							{simpleThreads.length === 0 && <ActivityIndicator />}
+						</View>
 					</View>
-					<View style={styles.activityIndicatorContainer}>
-						{simpleThreads.length === 0 && <ActivityIndicator />}
-					</View>
-				</View>
-			}
-			ListFooterComponent={<View style={styles.footer} />}
-			data={simpleThreads}
-			renderItem={({ item }) => (
-				<Post
-					avatarUrl={item.avatarUrl}
-					name={item.name}
-					postedTime={item.postedTime}
-					thread={item.thread}
-					nbLikes={item.nbLikes}
-					nbComments={item.nbComments}
-					isPinned={item.isPinned}
-					isFollowed={item.isFollowed}
-					isLiked={item.isLiked}
-				/>
-			)}
-			keyExtractor={(item) => item.id}
-		/>
+				}
+				ListFooterComponent={<View style={styles.footer} />}
+				data={simpleThreads}
+				renderItem={({ item }) => (
+					<Post
+						avatarUrl={item.avatarUrl}
+						name={item.name}
+						postedTime={item.postedTime}
+						thread={item.thread}
+						nbLikes={item.nbLikes}
+						nbComments={item.nbComments}
+						isPinned={item.isPinned}
+						isFollowed={item.isFollowed}
+						isLiked={item.isLiked}
+					/>
+				)}
+				keyExtractor={(item) => item.id}
+			/>
+		</View>
 	);
 };
 
