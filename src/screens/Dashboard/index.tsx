@@ -4,6 +4,7 @@ import {
 	FlatList,
 	Modal,
 	StyleSheet,
+	TouchableOpacity,
 	View,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -16,6 +17,7 @@ import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
 
+import NewsFeedTypingModal from './NewsFeedTypingModal';
 import QuickThread from './QuickThread';
 
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
@@ -23,9 +25,22 @@ type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 export const BuildDashboard: FC = () => {
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 	const navigation = useNavigation<DetailPostStackProp>();
-
+	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
+		useState(false);
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
+	};
+
+	const onQuickThreadPress = () => {
+		setIsQuickThreadModalVisible(true);
+	};
+
+	const onCloseModal = () => {
+		setIsQuickThreadModalVisible(false);
+	};
+
+	const onPostPress = () => {
+		setIsQuickThreadModalVisible(false);
 	};
 
 	useEffect(() => {
@@ -36,8 +51,11 @@ export const BuildDashboard: FC = () => {
 
 	return (
 		<View>
-			<Modal visible={false}>
-				<View style={{ backgroundColor: 'white', flex: 1 }}></View>
+			<Modal visible={isQuickThreadModalVisible} animationType={'slide'}>
+				<NewsFeedTypingModal
+					onPostPress={onPostPress}
+					onClosePress={onCloseModal}
+				/>
 			</Modal>
 			<FlatList
 				style={styles.container}
@@ -45,9 +63,12 @@ export const BuildDashboard: FC = () => {
 				ListHeaderComponent={
 					<View>
 						<ControllerRow canGoBack={false} onAvatarPress={onAvatarPress} />
-						<View style={styles.quickThreadContainer}>
+						<TouchableOpacity
+							style={styles.quickThreadContainer}
+							onPress={onQuickThreadPress}
+						>
 							<QuickThread />
-						</View>
+						</TouchableOpacity>
 						<View style={styles.activityIndicatorContainer}>
 							{simpleThreads.length === 0 && <ActivityIndicator />}
 						</View>
