@@ -1,26 +1,32 @@
 import React, { FC } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
-import { Markdown } from '@metacraft/ui';
 
 import { blueWhale, grey } from '../../../utils/colors';
-import { useInput } from '../../../utils/hook';
 
 interface Props {
-	size: number;
+	size?: number;
+	value?: string;
+	onChangeText?: (text: string) => void;
+	maxLength?: number;
 }
 
-export const QuickThread: FC<Props> = ({ size }: Props) => {
-	const input = useInput('');
-
+export const QuickThread: FC<Props> = ({
+	size,
+	value,
+	onChangeText,
+	maxLength,
+}: Props) => {
 	return (
 		<View style={styles.container}>
 			<TextInput
+				maxLength={maxLength}
 				multiline
 				numberOfLines={6}
 				style={[styles.input, { height: size }]}
 				placeholder="What's your thoughts"
 				placeholderTextColor={grey}
-				{...input}
+				onChangeText={onChangeText}
+				value={value}
 			/>
 			{/* <Markdown style={styles.markdownContainer} content={input.value || ' '} /> */}
 		</View>
@@ -37,12 +43,13 @@ const styles = StyleSheet.create({
 	},
 	input: {
 		fontFamily: 'Poppins',
-		fontSize: 15,
+		fontSize: 16,
 		paddingTop: 12,
 		paddingBottom: 24,
 		paddingHorizontal: 18,
 		height: 60,
 		color: '#FFFFFF',
+		fontWeight: '400',
 	},
 	markdownContainer: {
 		borderTopWidth: 1,
