@@ -16,10 +16,12 @@ const ICON_SIZE = 25;
 interface Props {
 	canGoBack?: boolean;
 	onAvatarPress: () => void;
+	onSearchPress: () => void;
 }
 export const ControllerRow: FC<Props> = ({
 	canGoBack = false,
 	onAvatarPress,
+	onSearchPress,
 }: Props) => {
 	const { user } = useSnapshot(appState);
 	const navigation = useNavigation();
@@ -35,13 +37,11 @@ export const ControllerRow: FC<Props> = ({
 			) : (
 				<View />
 			)}
-			<View
-				style={{
-					flexDirection: 'row',
-					alignItems: 'center',
-				}}
-			>
-				<SearchIcon size={ICON_SIZE} />
+			<View style={styles.mainContainer}>
+				<TouchableOpacity onPress={onSearchPress}>
+					<SearchIcon size={ICON_SIZE} />{' '}
+				</TouchableOpacity>
+
 				<View style={styles.iconContainer}>
 					<BellIcon size={ICON_SIZE} isFilled={true} color={'white'} />
 				</View>
@@ -64,6 +64,10 @@ export const ControllerRow: FC<Props> = ({
 export default ControllerRow;
 
 const styles = StyleSheet.create({
+	mainContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
 	container: {
 		flexDirection: 'row',
 		alignItems: 'center',
