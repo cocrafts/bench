@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Modal, StyleSheet, View } from 'react-native';
 import {
 	NavigationProp,
@@ -43,6 +43,7 @@ export const DetailPostScreen: FC<Props> = () => {
 
 	const onCloseSearchModal = () => {
 		setIsSearchModalVisible(false);
+	};
 
 	const onSearchPress = () => {
 		setIsSearchModalVisible(true);

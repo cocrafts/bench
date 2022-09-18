@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackParamList } from 'src/stack';
 import { useSnapshot } from 'valtio';
 
 import UserIcon from '../../components/icons/feather/User';
@@ -18,15 +19,18 @@ interface Props {
 	onAvatarPress: () => void;
 	onSearchPress: () => void;
 }
+type DashBoardStackProp = NavigationProp<StackParamList, 'Dashboard'>;
+
 export const ControllerRow: FC<Props> = ({
 	canGoBack = false,
 	onAvatarPress,
 	onSearchPress,
 }: Props) => {
 	const { user } = useSnapshot(appState);
-	const navigation = useNavigation();
+	const navigation = useNavigation<DashBoardStackProp>();
 
 	const goBack = () => navigation.goBack();
+	const onNotificationPress = () => navigation.navigate('Notification');
 
 	return (
 		<View style={styles.container}>
@@ -42,9 +46,12 @@ export const ControllerRow: FC<Props> = ({
 					<SearchIcon size={ICON_SIZE} />{' '}
 				</TouchableOpacity>
 
-				<View style={styles.iconContainer}>
+				<TouchableOpacity
+					onPress={onNotificationPress}
+					style={styles.iconContainer}
+				>
 					<BellIcon size={ICON_SIZE} isFilled={true} color={'white'} />
-				</View>
+				</TouchableOpacity>
 				<TouchableOpacity onPress={onAvatarPress} style={styles.iconContainer}>
 					{user ? (
 						<Avatar
