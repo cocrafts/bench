@@ -18,6 +18,7 @@ interface Props {
 	canGoBack?: boolean;
 	onAvatarPress: () => void;
 	onSearchPress: () => void;
+	bellIconColor?: string;
 }
 type DashBoardStackProp = NavigationProp<StackParamList, 'Dashboard'>;
 
@@ -25,6 +26,7 @@ export const ControllerRow: FC<Props> = ({
 	canGoBack = false,
 	onAvatarPress,
 	onSearchPress,
+	bellIconColor = 'white',
 }: Props) => {
 	const { user } = useSnapshot(appState);
 	const navigation = useNavigation<DashBoardStackProp>();
@@ -50,7 +52,7 @@ export const ControllerRow: FC<Props> = ({
 					onPress={onNotificationPress}
 					style={styles.iconContainer}
 				>
-					<BellIcon size={ICON_SIZE} isFilled={true} color={'white'} />
+					<BellIcon size={ICON_SIZE} isFilled={true} color={bellIconColor} />
 				</TouchableOpacity>
 				<TouchableOpacity onPress={onAvatarPress} style={styles.iconContainer}>
 					{user ? (
