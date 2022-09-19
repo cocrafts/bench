@@ -1,6 +1,14 @@
 import React, { FC, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, StyleSheet, View } from 'react-native';
+import {
+	ActivityIndicator,
+	FlatList,
+	Modal,
+	StyleSheet,
+	TouchableOpacity,
+	View,
+} from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import SearchModal from 'components/SearchModal';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
@@ -10,6 +18,7 @@ import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
 
+import NewsFeedTypingModal from './NewsFeedTypingModal';
 import QuickThread from './QuickThread';
 
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
@@ -17,9 +26,23 @@ type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 export const BuildDashboard: FC = () => {
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 	const navigation = useNavigation<DetailPostStackProp>();
-
+	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
+		useState(false);
+	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
+	};
+
+	const onQuickThreadPress = () => {
+		setIsQuickThreadModalVisible(true);
+	};
+
+	const onCloseModal = () => {
+		setIsQuickThreadModalVisible(false);
+	};
+
+	const onPostPress = () => {
+		setIsQuickThreadModalVisible(false);
 	};
 
 	useEffect(() => {
@@ -28,16 +51,39 @@ export const BuildDashboard: FC = () => {
 		}, 1000);
 	}, []);
 
+	const onSearchPress = () => {
+		setIsSearchModalVisible(true);
+	};
+	const onCloseSearchModal = () => {
+		setIsSearchModalVisible(false);
+	};
+
 	return (
 		<FlatList
 			style={styles.container}
 			showsVerticalScrollIndicator={false}
 			ListHeaderComponent={
 				<View>
-					<ControllerRow canGoBack={false} onAvatarPress={onAvatarPress} />
-					<View style={styles.quickThreadContainer}>
+					<Modal visible={isQuickThreadModalVisible} animationType={'slide'}>
+						<NewsFeedTypingModal
+							onPostPress={onPostPress}
+							onClosePress={onCloseModal}
+						/>
+					</Modal>
+					<Modal visible={isSearchModalVisible} animationType={'slide'}>
+						<SearchModal onCancelSearchModal={onCloseSearchModal} />
+					</Modal>
+					<ControllerRow
+						canGoBack={false}
+						onAvatarPress={onAvatarPress}
+						onSearchPress={onSearchPress}
+					/>
+					<TouchableOpacity
+						style={styles.quickThreadContainer}
+						onPress={onQuickThreadPress}
+					>
 						<QuickThread />
-					</View>
+					</TouchableOpacity>
 					<View style={styles.activityIndicatorContainer}>
 						{simpleThreads.length === 0 && <ActivityIndicator />}
 					</View>

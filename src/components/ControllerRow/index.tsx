@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackParamList } from 'src/stack';
 import { useSnapshot } from 'valtio';
 
 import UserIcon from '../../components/icons/feather/User';
@@ -16,15 +17,22 @@ const ICON_SIZE = 25;
 interface Props {
 	canGoBack?: boolean;
 	onAvatarPress: () => void;
+	onSearchPress: () => void;
+	bellIconColor?: string;
 }
+type DashBoardStackProp = NavigationProp<StackParamList, 'Dashboard'>;
+
 export const ControllerRow: FC<Props> = ({
 	canGoBack = false,
 	onAvatarPress,
+	onSearchPress,
+	bellIconColor = 'white',
 }: Props) => {
 	const { user } = useSnapshot(appState);
-	const navigation = useNavigation();
+	const navigation = useNavigation<DashBoardStackProp>();
 
 	const goBack = () => navigation.goBack();
+	const onNotificationPress = () => navigation.navigate('Notification');
 
 	return (
 		<View style={styles.container}>
@@ -35,16 +43,17 @@ export const ControllerRow: FC<Props> = ({
 			) : (
 				<View />
 			)}
-			<View
-				style={{
-					flexDirection: 'row',
-					alignItems: 'center',
-				}}
-			>
-				<SearchIcon size={ICON_SIZE} />
-				<View style={styles.iconContainer}>
-					<BellIcon size={ICON_SIZE} isFilled={true} color={'white'} />
-				</View>
+			<View style={styles.mainContainer}>
+				<TouchableOpacity onPress={onSearchPress}>
+					<SearchIcon size={ICON_SIZE} />{' '}
+				</TouchableOpacity>
+
+				<TouchableOpacity
+					onPress={onNotificationPress}
+					style={styles.iconContainer}
+				>
+					<BellIcon size={ICON_SIZE} isFilled={true} color={bellIconColor} />
+				</TouchableOpacity>
 				<TouchableOpacity onPress={onAvatarPress} style={styles.iconContainer}>
 					{user ? (
 						<Avatar
@@ -53,7 +62,7 @@ export const ControllerRow: FC<Props> = ({
 							uri={user.avatarUrl || ''}
 						/>
 					) : (
-						<UserIcon size={ICON_SIZE} color={'#222222'} isFilled={true} />
+						<UserIcon size={ICON_SIZE} color={'white'} isFilled={true} />
 					)}
 				</TouchableOpacity>
 			</View>
@@ -64,6 +73,10 @@ export const ControllerRow: FC<Props> = ({
 export default ControllerRow;
 
 const styles = StyleSheet.create({
+	mainContainer: {
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
 	container: {
 		flexDirection: 'row',
 		alignItems: 'center',

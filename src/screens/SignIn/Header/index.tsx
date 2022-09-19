@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 		fontFamily: 'Poppins',
 		fontWeight: '400',
 		fontSize: 20,
+		color: 'white',
 	},
 	container: {
 		width: '100%',

@@ -11,7 +11,3 @@ export const appState = proxy<AppState>({
 	counter: 0,
 	user: null,
 });
-
-export const appActions = {
-	increaseCounter: (): number => appState.counter++,
-};

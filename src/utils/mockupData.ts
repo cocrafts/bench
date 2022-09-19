@@ -1,6 +1,7 @@
 import { Profile } from '../utils/types/graphql';
 
 import { Thread } from './types/thread';
+import { Notification, NotificationType } from './types';
 
 const userId = '1412abcd';
 
@@ -120,5 +121,16 @@ export const threads: Array<Thread> = [
 		isPinned: false,
 		isFollowed: true,
 		isLiked: true,
+	},
+];
+
+export const mockupNotifications: Array<Notification> = [
+	{
+		id: '1',
+		avatarUrl: 'https://game8.vn/media/202101/images/4(8).jpg',
+		name: 'Shinichi',
+		type: NotificationType.comment,
+		postedTime: '2022-09-01T10:17:28.593Z',
+		isRead: true,
 	},
 ];
