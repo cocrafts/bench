@@ -2,9 +2,9 @@ import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 
-import { blue } from '../../../utils/colors';
-import Avatar from '../../Avatar';
-import DateDifferenceText from '../../DateDifferenceText';
+import { blue } from '../../utils/colors';
+import Avatar from '../Avatar';
+import DateDifferenceText from '../DateDifferenceText';
 
 interface Props {
 	avatarUrl: string;

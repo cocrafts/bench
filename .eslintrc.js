@@ -59,9 +59,12 @@ module.exports = {
 	},
 	ignorePatterns: ['src/utils/types/graphql.ts'],
 	globals: {
+		console: true,
+		process: true,
 		module: true,
 		require: true,
 		document: true,
 		ethereum: true,
+		hydrate: true,
 	},
 };

@@ -9,4 +9,14 @@ export type Thread = {
 	isPinned: boolean;
 	isFollowed: boolean;
 	isLiked: boolean;
+	replies: Array<Reply>;
+};
+
+export type Reply = {
+	name: string;
+	content: string;
+	avatarUrl: string;
+	postedTime: string;
+	nbLikes?: number;
+	originReply?: Reply;
 };
