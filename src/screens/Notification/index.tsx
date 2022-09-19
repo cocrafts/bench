@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { ActivityIndicator, Modal, StyleSheet, View } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { StackParamList } from 'src/stack';
 
 import ControllerRow from '../../components/ControllerRow';
 import SearchModal from '../../components/SearchModal';
@@ -7,14 +9,17 @@ import { blackPearl, blue } from '../../utils/colors';
 import { mockupNotifications } from '../../utils/mockupData';
 import { Notification } from '../../utils/types';
 
-interface Props {}
+type NotificationStackProp = NavigationProp<StackParamList, 'Notification'>;
 
-const NotificationScreen: FC<Props> = ({}: Props) => {
+const NotificationScreen: FC = () => {
+	const navigation = useNavigation<NotificationStackProp>();
 	const [notifications, setNotifications] = useState<Array<Notification>>([]);
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 	const onCloseSearchModal = () => setIsSearchModalVisible(false);
 	const onSearchPress = () => setIsSearchModalVisible(true);
-
+	const onAvatarPress = () => {
+		navigation.navigate('SignIn');
+	};
 	useEffect(() => {
 		setTimeout(() => {
 			return setNotifications(mockupNotifications);
@@ -29,9 +34,7 @@ const NotificationScreen: FC<Props> = ({}: Props) => {
 			<ControllerRow
 				bellIconColor={blue}
 				canGoBack={true}
-				onAvatarPress={function (): void {
-					throw new Error('Function not implemented.');
-				}}
+				onAvatarPress={onAvatarPress}
 				onSearchPress={onSearchPress}
 			/>
 			{notifications.length === 0 && (
