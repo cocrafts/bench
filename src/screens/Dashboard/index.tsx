@@ -56,6 +56,7 @@ export const BuildDashboard: FC = () => {
 					isPinned={item.isPinned}
 					isFollowed={item.isFollowed}
 					isLiked={item.isLiked}
+					replies={item.replies}
 				/>
 			)}
 			keyExtractor={(item) => item.id}

@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import DashboardScreen from '../screens/Dashboard';
 import DetailPostScreen from '../screens/DetailPost';
 import SignInScreen from '../screens/SignIn';
+import { Reply } from '../utils/types/thread';
 
 import { screenOptions } from './shared';
 
@@ -21,6 +22,7 @@ export type StackParamList = {
 		isPinned: boolean;
 		isFollowed: boolean;
 		isLiked: boolean;
+		replies?: Array<Reply>;
 	};
 	SignIn: undefined;
 };
