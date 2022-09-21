@@ -7,19 +7,19 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import SearchModal from 'components/SearchModal';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
-import { blackPearl } from '../../utils/colors';
+import { blackPearl, blueWhale, grey } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
 
 import NewsFeedTypingModal from './NewsFeedTypingModal';
-import QuickThread from './QuickThread';
 
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
@@ -82,7 +82,7 @@ export const BuildDashboard: FC = () => {
 						style={styles.quickThreadContainer}
 						onPress={onQuickThreadPress}
 					>
-						<QuickThread />
+						<Text style={styles.placeHolderText}>What{"'"}s your thoughts</Text>
 					</TouchableOpacity>
 					<View style={styles.activityIndicatorContainer}>
 						{simpleThreads.length === 0 && <ActivityIndicator />}
@@ -113,6 +113,11 @@ export const BuildDashboard: FC = () => {
 export default BuildDashboard;
 
 const styles = StyleSheet.create({
+	placeHolderText: {
+		color: grey,
+		fontSize: 16,
+		fontWeight: '400',
+	},
 	footer: { height: 24 },
 	activityIndicatorContainer: {
 		marginTop: 24,
@@ -127,6 +132,11 @@ const styles = StyleSheet.create({
 	},
 	quickThreadContainer: {
 		marginTop: 46,
+		backgroundColor: blueWhale,
+		justifyContent: 'center',
+		paddingLeft: 15,
+		paddingVertical: 14,
+		borderRadius: 10,
 	},
 	threadListContainer: {
 		marginTop: 24,
