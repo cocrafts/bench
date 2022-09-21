@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import DashboardScreen from '../screens/Dashboard';
 import DetailPostScreen from '../screens/DetailPost';
+import NotificationScreen from '../screens/Notification';
 import SignInScreen from '../screens/SignIn';
 import { Reply } from '../utils/types/thread';
 
@@ -25,6 +26,7 @@ export type StackParamList = {
 		replies?: Array<Reply>;
 	};
 	SignIn: undefined;
+	Notification: undefined;
 };
 
 const Stack = createStackNavigator<StackParamList>();
@@ -41,6 +43,7 @@ export const BuildStack: FC = () => {
 			<Stack.Screen name="Dashboard" component={DashboardScreen} />
 			<Stack.Screen name="DetailPost" component={DetailPostScreen} />
 			<Stack.Screen name="SignIn" component={SignInScreen} />
+			<Stack.Screen name="Notification" component={NotificationScreen} />
 		</Stack.Navigator>
 	);
 };

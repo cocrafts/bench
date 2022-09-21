@@ -23,11 +23,17 @@ const ControllerRow: FC<Props> = ({
 	const displayClosePopup = () => setIsPopupVisible(true);
 
 	const hideClosePopup = () => setIsPopupVisible(false);
+
+	const onDiscardPost = () => {
+		hideClosePopup();
+		onClosePress();
+	};
+
 	return (
 		<View style={styles.container}>
 			<Modal visible={isPopupVisible} transparent={true} animationType={'fade'}>
 				<CloseModal
-					onDiscardPost={onClosePress}
+					onDiscardPost={onDiscardPost}
 					onContinueEditing={hideClosePopup}
 				/>
 			</Modal>
