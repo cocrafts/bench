@@ -59,54 +59,58 @@ export const BuildDashboard: FC = () => {
 	};
 
 	return (
-		<FlatList
-			style={styles.container}
-			showsVerticalScrollIndicator={false}
-			ListHeaderComponent={
-				<View>
-					<Modal visible={isQuickThreadModalVisible} animationType={'slide'}>
-						<NewsFeedTypingModal
-							onPostPress={onPostPress}
-							onClosePress={onCloseModal}
+		<View style={styles.mainContainer}>
+			<FlatList
+				style={styles.container}
+				showsVerticalScrollIndicator={false}
+				ListHeaderComponent={
+					<View>
+						<Modal visible={isQuickThreadModalVisible} animationType={'slide'}>
+							<NewsFeedTypingModal
+								onPostPress={onPostPress}
+								onClosePress={onCloseModal}
+							/>
+						</Modal>
+						<Modal visible={isSearchModalVisible} animationType={'slide'}>
+							<SearchModal onCancelSearchModal={onCloseSearchModal} />
+						</Modal>
+						<ControllerRow
+							canGoBack={false}
+							onAvatarPress={onAvatarPress}
+							onSearchPress={onSearchPress}
 						/>
-					</Modal>
-					<Modal visible={isSearchModalVisible} animationType={'slide'}>
-						<SearchModal onCancelSearchModal={onCloseSearchModal} />
-					</Modal>
-					<ControllerRow
-						canGoBack={false}
-						onAvatarPress={onAvatarPress}
-						onSearchPress={onSearchPress}
-					/>
-					<TouchableOpacity
-						style={styles.quickThreadContainer}
-						onPress={onQuickThreadPress}
-					>
-						<Text style={styles.placeHolderText}>What{"'"}s your thoughts</Text>
-					</TouchableOpacity>
-					<View style={styles.activityIndicatorContainer}>
-						{simpleThreads.length === 0 && <ActivityIndicator />}
+						<TouchableOpacity
+							style={styles.quickThreadContainer}
+							onPress={onQuickThreadPress}
+						>
+							<Text style={styles.placeHolderText}>
+								What{"'"}s your thoughts
+							</Text>
+						</TouchableOpacity>
+						<View style={styles.activityIndicatorContainer}>
+							{simpleThreads.length === 0 && <ActivityIndicator />}
+						</View>
 					</View>
-				</View>
-			}
-			ListFooterComponent={<View style={styles.footer} />}
-			data={simpleThreads}
-			renderItem={({ item }) => (
-				<Post
-					avatarUrl={item.avatarUrl}
-					name={item.name}
-					postedTime={item.postedTime}
-					thread={item.thread}
-					nbLikes={item.nbLikes}
-					nbComments={item.nbComments}
-					isPinned={item.isPinned}
-					isFollowed={item.isFollowed}
-					isLiked={item.isLiked}
-					replies={item.replies}
-				/>
-			)}
-			keyExtractor={(item) => item.id}
-		/>
+				}
+				ListFooterComponent={<View style={styles.footer} />}
+				data={simpleThreads}
+				renderItem={({ item }) => (
+					<Post
+						avatarUrl={item.avatarUrl}
+						name={item.name}
+						postedTime={item.postedTime}
+						thread={item.thread}
+						nbLikes={item.nbLikes}
+						nbComments={item.nbComments}
+						isPinned={item.isPinned}
+						isFollowed={item.isFollowed}
+						isLiked={item.isLiked}
+						replies={item.replies}
+					/>
+				)}
+				keyExtractor={(item) => item.id}
+			/>
+		</View>
 	);
 };
 
@@ -141,4 +145,5 @@ const styles = StyleSheet.create({
 	threadListContainer: {
 		marginTop: 24,
 	},
+	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
 });
