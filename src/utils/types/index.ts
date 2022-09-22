@@ -3,12 +3,6 @@ export type Notification = {
 	avatarUrl: string;
 	name: string;
 	postedTime: string;
-	type: NotificationType;
+	content: string;
 	isRead: boolean;
 };
-
-export enum NotificationType {
-	comment = 'comment',
-	react = 'react',
-	reply = 'reply',
-}
