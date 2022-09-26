@@ -1,17 +1,18 @@
-import React, { FC } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import React, { FC, useState } from 'react';
+import { FlatList, Modal, StyleSheet, View } from 'react-native';
 import {
 	NavigationProp,
 	RouteProp,
 	useNavigation,
 	useRoute,
 } from '@react-navigation/native';
-import CommentInput from 'components/CommentInput';
-import { blackPearl } from 'utils/colors';
 
+import CommentInput from '../../components/CommentInput';
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
+import SearchModal from '../../components/SearchModal';
 import { StackParamList } from '../../stack';
+import { blackPearl } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
 
 import Reply from './Reply';
@@ -26,6 +27,7 @@ interface Props {
 const DetailPostScreen: FC<Props> = () => {
 	const route = useRoute<DetailPostStackRouteProp>();
 	const navigation = useNavigation<DetailPostNavigationProp>();
+	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 
 	const {
 		avatarUrl = '',
@@ -44,13 +46,28 @@ const DetailPostScreen: FC<Props> = () => {
 		navigation.navigate('SignIn');
 	};
 
+	const onCloseSearchModal = () => {
+		setIsSearchModalVisible(false);
+	};
+
+	const onSearchPress = () => {
+		setIsSearchModalVisible(true);
+	};
+
 	return (
 		<FlatList
 			style={styles.container}
 			showsVerticalScrollIndicator={false}
 			ListHeaderComponent={
 				<View>
-					<ControllerRow canGoBack={true} onAvatarPress={onAvatarPress} />
+					<Modal visible={isSearchModalVisible} animationType={'slide'}>
+						<SearchModal onCancelSearchModal={onCloseSearchModal} />
+					</Modal>
+					<ControllerRow
+						canGoBack={true}
+						onAvatarPress={onAvatarPress}
+						onSearchPress={onSearchPress}
+					/>
 					<View style={styles.postDetailContainer}>
 						<Post
 							avatarUrl={avatarUrl}

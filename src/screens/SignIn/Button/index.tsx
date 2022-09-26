@@ -6,11 +6,17 @@ import { midnightDream } from '../../../utils/colors';
 
 interface Props {
 	text: string;
+	onPress: () => void;
 }
 
-const MainButton: FC<Props> = ({ text = '' }: Props) => {
+const MainButton: FC<Props> = ({ text = '', onPress }: Props) => {
 	return (
-		<Button style={styles.container} title={text} titleStyle={styles.text} />
+		<Button
+			style={styles.container}
+			title={text}
+			titleStyle={styles.text}
+			onPress={onPress}
+		/>
 	);
 };
 
