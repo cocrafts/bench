@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 		backgroundColor: midnightDream,
 		paddingHorizontal: 14,
 		paddingVertical: 10,
-		borderRadius: 5,
+		borderRadius: 6,
 	},
 	text: {
 		color: 'rgba(255,255,255,0.6)',
