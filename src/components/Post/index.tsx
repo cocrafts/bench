@@ -68,8 +68,8 @@ const Post: FC<Props> = ({
 					postedTime={new Date(postedTime)}
 				/>
 				<View style={styles.pinAndAlert}>
-					<PinIcon size={15} isFilled={isPinned} />
-					<BellIcon size={15} isFilled={isFollowed} style={styles.bellIcon} />
+					<BellIcon size={15} isFilled={isFollowed} />
+					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />;
 				</View>
 			</View>
 			<TouchableOpacity
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-	bellIcon: {
+	pinIcon: {
 		marginLeft: 10,
 	},
 	shortenedTextContainer: {
