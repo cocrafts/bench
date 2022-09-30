@@ -4,10 +4,9 @@ import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackParamList } from 'src/stack';
 
-import CommentInput from '../../components/CommentInput';
 import BellIcon from '../../components/icons/feather/Bell';
 import PinIcon from '../../components/icons/feather/Pin';
-import { midnightDream } from '../../utils/colors';
+import { blueWhale, grey, midnightDream } from '../../utils/colors';
 import { Reply } from '../../utils/types/thread';
 import UserInfo from '../UserInfo';
 
@@ -58,6 +57,20 @@ const Post: FC<Props> = ({
 			replies,
 		});
 	};
+	const onWriteCommentPress = () => {
+		navigation.navigate('DetailPost', {
+			avatarUrl,
+			name,
+			postedTime,
+			thread,
+			nbLikes,
+			nbComments,
+			isPinned,
+			isFollowed,
+			isLiked,
+			replies,
+		});
+	};
 
 	return (
 		<View style={styles.container}>
@@ -89,15 +102,24 @@ const Post: FC<Props> = ({
 				/>
 			</View>
 			{isShortForm && (
-				<View style={styles.commentInputContainer}>
-					<CommentInput />
-				</View>
+				<TouchableOpacity
+					onPress={onWriteCommentPress}
+					style={styles.commentInputContainer}
+				>
+					<Text style={styles.placeholder}>Write your comment</Text>
+				</TouchableOpacity>
 			)}
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	placeholder: {
+		color: grey,
+		fontWeight: '400',
+		fontSize: 14,
+		lineHeight: 21,
+	},
 	container: {
 		flex: 1,
 		backgroundColor: midnightDream,
@@ -124,7 +146,12 @@ const styles = StyleSheet.create({
 		marginTop: 7,
 	},
 	commentInputContainer: {
-		marginTop: 8,
+		marginTop: 13,
+		height: 26,
+		paddingHorizontal: 9,
+		justifyContent: 'center',
+		backgroundColor: blueWhale,
+		borderRadius: 6,
 	},
 	shortenedText: {
 		fontSize: 16,

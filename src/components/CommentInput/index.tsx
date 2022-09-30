@@ -7,9 +7,14 @@ import { useInput } from '../../utils/hook';
 interface Props {
 	style?: ViewStyle;
 	containerStyle?: ViewStyle;
+	autoFocus?: boolean;
 }
 
-export const CommentInput: FC<Props> = ({ style, containerStyle }: Props) => {
+export const CommentInput: FC<Props> = ({
+	style,
+	containerStyle,
+	autoFocus = false,
+}: Props) => {
 	const input = useInput('');
 	return (
 		<View style={[styles.container, containerStyle]}>
@@ -19,6 +24,8 @@ export const CommentInput: FC<Props> = ({ style, containerStyle }: Props) => {
 				style={[styles.input, style]}
 				placeholder="Write your comment..."
 				placeholderTextColor={grey}
+				autoFocus={autoFocus}
+				focusable={true}
 				{...input}
 			/>
 		</View>
