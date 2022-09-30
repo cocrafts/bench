@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
 		paddingVertical: 12,
 		paddingHorizontal: 16,
 		marginTop: 12,
-		borderRadius: 5,
+		borderRadius: 10,
 	},
 	headerRow: {
 		width: '100%',
