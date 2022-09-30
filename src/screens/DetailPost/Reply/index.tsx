@@ -5,7 +5,6 @@ import Avatar from 'components/Avatar';
 
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 import UserInfo from '../../../components/UserInfo';
-import { blackPearl, grey, midnightDream } from '../../../utils/colors';
 import { Reply as ReplyType } from '../../../utils/types/thread';
 
 interface Props {
