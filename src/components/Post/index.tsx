@@ -43,7 +43,7 @@ const Post: FC<Props> = ({
 	replies = [],
 }: Props) => {
 	const navigation = useNavigation<DetailPostStackProp>();
-	const onThreadPress = () => {
+	const onThreadPress = (autoFocus: boolean) => {
 		navigation.navigate('DetailPost', {
 			avatarUrl,
 			name,
@@ -55,20 +55,7 @@ const Post: FC<Props> = ({
 			isFollowed,
 			isLiked,
 			replies,
-		});
-	};
-	const onWriteCommentPress = () => {
-		navigation.navigate('DetailPost', {
-			avatarUrl,
-			name,
-			postedTime,
-			thread,
-			nbLikes,
-			nbComments,
-			isPinned,
-			isFollowed,
-			isLiked,
-			replies,
+			autoFocus,
 		});
 	};
 
@@ -87,7 +74,7 @@ const Post: FC<Props> = ({
 			</View>
 			<TouchableOpacity
 				disabled={!isShortForm}
-				onPress={onThreadPress}
+				onPress={() => onThreadPress(false)}
 				style={styles.shortenedTextContainer}
 			>
 				<Text numberOfLines={isShortForm ? 3 : 0} style={styles.shortenedText}>
@@ -103,7 +90,7 @@ const Post: FC<Props> = ({
 			</View>
 			{isShortForm && (
 				<TouchableOpacity
-					onPress={onWriteCommentPress}
+					onPress={() => onThreadPress(true)}
 					style={styles.commentInputContainer}
 				>
 					<Text style={styles.placeholder}>Write your comment</Text>

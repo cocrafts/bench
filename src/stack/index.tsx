@@ -24,6 +24,7 @@ export type StackParamList = {
 		isFollowed: boolean;
 		isLiked: boolean;
 		replies?: Array<Reply>;
+		autoFocus?: boolean;
 	};
 	SignIn: undefined;
 	Notification: undefined;

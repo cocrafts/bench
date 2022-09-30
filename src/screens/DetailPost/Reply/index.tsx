@@ -5,7 +5,7 @@ import Avatar from 'components/Avatar';
 
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 import UserInfo from '../../../components/UserInfo';
-import { blackPearl } from '../../../utils/colors';
+import { blackPearl, grey, midnightDream } from '../../../utils/colors';
 import { Reply as ReplyType } from '../../../utils/types/thread';
 
 interface Props {
@@ -66,12 +66,14 @@ const styles = StyleSheet.create({
 		fontWeight: '400',
 		fontStyle: 'normal',
 		lineHeight: 15,
+		color: grey,
 	},
 	container: {
 		flex: 1,
-		backgroundColor: blackPearl,
+		backgroundColor: midnightDream,
 		paddingHorizontal: 14,
 		paddingVertical: 10,
+		borderRadius: 5,
 	},
 	text: {
 		color: 'rgba(255,255,255,0.6)',

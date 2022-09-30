@@ -47,13 +47,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 14,
 		height: 32,
 		lineHeight: 21,
-		color: 'rgba(255,255,255,0.5)',
+		color: grey,
 		fontWeight: '400',
-	},
-	markdownContainer: {
-		borderTopWidth: 1,
-		borderColor: 'rgba(255, 255, 255, 0.02)',
-		marginHorizontal: 18,
-		marginBottom: 6,
 	},
 });
