@@ -69,7 +69,7 @@ const Post: FC<Props> = ({
 				/>
 				<View style={styles.pinAndAlert}>
 					<BellIcon size={15} isFilled={isFollowed} />
-					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />;
+					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />
 				</View>
 			</View>
 			<TouchableOpacity
