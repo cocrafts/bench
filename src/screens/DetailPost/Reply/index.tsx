@@ -5,7 +5,7 @@ import Avatar from 'components/Avatar';
 
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 import UserInfo from '../../../components/UserInfo';
-import { blackPearl } from '../../../utils/colors';
+import { grey, midnightDream } from '../../../utils/colors';
 import { Reply as ReplyType } from '../../../utils/types/thread';
 
 interface Props {
@@ -26,7 +26,7 @@ const Reply: FC<Props> = ({
 	originReply,
 }: Props) => {
 	return (
-		<View>
+		<View style={styles.container}>
 			{originReply && (
 				<View style={styles.originalReplyContainer}>
 					<View style={styles.directionContainer} />
@@ -41,7 +41,7 @@ const Reply: FC<Props> = ({
 					</View>
 				</View>
 			)}
-			<View style={styles.container}>
+			<View style={styles.mainReplyContainer}>
 				<UserInfo
 					avatarUrl={avatarUrl}
 					name={name}
@@ -66,13 +66,16 @@ const styles = StyleSheet.create({
 		fontWeight: '400',
 		fontStyle: 'normal',
 		lineHeight: 15,
+		color: grey,
 	},
 	container: {
 		flex: 1,
-		backgroundColor: blackPearl,
+		backgroundColor: midnightDream,
 		paddingHorizontal: 14,
 		paddingVertical: 10,
+		borderRadius: 6,
 	},
+	mainReplyContainer: {},
 	text: {
 		color: 'rgba(255,255,255,0.6)',
 		fontWeight: '400',
@@ -98,26 +101,25 @@ const styles = StyleSheet.create({
 		borderRightColor: 'transparent',
 		borderRadius: 5,
 		borderBottomLeftRadius: 0,
-		width: 22,
-		height: 31,
-		marginLeft: 25,
+		width: 25,
+		height: 25,
+		marginLeft: 11,
 	},
 	originalShortReplyContainer: {
 		flex: 1,
 		alignItems: 'center',
 		flexDirection: 'row',
-		paddingVertical: 11,
-		paddingHorizontal: 7,
-		backgroundColor: blackPearl,
 		borderRadius: 5,
 		height: 39,
 		marginTop: -18,
+		marginLeft: -3,
 	},
 	nameText: {
-		fontWeight: '400',
+		fontWeight: '700',
 		fontSize: 10,
 		lineHeight: 15,
 		marginLeft: 4,
+		color: grey,
 	},
 	originalReplyContent: {
 		color: 'rgba(255,255,255,0.5)',

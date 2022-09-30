@@ -12,7 +12,7 @@ import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
 import SearchModal from '../../components/SearchModal';
 import { StackParamList } from '../../stack';
-import { blackPearl } from '../../utils/colors';
+import { blackPearl, midnightDream } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
 
 import Reply from './Reply';
@@ -40,6 +40,7 @@ const DetailPostScreen: FC<Props> = () => {
 		isFollowed = false,
 		isLiked = false,
 		replies = [],
+		autoFocus = false,
 	} = route.params;
 
 	const onAvatarPress = () => {
@@ -55,20 +56,20 @@ const DetailPostScreen: FC<Props> = () => {
 	};
 
 	return (
-		<FlatList
-			style={styles.container}
-			showsVerticalScrollIndicator={false}
-			ListHeaderComponent={
-				<View>
-					<Modal visible={isSearchModalVisible} animationType={'slide'}>
-						<SearchModal onCancelSearchModal={onCloseSearchModal} />
-					</Modal>
-					<ControllerRow
-						canGoBack={true}
-						onAvatarPress={onAvatarPress}
-						onSearchPress={onSearchPress}
-					/>
-					<View style={styles.postDetailContainer}>
+		<View style={styles.mainContainer}>
+			<FlatList
+				style={styles.container}
+				showsVerticalScrollIndicator={false}
+				ListHeaderComponent={
+					<View>
+						<Modal visible={isSearchModalVisible} animationType={'slide'}>
+							<SearchModal onCancelSearchModal={onCloseSearchModal} />
+						</Modal>
+						<ControllerRow
+							canGoBack={true}
+							onAvatarPress={onAvatarPress}
+							onSearchPress={onSearchPress}
+						/>
 						<Post
 							avatarUrl={avatarUrl}
 							name={name}
@@ -82,33 +83,37 @@ const DetailPostScreen: FC<Props> = () => {
 							isShortForm={false}
 						/>
 					</View>
-				</View>
-			}
-			ListFooterComponent={
-				<View style={styles.commentInputContainer}>
-					<CommentInput containerStyle={styles.commentInput} />
-				</View>
-			}
-			data={replies}
-			renderItem={({ item }) => (
-				<View style={styles.replyContainer}>
-					<Reply
-						avatarUrl={item.avatarUrl}
-						name={item.name}
-						postedTime={item.postedTime}
-						thread={item.content}
-						nbLikes={item.nbLikes || 0}
-						originReply={item.originReply}
-					/>
-				</View>
-			)}
-		/>
+				}
+				ListFooterComponent={
+					<View style={styles.commentInputContainer}>
+						<CommentInput
+							autoFocus={autoFocus}
+							containerStyle={styles.commentInput}
+						/>
+					</View>
+				}
+				data={replies}
+				renderItem={({ item }) => (
+					<View style={styles.replyContainer}>
+						<Reply
+							avatarUrl={item.avatarUrl}
+							name={item.name}
+							postedTime={item.postedTime}
+							thread={item.content}
+							nbLikes={item.nbLikes || 0}
+							originReply={item.originReply}
+						/>
+					</View>
+				)}
+			/>
+		</View>
 	);
 };
 
 export default DetailPostScreen;
 
 const styles = StyleSheet.create({
+	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
 	replyContainer: {
 		marginTop: 16,
 	},
@@ -119,20 +124,12 @@ const styles = StyleSheet.create({
 		alignSelf: 'center',
 		paddingTop: 32,
 		paddingHorizontal: 15,
-	},
-	quickThreadContainer: {
-		marginTop: 46,
-	},
-	threadListContainer: {
-		marginTop: 24,
-	},
-	postDetailContainer: {
-		marginTop: 13,
+		backgroundColor: blackPearl,
 	},
 	commentInputContainer: {
 		marginVertical: 12,
 	},
 	commentInput: {
-		backgroundColor: blackPearl,
+		backgroundColor: midnightDream,
 	},
 });

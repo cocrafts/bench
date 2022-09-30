@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
 		backgroundColor: blackPearl,
 	},
 	quickThreadContainer: {
-		marginTop: 46,
+		marginTop: 10,
 		backgroundColor: blueWhale,
 		justifyContent: 'center',
 		paddingLeft: 15,
