@@ -62,7 +62,7 @@ const Reply: FC<Props> = ({
 const styles = StyleSheet.create({
 	replyText: {
 		marginLeft: 35,
-		fontSize: 10,
+		fontSize: 13,
 		fontWeight: '400',
 		fontStyle: 'normal',
 		lineHeight: 15,
