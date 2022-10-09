@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 	},
 	footer: { height: 24 },
 	activityIndicatorContainer: {
-		marginTop: 24,
+		marginTop: 5,
 	},
 	container: {
 		width: '100%',
@@ -141,9 +141,6 @@ const styles = StyleSheet.create({
 		paddingLeft: 15,
 		paddingVertical: 14,
 		borderRadius: 10,
-	},
-	threadListContainer: {
-		marginTop: 24,
 	},
 	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
 });
