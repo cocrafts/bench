@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
 		backgroundColor: blue,
 	},
 	disabled: {
-		backgroundColor: grey,
+		backgroundColor: 'rgba(128,144,153,0.3)',
 	},
 	title: {
 		color: 'white',

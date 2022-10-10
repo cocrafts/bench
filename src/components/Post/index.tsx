@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 		backgroundColor: midnightDream,
 		paddingVertical: 12,
 		paddingHorizontal: 16,
-		marginTop: 12,
+		marginTop: 15,
 		borderRadius: 10,
 	},
 	headerRow: {
