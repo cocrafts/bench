@@ -7,6 +7,7 @@ import DashboardScreen from '../screens/Dashboard';
 import DetailPostScreen from '../screens/DetailPost';
 import NotificationScreen from '../screens/Notification';
 import SignInScreen from '../screens/SignIn';
+import { Reply } from '../utils/types/thread';
 
 import { screenOptions } from './shared';
 
@@ -22,6 +23,8 @@ export type StackParamList = {
 		isPinned: boolean;
 		isFollowed: boolean;
 		isLiked: boolean;
+		replies?: Array<Reply>;
+		autoFocus?: boolean;
 	};
 	SignIn: undefined;
 	Notification: undefined;

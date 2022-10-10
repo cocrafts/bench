@@ -39,10 +39,14 @@ const copyAssets = (configs) => {
 
 const externals = (configs) => {
 	configs.externals = {
+		rxjs: 'rxjs',
 		react: 'React',
 		lodash: '_',
+		'amazon-cognito-identity-js': 'AmazonCognitoIdentity',
 		'react-dom': 'ReactDOM',
 		'react-art': 'ReactART',
+		'@blocto/sdk': 'BloctoSDK',
+		'@solana/web3.js': 'solanaWeb3',
 	};
 
 	return configs;
@@ -50,6 +54,8 @@ const externals = (configs) => {
 
 module.exports = {
 	useBabel: true,
+	publicPath: () => process.env.PUBLIC_URL || '/',
+	keepPreviousBuild: () => true,
 	buildId: () => 'app',
 	webpackMiddlewares: [setEnvironments, copyAssets, externals],
 	moduleAlias: {

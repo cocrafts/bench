@@ -7,9 +7,14 @@ import { useInput } from '../../utils/hook';
 interface Props {
 	style?: ViewStyle;
 	containerStyle?: ViewStyle;
+	autoFocus?: boolean;
 }
 
-export const CommentInput: FC<Props> = ({ style, containerStyle }: Props) => {
+export const CommentInput: FC<Props> = ({
+	style,
+	containerStyle,
+	autoFocus = false,
+}: Props) => {
 	const input = useInput('');
 	return (
 		<View style={[styles.container, containerStyle]}>
@@ -19,6 +24,8 @@ export const CommentInput: FC<Props> = ({ style, containerStyle }: Props) => {
 				style={[styles.input, style]}
 				placeholder="Write your comment..."
 				placeholderTextColor={grey}
+				autoFocus={autoFocus}
+				focusable={true}
 				{...input}
 			/>
 		</View>
@@ -40,13 +47,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 14,
 		height: 32,
 		lineHeight: 21,
-		color: 'rgba(255,255,255,0.5)',
+		color: grey,
 		fontWeight: '400',
-	},
-	markdownContainer: {
-		borderTopWidth: 1,
-		borderColor: 'rgba(255, 255, 255, 0.02)',
-		marginHorizontal: 18,
-		marginBottom: 6,
 	},
 });

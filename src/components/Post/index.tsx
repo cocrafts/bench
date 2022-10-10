@@ -4,13 +4,13 @@ import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackParamList } from 'src/stack';
 
-import CommentInput from '../../components/CommentInput';
 import BellIcon from '../../components/icons/feather/Bell';
 import PinIcon from '../../components/icons/feather/Pin';
-import { midnightDream } from '../../utils/colors';
+import { blueWhale, grey, midnightDream } from '../../utils/colors';
+import { Reply } from '../../utils/types/thread';
+import UserInfo from '../UserInfo';
 
 import SocialRow from './SocialRow';
-import UserInfo from './UserInfo';
 
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
@@ -25,6 +25,7 @@ interface Props {
 	isFollowed: boolean;
 	isLiked: boolean;
 	isShortForm?: boolean;
+	replies?: Array<Reply>;
 	navigation?: DetailPostStackProp;
 }
 
@@ -39,9 +40,10 @@ const Post: FC<Props> = ({
 	isFollowed = false,
 	isLiked = false,
 	isShortForm = true,
+	replies = [],
 }: Props) => {
 	const navigation = useNavigation<DetailPostStackProp>();
-	const onThreadPress = () => {
+	const onThreadPress = (autoFocus: boolean) => {
 		navigation.navigate('DetailPost', {
 			avatarUrl,
 			name,
@@ -52,6 +54,8 @@ const Post: FC<Props> = ({
 			isPinned,
 			isFollowed,
 			isLiked,
+			replies,
+			autoFocus,
 		});
 	};
 
@@ -64,13 +68,13 @@ const Post: FC<Props> = ({
 					postedTime={new Date(postedTime)}
 				/>
 				<View style={styles.pinAndAlert}>
-					<PinIcon size={15} isFilled={isPinned} />
-					<BellIcon size={15} isFilled={isFollowed} style={styles.bellIcon} />
+					<BellIcon size={15} isFilled={isFollowed} />
+					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />
 				</View>
 			</View>
 			<TouchableOpacity
 				disabled={!isShortForm}
-				onPress={onThreadPress}
+				onPress={() => onThreadPress(false)}
 				style={styles.shortenedTextContainer}
 			>
 				<Text numberOfLines={isShortForm ? 3 : 0} style={styles.shortenedText}>
@@ -84,21 +88,32 @@ const Post: FC<Props> = ({
 					isLiked={isLiked}
 				/>
 			</View>
-			<View style={styles.commentInputContainer}>
-				<CommentInput />
-			</View>
+			{isShortForm && (
+				<TouchableOpacity
+					onPress={() => onThreadPress(true)}
+					style={styles.commentInputContainer}
+				>
+					<Text style={styles.placeholder}>Write your comment</Text>
+				</TouchableOpacity>
+			)}
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	placeholder: {
+		color: grey,
+		fontWeight: '400',
+		fontSize: 14,
+		lineHeight: 21,
+	},
 	container: {
 		flex: 1,
 		backgroundColor: midnightDream,
 		paddingVertical: 12,
 		paddingHorizontal: 16,
-		marginTop: 12,
-		borderRadius: 5,
+		marginTop: 15,
+		borderRadius: 10,
 	},
 	headerRow: {
 		width: '100%',
@@ -111,14 +126,19 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 	},
-	bellIcon: {
+	pinIcon: {
 		marginLeft: 10,
 	},
 	shortenedTextContainer: {
 		marginTop: 7,
 	},
 	commentInputContainer: {
-		marginTop: 8,
+		marginTop: 13,
+		height: 26,
+		paddingHorizontal: 9,
+		justifyContent: 'center',
+		backgroundColor: blueWhale,
+		borderRadius: 6,
 	},
 	shortenedText: {
 		fontSize: 16,
