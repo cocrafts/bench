@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 import Avatar from 'components/Avatar';
 
@@ -15,6 +15,7 @@ interface Props {
 	thread: string;
 	nbLikes: number;
 	originReply?: ReplyType;
+	onReplyPress: () => void;
 }
 
 const Reply: FC<Props> = ({
@@ -24,6 +25,7 @@ const Reply: FC<Props> = ({
 	thread = '',
 	nbLikes = 0,
 	originReply,
+	onReplyPress,
 }: Props) => {
 	return (
 		<View style={styles.container}>
@@ -52,7 +54,9 @@ const Reply: FC<Props> = ({
 				</View>
 				<View style={styles.socialContainer}>
 					<ThumbsUpNumber number={nbLikes} />
-					<Text style={styles.replyText}>Reply</Text>
+					<TouchableOpacity onPress={onReplyPress}>
+						<Text style={styles.replyText}>Reply</Text>
+					</TouchableOpacity>
 				</View>
 			</View>
 		</View>

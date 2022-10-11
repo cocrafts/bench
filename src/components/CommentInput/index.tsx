@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, TextInput, View, ViewStyle } from 'react-native';
 
 import { blueWhale, grey } from '../../utils/colors';
@@ -8,26 +8,21 @@ interface Props {
 	style?: ViewStyle;
 	containerStyle?: ViewStyle;
 	autoFocus?: boolean;
+	commentInputRef: React.RefObject<TextInput>;
 }
 
 export const CommentInput: FC<Props> = ({
 	style,
 	containerStyle,
 	autoFocus = false,
+	commentInputRef,
 }: Props) => {
 	const input = useInput('');
-	const inputRef = useRef<TextInput>(null);
-
-	useEffect(() => {
-		if (inputRef.current && autoFocus) {
-			inputRef.current?.focus();
-		}
-	}, [autoFocus]);
 
 	return (
 		<View style={[styles.container, containerStyle]}>
 			<TextInput
-				ref={inputRef}
+				ref={commentInputRef}
 				multiline
 				numberOfLines={6}
 				style={[styles.input, style]}
