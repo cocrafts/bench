@@ -23,7 +23,6 @@ export const CommentInput: FC<Props> = ({
 		<View style={[styles.container, containerStyle]}>
 			<TextInput
 				ref={commentInputRef}
-				multiline
 				numberOfLines={6}
 				style={[styles.input, style]}
 				placeholder="Write your comment..."

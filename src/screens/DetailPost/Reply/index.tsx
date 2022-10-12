@@ -5,7 +5,7 @@ import Avatar from 'components/Avatar';
 
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 import UserInfo from '../../../components/UserInfo';
-import { grey, midnightDream } from '../../../utils/colors';
+import { grey, midnightDream, yellow } from '../../../utils/colors';
 import { Reply as ReplyType } from '../../../utils/types/thread';
 
 interface Props {
@@ -16,6 +16,7 @@ interface Props {
 	nbLikes: number;
 	originReply?: ReplyType;
 	onReplyPress: () => void;
+	isActive: boolean;
 }
 
 const Reply: FC<Props> = ({
@@ -26,6 +27,7 @@ const Reply: FC<Props> = ({
 	nbLikes = 0,
 	originReply,
 	onReplyPress,
+	isActive = false,
 }: Props) => {
 	return (
 		<View style={styles.container}>
@@ -43,7 +45,9 @@ const Reply: FC<Props> = ({
 					</View>
 				</View>
 			)}
-			<View style={styles.mainReplyContainer}>
+			<View
+				style={[styles.mainReplyContainer, isActive && styles.activeBorder]}
+			>
 				<UserInfo
 					avatarUrl={avatarUrl}
 					name={name}
@@ -64,6 +68,11 @@ const Reply: FC<Props> = ({
 };
 
 const styles = StyleSheet.create({
+	activeBorder: {
+		borderWidth: 1,
+		borderColor: yellow,
+		borderRadius: 5,
+	},
 	replyText: {
 		marginLeft: 35,
 		fontSize: 13,
@@ -74,12 +83,14 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		flex: 1,
-		backgroundColor: midnightDream,
-		paddingHorizontal: 14,
-		paddingVertical: 10,
+		paddingTop: 10,
 		borderRadius: 6,
 	},
-	mainReplyContainer: {},
+	mainReplyContainer: {
+		paddingHorizontal: 14,
+		paddingVertical: 10,
+		backgroundColor: midnightDream,
+	},
 	text: {
 		color: 'rgba(255,255,255,0.6)',
 		fontWeight: '400',
@@ -97,6 +108,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center',
 		marginTop: 18,
+		marginHorizontal: 14,
 	},
 	directionContainer: {
 		borderWidth: 0.5,
@@ -115,8 +127,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		borderRadius: 5,
 		height: 39,
-		marginTop: -18,
+		marginTop: -21,
 		marginLeft: -3,
+		backgroundColor: midnightDream,
+		paddingHorizontal: 7,
 	},
 	nameText: {
 		fontWeight: '700',

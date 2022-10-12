@@ -28,7 +28,9 @@ const DetailPostScreen: FC<Props> = () => {
 	const route = useRoute<DetailPostStackRouteProp>();
 	const navigation = useNavigation<DetailPostNavigationProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+	const [currentReplyActiveIndex, setCurrentReplyActiveIndex] = useState(-1);
 	const commentInputRef = useRef<TextInput>(null);
+
 	const {
 		avatarUrl = '',
 		name = '',
@@ -55,13 +57,23 @@ const DetailPostScreen: FC<Props> = () => {
 		setIsSearchModalVisible(true);
 	};
 
-	const onReplyPress = useCallback(() => {
-		commentInputRef.current && commentInputRef.current?.focus();
-	}, [commentInputRef.current]);
+	const onReplyPress = useCallback(
+		(index: number) => {
+			commentInputRef.current && commentInputRef.current?.focus();
+			setCurrentReplyActiveIndex(index);
+		},
+		[commentInputRef.current],
+	);
 
 	useEffect(() => {
 		autoFocus && commentInputRef.current && commentInputRef.current?.focus();
 	}, [autoFocus, commentInputRef.current]);
+
+	useEffect(() => {
+		if (!commentInputRef.current?.isFocused && currentReplyActiveIndex !== -1) {
+			setCurrentReplyActiveIndex(-1);
+		}
+	}, [currentReplyActiveIndex, commentInputRef.current?.isFocused]);
 
 	return (
 		<View style={styles.mainContainer}>
@@ -102,10 +114,11 @@ const DetailPostScreen: FC<Props> = () => {
 					</View>
 				}
 				data={replies}
-				renderItem={({ item }) => (
+				renderItem={({ item, index }) => (
 					<View style={styles.replyContainer}>
 						<Reply
-							onReplyPress={onReplyPress}
+							isActive={currentReplyActiveIndex === index}
+							onReplyPress={() => onReplyPress(index)}
 							avatarUrl={item.avatarUrl}
 							name={item.name}
 							postedTime={item.postedTime}
