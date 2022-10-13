@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
 	socialContainer: {
 		marginTop: 14,
 		flexDirection: 'row',
+		alignItems: 'center',
 	},
 	originalReplyContainer: {
 		flexDirection: 'row',
