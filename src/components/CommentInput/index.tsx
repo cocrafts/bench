@@ -8,18 +8,21 @@ interface Props {
 	style?: ViewStyle;
 	containerStyle?: ViewStyle;
 	autoFocus?: boolean;
+	commentInputRef: React.RefObject<TextInput>;
 }
 
 export const CommentInput: FC<Props> = ({
 	style,
 	containerStyle,
 	autoFocus = false,
+	commentInputRef,
 }: Props) => {
 	const input = useInput('');
+
 	return (
 		<View style={[styles.container, containerStyle]}>
 			<TextInput
-				multiline
+				ref={commentInputRef}
 				numberOfLines={6}
 				style={[styles.input, style]}
 				placeholder="Write your comment..."
