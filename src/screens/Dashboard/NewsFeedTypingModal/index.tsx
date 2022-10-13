@@ -26,7 +26,7 @@ const NewsFeedTypingModal: FC<Props> = ({
 			<ControllerRow
 				onPostPress={onPostPress}
 				onClosePress={onClosePress}
-				isPostDisable={value === '' || nbCharacterLeft <= 0}
+				isPostDisable={value === ''}
 			/>
 			<View style={styles.quickThreadContainer}>
 				<QuickThread
