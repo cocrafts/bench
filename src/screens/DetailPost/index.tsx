@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { FlatList, Modal, StyleSheet, View } from 'react-native';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FlatList, Modal, StyleSheet, TextInput, View } from 'react-native';
 import {
 	NavigationProp,
 	RouteProp,
@@ -28,6 +28,8 @@ const DetailPostScreen: FC<Props> = () => {
 	const route = useRoute<DetailPostStackRouteProp>();
 	const navigation = useNavigation<DetailPostNavigationProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+	const [currentReplyActiveIndex, setCurrentReplyActiveIndex] = useState(-1);
+	const commentInputRef = useRef<TextInput>(null);
 
 	const {
 		avatarUrl = '',
@@ -54,6 +56,24 @@ const DetailPostScreen: FC<Props> = () => {
 	const onSearchPress = () => {
 		setIsSearchModalVisible(true);
 	};
+
+	const onReplyPress = useCallback(
+		(index: number) => {
+			commentInputRef.current && commentInputRef.current?.focus();
+			setCurrentReplyActiveIndex(index);
+		},
+		[commentInputRef.current],
+	);
+
+	useEffect(() => {
+		autoFocus && commentInputRef.current && commentInputRef.current?.focus();
+	}, [autoFocus, commentInputRef.current]);
+
+	useEffect(() => {
+		if (!commentInputRef.current?.isFocused && currentReplyActiveIndex !== -1) {
+			setCurrentReplyActiveIndex(-1);
+		}
+	}, [currentReplyActiveIndex, commentInputRef.current?.isFocused]);
 
 	return (
 		<View style={styles.mainContainer}>
@@ -87,15 +107,18 @@ const DetailPostScreen: FC<Props> = () => {
 				ListFooterComponent={
 					<View style={styles.commentInputContainer}>
 						<CommentInput
+							commentInputRef={commentInputRef}
 							autoFocus={autoFocus}
 							containerStyle={styles.commentInput}
 						/>
 					</View>
 				}
 				data={replies}
-				renderItem={({ item }) => (
+				renderItem={({ item, index }) => (
 					<View style={styles.replyContainer}>
 						<Reply
+							isActive={currentReplyActiveIndex === index}
+							onReplyPress={() => onReplyPress(index)}
 							avatarUrl={item.avatarUrl}
 							name={item.name}
 							postedTime={item.postedTime}
