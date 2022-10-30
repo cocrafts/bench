@@ -8,9 +8,9 @@ const template = readFileSync('./tool/automation.tf').toString('utf-8');
 
 const generatedScript = render(template, {
 	gitBranch,
-	id: `metacraft-craft-${gitBranch}`,
+	id: `metacraft-bench-${gitBranch}`,
 	region: 'ap-northeast-1',
-	alias: isProduction ? 'craft.stormgate.io' : 'dev-craft.stormgate.io',
+	alias: isProduction ? 'bench.stormgate.io' : 'bench-dev.stormgate.io',
 	sslArn:
 		'arn:aws:acm:us-east-1:984261700405:certificate/2fc55c46-3c09-4d58-a754-56583bc42053',
 });

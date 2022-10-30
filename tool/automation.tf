@@ -22,7 +22,7 @@ provider "aws" {
 }
 
 locals {
-  originId = "metacraft-craft-s3"
+  originId = "metacraft-bench-s3"
 }
 
 resource "aws_s3_bucket" "app" {
