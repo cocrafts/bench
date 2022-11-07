@@ -1,73 +1,64 @@
 import React, { FC } from 'react';
 import {
 	Image,
-	ImageStyle,
 	StyleSheet,
 	Text,
-	TextStyle,
 	TouchableOpacity,
 	ViewStyle,
 } from 'react-native';
 
 interface Props {
-	uri: string;
-	userName?: string;
-	size: number;
+	style?: ViewStyle;
+	imageUri?: string;
+	characters?: string;
+	size?: number;
 	onPress?: () => void;
 }
 
-export const Avatar: FC<Props> = ({
-	uri,
-	userName = '',
-	size = 22,
-	onPress,
-}) => {
-	const imageStyle: ImageStyle = {
-		width: size,
-		height: size,
-		borderRadius: size / 2,
-	};
-
-	const containerStyle: ViewStyle = {
-		width: size,
-		height: size,
-		borderRadius: size / 2,
-	};
-
-	const textStyle: TextStyle = {
-		fontSize: (size * 12) / 22,
-		fontWeight: '400',
-	};
-
-	if (uri) {
-		return (
-			<Image
-				style={imageStyle}
-				source={{
-					uri: uri,
-				}}
-			/>
-		);
-	} else if (userName) {
-		return (
-			<TouchableOpacity
-				onPress={onPress}
-				style={[containerStyle, styles.container]}
-			>
-				<Text style={textStyle}>{userName.charAt(0)}</Text>
-			</TouchableOpacity>
-		);
-	} else {
-		return null;
-	}
-};
-
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: '#7FC4BC',
+		backgroundColor: '#555555',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	character: {
+		fontSize: 14,
+		color: '#FFFFFF',
+	},
 });
+
+export const Avatar: FC<Props> = ({
+	style,
+	imageUri,
+	characters,
+	size,
+	onPress,
+}) => {
+	const containerStyle = {
+		width: size,
+		height: size,
+		borderRadius: (size as number) / 2,
+	};
+
+	return (
+		<TouchableOpacity
+			activeOpacity={0.8}
+			style={[styles.container, containerStyle, style]}
+			onPress={onPress}
+		>
+			{imageUri ? (
+				<Image style={containerStyle} source={{ uri: imageUri }} />
+			) : (
+				<Text style={styles.character}>
+					{characters?.substring?.(0, 1) || '?'}
+				</Text>
+			)}
+		</TouchableOpacity>
+	);
+};
+
+Avatar.defaultProps = {
+	size: 32,
+};
 
 export default Avatar;
