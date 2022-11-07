@@ -1,16 +1,12 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import AuthenticationBundle from 'components/AuthenticationBundle';
+import BackIcon from 'components/icons/feather/Back';
+import BellIcon from 'components/icons/feather/Bell';
+import SearchIcon from 'components/icons/feather/Search';
 import { StackParamList } from 'src/stack';
-import { useSnapshot } from 'valtio';
-
-import UserIcon from '../../components/icons/feather/User';
-import { grey } from '../../utils/colors';
-import { appState } from '../../utils/state/app';
-import Avatar from '../Avatar';
-import BackIcon from '../icons/feather/Back';
-import BellIcon from '../icons/feather/Bell';
-import SearchIcon from '../icons/feather/Search';
+import { grey } from 'utils/colors';
 
 const ICON_SIZE = 25;
 
@@ -24,11 +20,9 @@ type DashBoardStackProp = NavigationProp<StackParamList, 'Dashboard'>;
 
 export const ControllerRow: FC<Props> = ({
 	canGoBack = false,
-	onAvatarPress,
 	onSearchPress,
 	bellIconColor = 'white',
 }: Props) => {
-	const { user } = useSnapshot(appState);
 	const navigation = useNavigation<DashBoardStackProp>();
 
 	const goBack = () => navigation.goBack();
@@ -45,7 +39,7 @@ export const ControllerRow: FC<Props> = ({
 			)}
 			<View style={styles.mainContainer}>
 				<TouchableOpacity onPress={onSearchPress}>
-					<SearchIcon size={ICON_SIZE} />{' '}
+					<SearchIcon size={ICON_SIZE} />
 				</TouchableOpacity>
 
 				<TouchableOpacity
@@ -54,17 +48,7 @@ export const ControllerRow: FC<Props> = ({
 				>
 					<BellIcon size={ICON_SIZE} isFilled={true} color={bellIconColor} />
 				</TouchableOpacity>
-				<TouchableOpacity onPress={onAvatarPress} style={styles.iconContainer}>
-					{user ? (
-						<Avatar
-							size={ICON_SIZE}
-							userName={user.name || ''}
-							uri={user.avatarUrl || ''}
-						/>
-					) : (
-						<UserIcon size={ICON_SIZE} color={'white'} isFilled={true} />
-					)}
-				</TouchableOpacity>
+				<AuthenticationBundle />
 			</View>
 		</View>
 	);

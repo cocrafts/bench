@@ -11,6 +11,7 @@ import {
 import { SolflareWalletAdapter } from '@solana/wallet-adapter-solflare';
 import { clusterApiUrl } from '@solana/web3.js';
 import { graphQlClient } from 'utils/graphql';
+import { useAppInit } from 'utils/hook';
 import { appState } from 'utils/state/app';
 import { useSnapshot } from 'valtio';
 
@@ -31,6 +32,10 @@ export const AppContainer: FC = () => {
 			console.log(error);
 		}, []);
 	};
+
+	useAppInit({
+		withProfileFetch: true,
+	});
 
 	return (
 		<ApolloProvider client={graphQlClient}>
