@@ -1,0 +1,275 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+	query: Query
+	mutation: Mutation
+	subscription: Subscription
+}
+
+type Account {
+	address: String!
+	avatarUrl: String
+	email: String
+	githubUrl: String
+	id: String!
+	jwt: String
+	mineral: Float!
+	name: String
+}
+
+type BuildAccount {
+	avatarUrl: String
+	id: String
+	name: String
+}
+
+type BuildActivity {
+	account: BuildAccount
+	description: String
+	detail: BuildDetail
+	id: String!
+	reward: Float
+	timestamp: String!
+	type: String
+}
+
+type BuildDetail {
+	added: [String]
+	history: [String]
+	modified: [String]
+	removed: [String]
+	timestamp: String
+	url: String
+}
+
+type CardDuel {
+	history: [[CardDuelCommand]]
+	id: String
+	setup: CardDuelSetup
+}
+
+type CardDuelAttributes {
+	attack: Int
+	cooldown: Int
+	defense: Int
+	health: Int
+	perTurnHero: Int
+	perTurnTroop: Int
+	turn: Int
+}
+
+type CardDuelCommand {
+	from: CardDuelIdentifier
+	owner: String
+	payload: CardDuelAttributes
+	side: Int
+	target: CardDuelIdentifier
+	type: Int
+}
+
+type CardDuelHistory {
+	duel: CardDuel!
+	id: String
+	opponent: Profile
+	timestamp: String!
+	victory: Boolean
+}
+
+type CardDuelIdentifier {
+	id: String
+	owner: String
+	place: Int
+	position: String
+}
+
+type CardDuelSetting {
+	groundSize: Int
+	handSize: Int
+	maxAttachment: Int
+	perTurnHero: Int
+	perTurnTroop: Int
+}
+
+type CardDuelSetup {
+	deck: [[String]]
+	firstMover: String!
+	player: [String]
+	setting: CardDuelSetting!
+	version: String!
+}
+
+type Comment {
+	body: String
+	upCount: Int
+}
+
+type GameInvitation {
+	game: String!
+	id: String!
+	opponent: Profile!
+	owner: Profile!
+	timestamp: String!
+}
+
+type GameSubscription {
+	email: String!
+	game: MetacraftGames
+	timestamp: String!
+}
+
+type Mutation {
+	acceptGame(invitationId: String!): Boolean
+	archiveThread(id: String): Boolean
+	claimTokenFromOrder(orderId: String!, signature: String!): TokenOrder
+	confirmTokenOrder(input: ConfirmTokenOrderInput): TokenOrder
+	connectGitHub(code: String!): Account
+	createThread(input: CreateThreadInput!): Thread
+	createTokenOrder(input: CreateTokenOrderInput): TokenOrder
+	editThread(input: EditThreadInput!): Thread
+	emailConfirmedOrder(input: EmailConfirmedOrderInput): TokenOrder
+	increaseCounter(amount: Float): Float
+	inviteGame(input: InviteGameInput!): GameInvitation
+	registerTokenOrderNonce(orderId: String!): String
+	subscribeGame(input: SubscribeGameInput): GameSubscription
+}
+
+type Profile {
+	address: String!
+	avatarUrl: String
+	email: String
+	githubId: String
+	githubUrl: String
+	id: String!
+	isOnline: Boolean
+	jwt: String
+	linkedId: String
+	mineral: Float!
+	name: String
+}
+
+type Query {
+	account(address: String): Account
+	buddies: [Profile]
+	buildActivities: [BuildActivity]
+	cardDuel(id: String!): CardDuel
+	cardDuelHistory(limit: Int): [CardDuelHistory]
+	cardDuelPlaying: CardDuelHistory
+	counter: Float
+	feedThreads: [Thread]
+	findThreads(keyword: String!): [Thread]
+	gameInvitations: [GameInvitation]
+	greeting: String
+	personalBuildActivities(address: String): [BuildActivity]
+	personalThreads(id: String): [Thread]
+	profile(address: String): Profile
+	tokenOrders: [TokenOrder]
+}
+
+type Subscription {
+	counterIncreased: Float
+	gameInvitation(opponent: String!): GameInvitation
+}
+
+type Thread {
+	body: String
+	comments: [Comment]
+	histories: [ThreadHistory]
+	id: String
+	owner: Profile
+	timestamp: String
+	title: String
+	upCount: Int
+	updatedAt: String
+}
+
+type ThreadHistory {
+	body: String
+	id: String
+	timestamp: String
+	title: String
+}
+
+type TokenOrder {
+	id: String
+	investAmount: Float!
+	investCurrency: SupportedCurrencies!
+	investUsdRatio: Float!
+	mineralAmount: Float!
+	mineralUnitPrice: Float!
+	nonce: String
+	nonceTime: String
+	owner: Profile
+	pendingUnlocks: [TokenUnlock]
+	round: String
+	status: OrderStatuses!
+	timestamp: String!
+	unlockAmount: Float
+	unlockCount: Int
+}
+
+type TokenUnlock {
+	amount: Float!
+	id: String
+	percentage: Float!
+	round: String
+	total: Float!
+	unlockOrder: Int
+}
+
+enum MetacraftGames {
+	CARD
+}
+
+enum OrderStatuses {
+	CANCELLED
+	INITIATED
+	PAID
+}
+
+enum SupportedCurrencies {
+	SOL
+	USDC
+	USDT
+}
+
+input ConfirmTokenOrderInput {
+	orderId: String!
+	signature: String!
+}
+
+input CreateThreadInput {
+	body: String!
+	title: String
+}
+
+input CreateTokenOrderInput {
+	investAmount: Float
+	investCurrency: SupportedCurrencies
+}
+
+input EditThreadInput {
+	body: String
+	id: String
+	title: String
+}
+
+input EmailConfirmedOrderInput {
+	email: String!
+	name: String
+	order: String
+}
+
+input InviteGameInput {
+	game: MetacraftGames!
+	opponent: String!
+}
+
+input LoginInput {
+	publicKey: String!
+	signature: String!
+}
+
+input SubscribeGameInput {
+	email: String!
+	game: MetacraftGames
+}
