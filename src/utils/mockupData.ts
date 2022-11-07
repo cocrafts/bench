@@ -1,4 +1,4 @@
-import { Profile } from '../utils/types/graphql';
+import { Profile } from 'utils/types';
 
 import { Thread } from './types/thread';
 import { Notification } from './types';
@@ -445,7 +445,7 @@ export const threads: Array<Thread> = [
 		nbLikes: 1200,
 		nbComments: 163,
 		postedTime: '2022-09-01T10:17:28.593Z',
-		id: '3',
+		id: '9',
 		isPinned: false,
 		isFollowed: true,
 		isLiked: true,
@@ -476,7 +476,7 @@ export const threads: Array<Thread> = [
 		nbLikes: 1200,
 		nbComments: 163,
 		postedTime: '2022-09-01T10:17:28.593Z',
-		id: '4',
+		id: '10',
 		isPinned: false,
 		isFollowed: true,
 		isLiked: true,
@@ -507,7 +507,7 @@ export const threads: Array<Thread> = [
 		nbLikes: 1200,
 		nbComments: 163,
 		postedTime: '2022-09-01T10:17:28.593Z',
-		id: '5',
+		id: '11',
 		isPinned: true,
 		isFollowed: true,
 		isLiked: true,
@@ -539,7 +539,7 @@ export const threads: Array<Thread> = [
 		nbLikes: 13,
 		nbComments: 12,
 		postedTime: '2022-08-28T10:17:28.593Z',
-		id: '6',
+		id: '12',
 		isPinned: false,
 		isFollowed: false,
 		isLiked: false,
@@ -571,7 +571,7 @@ export const threads: Array<Thread> = [
 		nbLikes: 1200,
 		nbComments: 163,
 		postedTime: '2022-09-01T10:17:28.593Z',
-		id: '7',
+		id: '13',
 		isPinned: false,
 		isFollowed: true,
 		isLiked: true,
@@ -602,7 +602,7 @@ export const threads: Array<Thread> = [
 		nbLikes: 1200,
 		nbComments: 163,
 		postedTime: '2022-09-01T10:17:28.593Z',
-		id: '8',
+		id: '14',
 		isPinned: false,
 		isFollowed: true,
 		isLiked: true,
@@ -729,7 +729,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '1',
+		id: '13',
 		avatarUrl: 'https://game8.vn/media/202101/images/4(8).jpg',
 		name: 'Shinichi',
 		content: 'commented on your post',
@@ -737,7 +737,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '2',
+		id: '14',
 		avatarUrl:
 			'https://static.game24h.vn/upload/2016/2016-4/2016-11-03/songoku.png',
 		name: 'Goku',
@@ -746,7 +746,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: true,
 	},
 	{
-		id: '3',
+		id: '15',
 		avatarUrl: 'https://avatars.githubusercontent.com/u/11600914?v=4',
 		name: 'Son Le',
 		content: 'replied to your comment',
@@ -754,7 +754,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '4',
+		id: '16',
 		avatarUrl: 'https://game8.vn/media/202101/images/4(8).jpg',
 		name: 'Shinichi',
 		content: 'commented on your post',
@@ -762,7 +762,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '5',
+		id: '17',
 		avatarUrl:
 			'https://static.game24h.vn/upload/2016/2016-4/2016-11-03/songoku.png',
 		name: 'Goku',
@@ -771,7 +771,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: true,
 	},
 	{
-		id: '6',
+		id: '18',
 		avatarUrl: 'https://avatars.githubusercontent.com/u/11600914?v=4',
 		name: 'Son Le',
 		content: 'replied to your comment',
@@ -779,7 +779,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '7',
+		id: '19',
 		avatarUrl: 'https://game8.vn/media/202101/images/4(8).jpg',
 		name: 'Shinichi',
 		content: 'commented on your post',
@@ -787,7 +787,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '8',
+		id: '20',
 		avatarUrl:
 			'https://static.game24h.vn/upload/2016/2016-4/2016-11-03/songoku.png',
 		name: 'Goku',
@@ -796,7 +796,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: true,
 	},
 	{
-		id: '9',
+		id: '21',
 		avatarUrl: 'https://avatars.githubusercontent.com/u/11600914?v=4',
 		name: 'Son Le',
 		content: 'replied to your comment',
@@ -804,7 +804,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '10',
+		id: '22',
 		avatarUrl: 'https://game8.vn/media/202101/images/4(8).jpg',
 		name: 'Shinichi',
 		content: 'commented on your post',
@@ -812,7 +812,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: false,
 	},
 	{
-		id: '11',
+		id: '23',
 		avatarUrl:
 			'https://static.game24h.vn/upload/2016/2016-4/2016-11-03/songoku.png',
 		name: 'Goku',
@@ -821,7 +821,7 @@ export const mockupNotifications: Array<Notification> = [
 		isRead: true,
 	},
 	{
-		id: '12',
+		id: '24',
 		avatarUrl: 'https://avatars.githubusercontent.com/u/11600914?v=4',
 		name: 'Son Le',
 		content: 'replied to your comment',
