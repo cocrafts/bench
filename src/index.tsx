@@ -12,6 +12,7 @@ import { SolflareWalletAdapter } from '@solana/wallet-adapter-solflare';
 import { clusterApiUrl } from '@solana/web3.js';
 import { graphQlClient } from 'utils/graphql';
 import { useAppInit } from 'utils/hook';
+import { stateActions } from 'utils/state';
 import { appState } from 'utils/state/app';
 import { useSnapshot } from 'valtio';
 
@@ -35,6 +36,9 @@ export const AppContainer: FC = () => {
 
 	useAppInit({
 		withProfileFetch: true,
+		onSignOut: () => {
+			stateActions.clearAll();
+		},
 	});
 
 	return (
