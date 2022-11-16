@@ -19,7 +19,7 @@ const UserInfo: FC<Props> = ({
 }: Props) => {
 	return (
 		<View style={styles.container}>
-			<Avatar uri={avatarUrl} size={25} userName={name} />
+			<Avatar imageUri={avatarUrl} size={25} characters={name} />
 			<View style={styles.nameTimeContainer}>
 				<Text style={styles.name}>{name}</Text>
 				<DateDifferenceText

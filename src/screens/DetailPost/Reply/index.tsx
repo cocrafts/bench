@@ -35,7 +35,7 @@ const Reply: FC<Props> = ({
 				<View style={styles.originalReplyContainer}>
 					<View style={styles.directionContainer} />
 					<View style={styles.originalShortReplyContainer}>
-						<Avatar uri={originReply.avatarUrl} size={16} />
+						<Avatar imageUri={originReply.avatarUrl} size={16} />
 						<Text style={styles.nameText}>{originReply.name}</Text>
 						<View style={styles.originalReplyContentContainer}>
 							<Text numberOfLines={1} style={styles.originalReplyContent}>
