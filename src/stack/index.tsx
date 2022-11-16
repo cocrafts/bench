@@ -2,12 +2,12 @@ import React, { FC, useCallback } from 'react';
 import { fantasyTheme, themeActions } from '@metacraft/ui';
 import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Comment } from 'utils/types';
 
 import DashboardScreen from '../screens/Dashboard';
 import DetailPostScreen from '../screens/DetailPost';
 import NotificationScreen from '../screens/Notification';
 import SignInScreen from '../screens/SignIn';
-import { Reply } from '../utils/types/thread';
 
 import { screenOptions } from './shared';
 
@@ -23,7 +23,7 @@ export type StackParamList = {
 		isPinned: boolean;
 		isFollowed: boolean;
 		isLiked: boolean;
-		replies?: Array<Reply>;
+		comments?: Array<Comment>;
 		autoFocus?: boolean;
 	};
 	SignIn: undefined;

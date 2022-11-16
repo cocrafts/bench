@@ -1,41 +1,30 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
-import Avatar from 'components/Avatar';
+import { Comment } from 'utils/types';
 
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
-import UserInfo from '../../../components/UserInfo';
 import { grey, midnightDream, yellow } from '../../../utils/colors';
-import { Reply as ReplyType } from '../../../utils/types/thread';
+
+// temporaly hiding
+// import Avatar from 'components/Avatar';
+// import UserInfo from '../../../components/UserInfo';
 
 interface Props {
-	name: string;
-	avatarUrl: string;
-	postedTime: string;
-	thread: string;
-	nbLikes: number;
-	originReply?: ReplyType;
+	item: Comment;
 	onReplyPress: () => void;
 	isActive: boolean;
 }
 
-const Reply: FC<Props> = ({
-	avatarUrl = '',
-	name = '',
-	postedTime = '',
-	thread = '',
-	nbLikes = 0,
-	originReply,
-	onReplyPress,
-	isActive = false,
-}: Props) => {
+const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
+	const { body, upCount } = item;
 	return (
 		<View style={styles.container}>
-			{originReply && (
+			{/* {originReply && (
 				<View style={styles.originalReplyContainer}>
 					<View style={styles.directionContainer} />
 					<View style={styles.originalShortReplyContainer}>
-						<Avatar uri={originReply.avatarUrl} size={16} />
+						<Avatar imageUri={originReply.avatarUrl} size={16} />
 						<Text style={styles.nameText}>{originReply.name}</Text>
 						<View style={styles.originalReplyContentContainer}>
 							<Text numberOfLines={1} style={styles.originalReplyContent}>
@@ -44,20 +33,20 @@ const Reply: FC<Props> = ({
 						</View>
 					</View>
 				</View>
-			)}
+			)} */}
 			<View
 				style={[styles.mainReplyContainer, isActive && styles.activeBorder]}
 			>
-				<UserInfo
+				{/* <UserInfo
 					avatarUrl={avatarUrl}
 					name={name}
 					postedTime={new Date(postedTime)}
-				/>
+				/> */}
 				<View style={styles.textContainer}>
-					<Text style={styles.text}>{thread}</Text>
+					<Text style={styles.text}>{body}</Text>
 				</View>
 				<View style={styles.socialContainer}>
-					<ThumbsUpNumber number={nbLikes} />
+					{upCount && <ThumbsUpNumber number={upCount} />}
 					<TouchableOpacity onPress={onReplyPress}>
 						<Text style={styles.replyText}>Reply</Text>
 					</TouchableOpacity>

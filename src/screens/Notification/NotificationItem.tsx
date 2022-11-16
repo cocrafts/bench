@@ -24,7 +24,7 @@ const NotificationItem: FC<Props> = ({
 		<View
 			style={[styles.container, isRead && { backgroundColor: 'transparent' }]}
 		>
-			<Avatar size={25} uri={avatarUrl} />
+			<Avatar size={25} imageUri={avatarUrl} />
 			<Text numberOfLines={2} style={styles.contentContainer}>
 				<Text style={styles.name}>{name}</Text>
 				<Text style={styles.content}>{` ${content}`}</Text>
