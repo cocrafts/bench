@@ -41,7 +41,7 @@ const DetailPostScreen: FC<Props> = () => {
 		isPinned = false,
 		isFollowed = false,
 		isLiked = false,
-		replies = [],
+		comments = [],
 		autoFocus = false,
 	} = route.params;
 
@@ -113,18 +113,13 @@ const DetailPostScreen: FC<Props> = () => {
 						/>
 					</View>
 				}
-				data={replies}
+				data={comments}
 				renderItem={({ item, index }) => (
 					<View style={styles.replyContainer}>
 						<Reply
 							isActive={currentReplyActiveIndex === index}
 							onReplyPress={() => onReplyPress(index)}
-							avatarUrl={item.avatarUrl}
-							name={item.name}
-							postedTime={item.postedTime}
-							thread={item.content}
-							nbLikes={item.nbLikes || 0}
-							originReply={item.originReply}
+							item={item}
 						/>
 					</View>
 				)}
