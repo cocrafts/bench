@@ -7,9 +7,11 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
+import { useQuery } from '@apollo/client';
 import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import SearchModal from 'components/SearchModal';
+import { feedThreads } from 'utils/graphql/query';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
@@ -58,6 +60,8 @@ export const BuildDashboard: FC = () => {
 		setIsSearchModalVisible(false);
 	};
 
+	const { data } = useQuery(feedThreads);
+
 	return (
 		<View style={styles.mainContainer}>
 			<FlatList
@@ -93,21 +97,8 @@ export const BuildDashboard: FC = () => {
 					</View>
 				}
 				ListFooterComponent={<View style={styles.footer} />}
-				data={simpleThreads}
-				renderItem={({ item }) => (
-					<Post
-						avatarUrl={item.avatarUrl}
-						name={item.name}
-						postedTime={item.postedTime}
-						thread={item.thread}
-						nbLikes={item.nbLikes}
-						nbComments={item.nbComments}
-						isPinned={item.isPinned}
-						isFollowed={item.isFollowed}
-						isLiked={item.isLiked}
-						replies={item.replies}
-					/>
-				)}
+				data={data?.feedThreads}
+				renderItem={({ item }) => <Post item={item} />}
 				keyExtractor={(item) => item.id}
 			/>
 		</View>
