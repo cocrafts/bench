@@ -6,23 +6,24 @@ import { grey } from 'utils/colors';
 import ThumbsUpNumber from '../../../components/ThumbsUpNumber';
 
 interface Props {
-	nbLikes: number;
-	nbComments: number;
-	isLiked: boolean;
+	upCount?: number;
+	commentCount?: number;
+	isUpVoted?: boolean;
 }
 
 const SocialRow: FC<Props> = ({
-	nbLikes = 0,
-	nbComments = 0,
-	isLiked = false,
+	upCount = 0,
+	commentCount = 0,
+	isUpVoted = false,
 }: Props) => {
+	const commentText =
+		commentCount === 0 || commentCount === 1 ? 'Comment' : 'Comments';
 	return (
 		<View style={styles.container}>
-			<ThumbsUpNumber number={nbLikes} isLiked={isLiked} />
+			<ThumbsUpNumber number={upCount} isLiked={isUpVoted} />
 			<View style={styles.commentNumber}>
 				<Text style={styles.commentNumberText}>
-					{nbComments}{' '}
-					{nbComments === 0 || nbComments === 1 ? 'Comment' : 'Comments'}
+					{commentCount} {commentText}
 				</Text>
 			</View>
 		</View>

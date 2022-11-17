@@ -3,74 +3,44 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackParamList } from 'src/stack';
+import { Thread } from 'utils/types';
 
-import BellIcon from '../../components/icons/feather/Bell';
-import PinIcon from '../../components/icons/feather/Pin';
 import { blueWhale, grey, midnightDream } from '../../utils/colors';
-import { Reply } from '../../utils/types/thread';
 import UserInfo from '../UserInfo';
 
 import SocialRow from './SocialRow';
-
+// temporaly hiding
+// import BellIcon from '../../components/icons/feather/Bell';
+// import PinIcon from '../../components/icons/feather/Pin';
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
 interface Props {
-	avatarUrl: string;
-	name: string;
-	postedTime: string;
-	thread: string;
-	nbLikes: number;
-	nbComments: number;
-	isPinned: boolean;
-	isFollowed: boolean;
-	isLiked: boolean;
+	item: Thread;
 	isShortForm?: boolean;
-	replies?: Array<Reply>;
 	navigation?: DetailPostStackProp;
 }
 
-const Post: FC<Props> = ({
-	avatarUrl = '',
-	name = '',
-	postedTime = '',
-	thread = '',
-	nbLikes = 0,
-	nbComments = 0,
-	isPinned = false,
-	isFollowed = false,
-	isLiked = false,
-	isShortForm = true,
-	replies = [],
-}: Props) => {
+const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	const navigation = useNavigation<DetailPostStackProp>();
+	const { owner, body, timestamp, upCount } = item;
 	const onThreadPress = (autoFocus: boolean) => {
-		navigation.navigate('DetailPost', {
-			avatarUrl,
-			name,
-			postedTime,
-			thread,
-			nbLikes,
-			nbComments,
-			isPinned,
-			isFollowed,
-			isLiked,
-			replies,
-			autoFocus,
-		});
+		navigation.navigate('DetailPost', { item, autoFocus });
 	};
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerRow}>
-				<UserInfo
-					avatarUrl={avatarUrl}
-					name={name}
-					postedTime={new Date(postedTime)}
-				/>
-				<View style={styles.pinAndAlert}>
+				{owner?.avatarUrl && owner.name && timestamp && (
+					<UserInfo
+						avatarUrl={owner?.avatarUrl}
+						name={owner?.name}
+						postedTime={new Date(timestamp)}
+					/>
+				)}
+				{/* <View style={styles.pinAndAlert}>
 					<BellIcon size={15} isFilled={isFollowed} />
 					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />
-				</View>
+				</View> */}
 			</View>
 			<TouchableOpacity
 				disabled={!isShortForm}
@@ -78,14 +48,14 @@ const Post: FC<Props> = ({
 				style={styles.shortenedTextContainer}
 			>
 				<Text numberOfLines={isShortForm ? 3 : 0} style={styles.shortenedText}>
-					{thread}
+					{body}
 				</Text>
 			</TouchableOpacity>
 			<View style={styles.socialRowContainer}>
 				<SocialRow
-					nbLikes={nbLikes}
-					nbComments={nbComments}
-					isLiked={isLiked}
+					upCount={upCount || 0}
+					// commentCount={commentCount}
+					// isUpVoted={isUpVoted}
 				/>
 			</View>
 			{isShortForm && (

@@ -2,7 +2,7 @@ import React, { FC, useCallback } from 'react';
 import { fantasyTheme, themeActions } from '@metacraft/ui';
 import { useFocusEffect } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Comment } from 'utils/types';
+import { Thread } from 'utils/types';
 
 import DashboardScreen from '../screens/Dashboard';
 import DetailPostScreen from '../screens/DetailPost';
@@ -14,16 +14,7 @@ import { screenOptions } from './shared';
 export type StackParamList = {
 	Dashboard: undefined;
 	DetailPost: {
-		avatarUrl: string;
-		name: string;
-		postedTime: string;
-		thread: string;
-		nbLikes: number;
-		nbComments: number;
-		isPinned: boolean;
-		isFollowed: boolean;
-		isLiked: boolean;
-		comments?: Array<Comment>;
+		item: Thread;
 		autoFocus?: boolean;
 	};
 	SignIn: undefined;
