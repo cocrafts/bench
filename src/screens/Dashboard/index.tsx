@@ -11,7 +11,8 @@ import { useQuery } from '@apollo/client';
 import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import SearchModal from 'components/SearchModal';
-import { feedThreads } from 'utils/graphql/query';
+import { createThread } from 'utils/graphql';
+import * as queries from 'utils/graphql/query';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
@@ -31,6 +32,7 @@ export const BuildDashboard: FC = () => {
 	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
 		useState(false);
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+	const { data } = useQuery(queries.feedThreads);
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
 	};
@@ -43,15 +45,10 @@ export const BuildDashboard: FC = () => {
 		setIsQuickThreadModalVisible(false);
 	};
 
-	const onPostPress = () => {
+	const onPostPress = (item: string) => {
+		createThread({ title: 'Good day', body: item });
 		setIsQuickThreadModalVisible(false);
 	};
-
-	useEffect(() => {
-		setTimeout(() => {
-			setSimpleThreads(threads);
-		}, 1000);
-	}, []);
 
 	const onSearchPress = () => {
 		setIsSearchModalVisible(true);
@@ -60,7 +57,11 @@ export const BuildDashboard: FC = () => {
 		setIsSearchModalVisible(false);
 	};
 
-	const { data } = useQuery(feedThreads);
+	useEffect(() => {
+		setTimeout(() => {
+			setSimpleThreads(threads);
+		}, 1000);
+	}, []);
 
 	return (
 		<View style={styles.mainContainer}>

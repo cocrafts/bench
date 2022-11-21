@@ -30,13 +30,11 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	return (
 		<View style={styles.container}>
 			<View style={styles.headerRow}>
-				{owner?.avatarUrl && owner.name && timestamp && (
-					<UserInfo
-						avatarUrl={owner?.avatarUrl}
-						name={owner?.name}
-						postedTime={new Date(timestamp)}
-					/>
-				)}
+				<UserInfo
+					avatarUrl={owner?.avatarUrl || ''}
+					name={owner?.name || owner?.address}
+					postedTime={new Date(timestamp || '')}
+				/>
 				{/* <View style={styles.pinAndAlert}>
 					<BellIcon size={15} isFilled={isFollowed} />
 					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />
