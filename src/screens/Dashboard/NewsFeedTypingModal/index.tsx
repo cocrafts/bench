@@ -9,7 +9,7 @@ import QuickThread from '../QuickThread';
 import ControllerRow from './ControllerRow';
 
 interface Props {
-	onPostPress: () => void;
+	onPostPress: (item: string) => void;
 	onClosePress: () => void;
 }
 
@@ -24,7 +24,7 @@ const NewsFeedTypingModal: FC<Props> = ({
 	return (
 		<View style={styles.container}>
 			<ControllerRow
-				onPostPress={onPostPress}
+				onPostPress={() => onPostPress(value)}
 				onClosePress={onClosePress}
 				isPostDisable={value === ''}
 			/>
