@@ -46,7 +46,13 @@ export const AppContainer: FC = () => {
 			<ConnectionProvider endpoint={endpoint}>
 				<WalletProvider autoConnect wallets={wallets} onError={useError}>
 					<MetacraftProvider>
-						<NavigationContainer theme={theme}>
+						<NavigationContainer
+							theme={theme}
+							documentTitle={{
+								formatter: () =>
+									`Metacraft Bench - A Web3 game builder platform`,
+							}}
+						>
 							<BuildStack />
 						</NavigationContainer>
 					</MetacraftProvider>
