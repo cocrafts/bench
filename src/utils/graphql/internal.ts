@@ -3,7 +3,7 @@ import { setContext } from '@apollo/client/link/context';
 import configs from 'utils/config';
 import { extractJwt } from 'utils/lib';
 
-const uri = !__DEV__
+const uri = __DEV__
 	? 'http://localhost:3005/graphql'
 	: 'https://api.stormgate.io/graphql';
 
