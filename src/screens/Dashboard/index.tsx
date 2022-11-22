@@ -8,11 +8,14 @@ import {
 	View,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
-import { Text } from '@metacraft/ui';
+import { AnimateDirections, modalActions, Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import SignInOptions from 'components/modals/SignInOptions';
 import SearchModal from 'components/SearchModal';
 import { createThread } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
+import { useSnapshot } from 'utils/hook';
+import { accountState } from 'utils/state/account';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
@@ -27,6 +30,7 @@ import NewsFeedTypingModal from './NewsFeedTypingModal';
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
 export const BuildDashboard: FC = () => {
+	const { profile } = useSnapshot(accountState);
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 	const navigation = useNavigation<DetailPostStackProp>();
 	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
@@ -37,8 +41,20 @@ export const BuildDashboard: FC = () => {
 		navigation.navigate('SignIn');
 	};
 
+	const showSignInOptions = () => {
+		modalActions.show({
+			id: 'signInOptions',
+			component: SignInOptions,
+			animateDirection: AnimateDirections.BottomLeft,
+		});
+	};
+
 	const onQuickThreadPress = () => {
-		setIsQuickThreadModalVisible(true);
+		if (profile.id) {
+			setIsQuickThreadModalVisible(true);
+		} else {
+			showSignInOptions();
+		}
 	};
 
 	const onCloseModal = () => {

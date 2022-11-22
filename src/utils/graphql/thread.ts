@@ -1,4 +1,6 @@
+import { accountState } from 'utils/state/account';
 import { Thread } from 'utils/types';
+import { snapshot } from 'valtio';
 
 import { graphQlClient } from './internal';
 import * as mutations from './mutation';
@@ -10,6 +12,8 @@ export const feedThreads = async () =>
 	});
 
 export const createThread = async (item: Thread) => {
+	const { profile } = snapshot(accountState);
+	const { avatarUrl, address, id, name } = profile;
 	const { title, body } = item;
 	const time = new Date().toISOString();
 
@@ -41,10 +45,10 @@ export const createThread = async (item: Thread) => {
 				title,
 				body,
 				owner: {
-					avatarUrl: null,
-					address: '9E5khVvUyyuny6MNL7C7aMbMTMUBwC27dr9WC947Di68',
-					name: 'FME849',
-					id: null,
+					avatarUrl,
+					address,
+					name,
+					id,
 				},
 				timestamp: time,
 				comments: [],
