@@ -36,11 +36,7 @@ export const Balance: FC<Props> = ({ profile }) => {
 				style={styles.commandContainer}
 				onPress={() => appActions.setPrivacy(!privacy)}
 			>
-				{privacy ? (
-					<EyeIcon size={20} style={{ marginTop: 10 }} />
-				) : (
-					<EyeClosedIcon size={20} />
-				)}
+				{privacy ? <EyeIcon size={20} /> : <EyeClosedIcon size={20} />}
 			</TouchableOpacity>
 		</View>
 	);
