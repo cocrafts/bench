@@ -28,10 +28,16 @@ export const SignIn: FC = () => {
 				<Button
 					style={styles.fantasyButton}
 					title="Sign In"
+					titleStyle={styles.buttonTitle}
 					onPress={showSignInOptions}
 				/>
 			) : (
-				<Button outline title="Sign In" onPress={showSignInOptions} />
+				<Button
+					outline
+					title="Sign In"
+					titleStyle={styles.buttonTitle}
+					onPress={showSignInOptions}
+				/>
 			)}
 		</View>
 	);
@@ -42,7 +48,13 @@ export default SignIn;
 const styles = StyleSheet.create({
 	container: {},
 	fantasyButton: {
+		borderRadius: 10,
 		paddingVertical: 8,
 		paddingHorizontal: 24,
+		backgroundColor: '#002f40',
+	},
+	buttonTitle: {
+		paddingHorizontal: 0,
+		paddingVertical: 0,
 	},
 });

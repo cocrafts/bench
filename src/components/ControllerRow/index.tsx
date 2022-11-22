@@ -38,7 +38,7 @@ export const ControllerRow: FC<Props> = ({
 				<View />
 			)}
 			<View style={styles.mainContainer}>
-				<TouchableOpacity onPress={onSearchPress}>
+				{/* <TouchableOpacity onPress={onSearchPress}>
 					<SearchIcon size={ICON_SIZE} />
 				</TouchableOpacity>
 
@@ -47,8 +47,10 @@ export const ControllerRow: FC<Props> = ({
 					style={styles.iconContainer}
 				>
 					<BellIcon size={ICON_SIZE} isFilled={true} color={bellIconColor} />
-				</TouchableOpacity>
-				<AuthenticationBundle />
+				</TouchableOpacity> */}
+				<View style={styles.authBundleContainer}>
+					<AuthenticationBundle />
+				</View>
 			</View>
 		</View>
 	);
@@ -65,9 +67,12 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		justifyContent: 'space-between',
-		height: 45,
+		height: 40,
 	},
 	iconContainer: {
-		marginLeft: 13,
+		marginLeft: 15,
+	},
+	authBundleContainer: {
+		marginLeft: 15,
 	},
 });

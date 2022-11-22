@@ -13,7 +13,7 @@ interface Props {
 	onClosePress: () => void;
 }
 
-const MAX_CHARACTER_SIZE = 100;
+const MAX_CHARACTER_SIZE = 2000;
 
 const NewsFeedTypingModal: FC<Props> = ({
 	onPostPress,

@@ -9,7 +9,6 @@ import SignIn from './SignIn';
 const commandSize = 32;
 const styles = StyleSheet.create({
 	container: {
-		marginRight: 18,
 		justifyContent: 'center',
 	},
 	loadingContainer: {

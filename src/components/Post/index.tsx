@@ -49,21 +49,21 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					{body}
 				</Text>
 			</TouchableOpacity>
-			<View style={styles.socialRowContainer}>
+			{/* <View style={styles.socialRowContainer}>
 				<SocialRow
 					upCount={upCount || 0}
-					// commentCount={commentCount}
-					// isUpVoted={isUpVoted}
+					commentCount={commentCount}
+					isUpVoted={isUpVoted}
 				/>
-			</View>
-			{isShortForm && (
+			</View> */}
+			{/* {isShortForm && (
 				<TouchableOpacity
 					onPress={() => onThreadPress(true)}
 					style={styles.commentInputContainer}
 				>
 					<Text style={styles.placeholder}>Write your comment</Text>
 				</TouchableOpacity>
-			)}
+			)} */}
 		</View>
 	);
 };

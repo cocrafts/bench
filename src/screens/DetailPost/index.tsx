@@ -91,11 +91,11 @@ const DetailPostScreen: FC<Props> = () => {
 				}
 				ListFooterComponent={
 					<View style={styles.commentInputContainer}>
-						<CommentInput
+						{/* <CommentInput
 							commentInputRef={commentInputRef}
 							autoFocus={autoFocus}
 							containerStyle={styles.commentInput}
-						/>
+						/> */}
 					</View>
 				}
 				data={comments}
