@@ -3783,13 +3783,12 @@
   resolved "https://registry.yarnpkg.com/@metacraft/tsconfig/-/tsconfig-0.0.10.tgz#a7e3e7c26807acca0eea8607a5f32e9168fa74cf"
   integrity sha512-BG2ZreVA46ZTrTLVlYLw4CgnU4uAULDy5Y24czkgyerNqLOja8EruCmK5Aoio5YADvio6i49AGHVRtjKH3093Q==
 
-"@metacraft/ui@^0.0.45":
-  version "0.0.45"
-  resolved "https://registry.yarnpkg.com/@metacraft/ui/-/ui-0.0.45.tgz#3ac742b1b9220498e909b72ef0196d71bb33f07b"
-  integrity sha512-WtqE1pj6KKH58Dih0Gg/bzYlD9jBC4+hpN1s/IPunwNhRAi1xPG8qCbOyBTxIU6tV6F3L+dFHurhUDnSnO5nSA==
+"@metacraft/ui@^0.0.58":
+  version "0.0.58"
+  resolved "https://registry.yarnpkg.com/@metacraft/ui/-/ui-0.0.58.tgz#fc36d5fb416be8796be1ecd7ef739f431b61ba4c"
+  integrity sha512-nu/MUfci6qLleXfcLsVNlmWBgpRrJI0+LEgkbEgzw0ZYccTE6ItAnZRxtmFPlDwKXRSgJp/mxeUnCJTOdpL2Kg==
   dependencies:
     color2k "^2.0.0"
-    react-native-reanimated "^2.9.1"
     simple-markdown "^0.7.3"
 
 "@noble/ed25519@^1.7.0":

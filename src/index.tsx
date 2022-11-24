@@ -14,6 +14,7 @@ import { graphQlClient } from 'utils/graphql';
 import { useAppInit } from 'utils/hook';
 import { stateActions } from 'utils/state';
 import { appState } from 'utils/state/app';
+import { benchTheme } from 'utils/styles';
 import { useSnapshot } from 'valtio';
 
 import BuildStack from './stack';
@@ -45,7 +46,7 @@ export const AppContainer: FC = () => {
 		<ApolloProvider client={graphQlClient}>
 			<ConnectionProvider endpoint={endpoint}>
 				<WalletProvider autoConnect wallets={wallets} onError={useError}>
-					<MetacraftProvider>
+					<MetacraftProvider theme={benchTheme}>
 						<NavigationContainer
 							theme={theme}
 							documentTitle={{
