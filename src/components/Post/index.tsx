@@ -52,7 +52,9 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 				<Text numberOfLines={2} style={styles.headingText}>
 					{title}
 				</Text>
-				{markdownContent && <Markdown content={markdownContent} />}
+				{markdownContent && (
+					<Markdown content={markdownContent} configs={{ fontSize: 14 }} />
+				)}
 			</View>
 			{/* <View style={styles.socialRowContainer}>
 				<SocialRow
