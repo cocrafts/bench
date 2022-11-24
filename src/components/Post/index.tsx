@@ -1,15 +1,16 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from '@metacraft/ui';
+import { dimensionState, Markdown, Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackParamList } from 'src/stack';
+import { useSnapshot } from 'utils/hook';
 import { Thread } from 'utils/types';
 
 import { blueWhale, grey, midnightDream } from '../../utils/colors';
 import UserInfo from '../UserInfo';
 
-import SocialRow from './SocialRow';
 // temporaly hiding
+// import SocialRow from './SocialRow';
 // import BellIcon from '../../components/icons/feather/Bell';
 // import PinIcon from '../../components/icons/feather/Pin';
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
@@ -22,13 +23,20 @@ interface Props {
 
 const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	const navigation = useNavigation<DetailPostStackProp>();
-	const { owner, body, timestamp, upCount } = item;
+	const { owner, title, body, timestamp } = item;
+	const { responsiveLevel } = useSnapshot(dimensionState);
+	const nbContentCharacterDisplay = [100, 100, 100, 30][responsiveLevel];
+	const shortenedBody = `${body?.slice(0, nbContentCharacterDisplay)}...`;
+	const markdownContent = isShortForm ? shortenedBody : body;
 	const onThreadPress = (autoFocus: boolean) => {
 		navigation.navigate('DetailPost', { item, autoFocus });
 	};
 
 	return (
-		<View style={styles.container}>
+		<TouchableOpacity
+			style={styles.container}
+			onPress={() => onThreadPress(false)}
+		>
 			<View style={styles.headerRow}>
 				<UserInfo
 					avatarUrl={owner?.avatarUrl || ''}
@@ -40,23 +48,22 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />
 				</View> */}
 			</View>
-			<TouchableOpacity
-				disabled={!isShortForm}
-				onPress={() => onThreadPress(false)}
-				style={styles.shortenedTextContainer}
-			>
-				<Text numberOfLines={isShortForm ? 3 : 0} style={styles.shortenedText}>
-					{body}
+			<View style={styles.shortenedTextContainer}>
+				<Text numberOfLines={2} style={styles.headingText}>
+					{title}
 				</Text>
-			</TouchableOpacity>
+				{markdownContent && (
+					<Markdown content={markdownContent} configs={{ fontSize: 14 }} />
+				)}
+			</View>
 			{/* <View style={styles.socialRowContainer}>
 				<SocialRow
 					upCount={upCount || 0}
 					commentCount={commentCount}
 					isUpVoted={isUpVoted}
 				/>
-			</View> */}
-			{/* {isShortForm && (
+			</View>
+			{isShortForm && (
 				<TouchableOpacity
 					onPress={() => onThreadPress(true)}
 					style={styles.commentInputContainer}
@@ -64,7 +71,7 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					<Text style={styles.placeholder}>Write your comment</Text>
 				</TouchableOpacity>
 			)} */}
-		</View>
+		</TouchableOpacity>
 	);
 };
 
@@ -108,11 +115,14 @@ const styles = StyleSheet.create({
 		backgroundColor: blueWhale,
 		borderRadius: 6,
 	},
-	shortenedText: {
+	headingText: {
+		marginBottom: 5,
 		fontSize: 16,
-		fontWeight: '400',
+		fontWeight: '600',
+		color: '#fff',
+	},
+	shortenedText: {
 		color: 'white',
-		lineHeight: 24,
 	},
 	socialRowContainer: {
 		marginTop: 8,

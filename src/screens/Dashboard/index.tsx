@@ -16,6 +16,7 @@ import { createThread } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
+import { CreateThreadInput } from 'utils/types';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
@@ -61,8 +62,8 @@ export const BuildDashboard: FC = () => {
 		setIsQuickThreadModalVisible(false);
 	};
 
-	const onPostPress = (item: string) => {
-		createThread({ title: 'Good day', body: item });
+	const onPostPress = (item: CreateThreadInput) => {
+		createThread(item);
 		setIsQuickThreadModalVisible(false);
 	};
 
