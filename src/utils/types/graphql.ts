@@ -120,12 +120,31 @@ export type CardDuelSetup = {
 export type Comment = {
 	__typename?: 'Comment';
 	body?: Maybe<Scalars['String']>;
+	histories?: Maybe<Array<Maybe<CommentHistory>>>;
+	id?: Maybe<Scalars['String']>;
+	owner?: Maybe<Profile>;
+	timestamp?: Maybe<Scalars['String']>;
 	upCount?: Maybe<Scalars['Int']>;
+	updatedAt?: Maybe<Scalars['String']>;
+};
+
+export type CommentHistory = {
+	__typename?: 'CommentHistory';
+	body?: Maybe<Scalars['String']>;
+	id?: Maybe<Scalars['String']>;
+	timestamp?: Maybe<Scalars['String']>;
 };
 
 export type ConfirmTokenOrderInput = {
 	orderId: Scalars['String'];
 	signature: Scalars['String'];
+};
+
+export type CreateCommentInput = {
+	body: Scalars['String'];
+	id?: InputMaybe<Scalars['String']>;
+	parentId: Scalars['String'];
+	replyId?: InputMaybe<Scalars['String']>;
 };
 
 export type CreateThreadInput = {
@@ -136,6 +155,11 @@ export type CreateThreadInput = {
 export type CreateTokenOrderInput = {
 	investAmount?: InputMaybe<Scalars['Float']>;
 	investCurrency?: InputMaybe<SupportedCurrencies>;
+};
+
+export type EditCommentInput = {
+	body: Scalars['String'];
+	id: Scalars['String'];
 };
 
 export type EditThreadInput = {
@@ -183,22 +207,34 @@ export enum MetacraftGames {
 export type Mutation = {
 	__typename?: 'Mutation';
 	acceptGame?: Maybe<Scalars['Boolean']>;
+	archiveThread?: Maybe<Scalars['Boolean']>;
 	claimTokenFromOrder?: Maybe<TokenOrder>;
 	confirmTokenOrder?: Maybe<TokenOrder>;
+	/** Connect User's profile to Github, so their contribute in Github could be tracked */
 	connectGitHub?: Maybe<Account>;
+	createComment?: Maybe<Comment>;
 	createThread?: Maybe<Thread>;
 	createTokenOrder?: Maybe<TokenOrder>;
+	deleteComment?: Maybe<Scalars['Boolean']>;
+	editComment?: Maybe<Comment>;
 	editThread?: Maybe<Thread>;
 	emailConfirmedOrder?: Maybe<TokenOrder>;
 	increaseCounter?: Maybe<Scalars['Float']>;
 	inviteGame?: Maybe<GameInvitation>;
 	registerTokenOrderNonce?: Maybe<Scalars['String']>;
 	subscribeGame?: Maybe<GameSubscription>;
+	/** Up vote any Entity, could be Thread, Comment now.. and more to come */
+	upVote?: Maybe<Scalars['Boolean']>;
 };
 
 
 export type MutationAcceptGameArgs = {
 	invitationId: Scalars['String'];
+};
+
+
+export type MutationArchiveThreadArgs = {
+	id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -218,6 +254,11 @@ export type MutationConnectGitHubArgs = {
 };
 
 
+export type MutationCreateCommentArgs = {
+	input: CreateCommentInput;
+};
+
+
 export type MutationCreateThreadArgs = {
 	input: CreateThreadInput;
 };
@@ -225,6 +266,16 @@ export type MutationCreateThreadArgs = {
 
 export type MutationCreateTokenOrderArgs = {
 	input?: InputMaybe<CreateTokenOrderInput>;
+};
+
+
+export type MutationDeleteCommentArgs = {
+	id: Scalars['String'];
+};
+
+
+export type MutationEditCommentArgs = {
+	input: EditCommentInput;
 };
 
 
@@ -255,6 +306,11 @@ export type MutationRegisterTokenOrderNonceArgs = {
 
 export type MutationSubscribeGameArgs = {
 	input?: InputMaybe<SubscribeGameInput>;
+};
+
+
+export type MutationUpVoteArgs = {
+	id: Scalars['String'];
 };
 
 export enum OrderStatuses {
@@ -370,6 +426,7 @@ export type Thread = {
 export type ThreadHistory = {
 	__typename?: 'ThreadHistory';
 	body?: Maybe<Scalars['String']>;
+	id?: Maybe<Scalars['String']>;
 	timestamp?: Maybe<Scalars['String']>;
 	title?: Maybe<Scalars['String']>;
 };
@@ -485,9 +542,12 @@ export type ResolversTypes = {
 	CardDuelSetting: ResolverTypeWrapper<CardDuelSetting>;
 	CardDuelSetup: ResolverTypeWrapper<CardDuelSetup>;
 	Comment: ResolverTypeWrapper<Comment>;
+	CommentHistory: ResolverTypeWrapper<CommentHistory>;
 	ConfirmTokenOrderInput: ConfirmTokenOrderInput;
+	CreateCommentInput: CreateCommentInput;
 	CreateThreadInput: CreateThreadInput;
 	CreateTokenOrderInput: CreateTokenOrderInput;
+	EditCommentInput: EditCommentInput;
 	EditThreadInput: EditThreadInput;
 	EmailConfirmedOrderInput: EmailConfirmedOrderInput;
 	Float: ResolverTypeWrapper<Scalars['Float']>;
@@ -526,9 +586,12 @@ export type ResolversParentTypes = {
 	CardDuelSetting: CardDuelSetting;
 	CardDuelSetup: CardDuelSetup;
 	Comment: Comment;
+	CommentHistory: CommentHistory;
 	ConfirmTokenOrderInput: ConfirmTokenOrderInput;
+	CreateCommentInput: CreateCommentInput;
 	CreateThreadInput: CreateThreadInput;
 	CreateTokenOrderInput: CreateTokenOrderInput;
+	EditCommentInput: EditCommentInput;
 	EditThreadInput: EditThreadInput;
 	EmailConfirmedOrderInput: EmailConfirmedOrderInput;
 	Float: Scalars['Float'];
@@ -654,7 +717,19 @@ export type CardDuelSetupResolvers<ContextType = any, ParentType extends Resolve
 
 export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
 	body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	histories?: Resolver<Maybe<Array<Maybe<ResolversTypes['CommentHistory']>>>, ParentType, ContextType>;
+	id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	owner?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
+	timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	upCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+	updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CommentHistoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['CommentHistory'] = ResolversParentTypes['CommentHistory']> = {
+	body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -676,17 +751,22 @@ export type GameSubscriptionResolvers<ContextType = any, ParentType extends Reso
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
 	acceptGame?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationAcceptGameArgs, 'invitationId'>>;
+	archiveThread?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, Partial<MutationArchiveThreadArgs>>;
 	claimTokenFromOrder?: Resolver<Maybe<ResolversTypes['TokenOrder']>, ParentType, ContextType, RequireFields<MutationClaimTokenFromOrderArgs, 'orderId' | 'signature'>>;
 	confirmTokenOrder?: Resolver<Maybe<ResolversTypes['TokenOrder']>, ParentType, ContextType, Partial<MutationConfirmTokenOrderArgs>>;
 	connectGitHub?: Resolver<Maybe<ResolversTypes['Account']>, ParentType, ContextType, RequireFields<MutationConnectGitHubArgs, 'code'>>;
+	createComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationCreateCommentArgs, 'input'>>;
 	createThread?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationCreateThreadArgs, 'input'>>;
 	createTokenOrder?: Resolver<Maybe<ResolversTypes['TokenOrder']>, ParentType, ContextType, Partial<MutationCreateTokenOrderArgs>>;
+	deleteComment?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCommentArgs, 'id'>>;
+	editComment?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType, RequireFields<MutationEditCommentArgs, 'input'>>;
 	editThread?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, RequireFields<MutationEditThreadArgs, 'input'>>;
 	emailConfirmedOrder?: Resolver<Maybe<ResolversTypes['TokenOrder']>, ParentType, ContextType, Partial<MutationEmailConfirmedOrderArgs>>;
 	increaseCounter?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType, Partial<MutationIncreaseCounterArgs>>;
 	inviteGame?: Resolver<Maybe<ResolversTypes['GameInvitation']>, ParentType, ContextType, RequireFields<MutationInviteGameArgs, 'input'>>;
 	registerTokenOrderNonce?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType, RequireFields<MutationRegisterTokenOrderNonceArgs, 'orderId'>>;
 	subscribeGame?: Resolver<Maybe<ResolversTypes['GameSubscription']>, ParentType, ContextType, Partial<MutationSubscribeGameArgs>>;
+	upVote?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationUpVoteArgs, 'id'>>;
 };
 
 export type ProfileResolvers<ContextType = any, ParentType extends ResolversParentTypes['Profile'] = ResolversParentTypes['Profile']> = {
@@ -742,6 +822,7 @@ export type ThreadResolvers<ContextType = any, ParentType extends ResolversParen
 
 export type ThreadHistoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['ThreadHistory'] = ResolversParentTypes['ThreadHistory']> = {
 	body?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+	id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	__isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -789,6 +870,7 @@ export type Resolvers<ContextType = any> = {
 	CardDuelSetting?: CardDuelSettingResolvers<ContextType>;
 	CardDuelSetup?: CardDuelSetupResolvers<ContextType>;
 	Comment?: CommentResolvers<ContextType>;
+	CommentHistory?: CommentHistoryResolvers<ContextType>;
 	GameInvitation?: GameInvitationResolvers<ContextType>;
 	GameSubscription?: GameSubscriptionResolvers<ContextType>;
 	Mutation?: MutationResolvers<ContextType>;
