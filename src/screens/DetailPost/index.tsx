@@ -91,11 +91,11 @@ const DetailPostScreen: FC<Props> = () => {
 				}
 				ListFooterComponent={
 					<View style={styles.commentInputContainer}>
-						{/* <CommentInput
+						<CommentInput
 							commentInputRef={commentInputRef}
 							autoFocus={autoFocus}
 							containerStyle={styles.commentInput}
-						/> */}
+						/>
 					</View>
 				}
 				data={comments}
@@ -122,7 +122,7 @@ export default DetailPostScreen;
 const styles = StyleSheet.create({
 	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
 	replyContainer: {
-		marginTop: 16,
+		marginTop: 5,
 	},
 	container: {
 		width: '100%',
