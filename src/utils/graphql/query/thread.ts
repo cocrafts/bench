@@ -4,6 +4,15 @@ export const threadFields = gql`
 	fragment ThreadFields on Thread {
 		body
 		comments {
+			id
+			owner {
+				id
+				name
+				address
+				avatarUrl
+			}
+			upCount
+			timestamp
 			body
 			upCount
 		}
