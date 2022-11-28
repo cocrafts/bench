@@ -1,14 +1,14 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from '@metacraft/ui';
+import { Markdown, Text } from '@metacraft/ui';
 import { Comment } from 'utils/types';
 
-import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
+import UserInfo from '../../../components/UserInfo';
 import { grey, midnightDream, yellow } from '../../../utils/colors';
 
 // temporaly hiding
 // import Avatar from 'components/Avatar';
-// import UserInfo from '../../../components/UserInfo';
+// import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 
 interface Props {
 	item: Comment;
@@ -17,7 +17,9 @@ interface Props {
 }
 
 const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
-	const { body, upCount } = item;
+	const { body, upCount, owner, timestamp } = item;
+	const postedTime = new Date(timestamp || '');
+
 	return (
 		<View style={styles.container}>
 			{/* {originReply && (
@@ -37,20 +39,20 @@ const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
 			<View
 				style={[styles.mainReplyContainer, isActive && styles.activeBorder]}
 			>
-				{/* <UserInfo
-					avatarUrl={avatarUrl}
-					name={name}
-					postedTime={new Date(postedTime)}
-				/> */}
+				<UserInfo
+					avatarUrl={owner?.avatarUrl || ''}
+					name={owner?.name || owner?.address || ''}
+					postedTime={postedTime}
+				/>
 				<View style={styles.textContainer}>
-					<Text style={styles.text}>{body}</Text>
+					{body && <Markdown configs={{ fontSize: 14 }} content={body} />}
 				</View>
-				<View style={styles.socialContainer}>
-					{upCount && <ThumbsUpNumber number={upCount} />}
+				{/* <View style={styles.socialContainer}>
+					<ThumbsUpNumber number={upCount || 0} />
 					<TouchableOpacity onPress={onReplyPress}>
 						<Text style={styles.replyText}>Reply</Text>
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
 		</View>
 	);
@@ -73,15 +75,15 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		paddingTop: 10,
-		borderRadius: 6,
 	},
 	mainReplyContainer: {
 		paddingHorizontal: 14,
 		paddingVertical: 10,
+		borderRadius: 5,
 		backgroundColor: midnightDream,
 	},
 	text: {
-		color: 'rgba(255,255,255,0.6)',
+		color: 'rgba(255,255,255, 1)',
 		fontWeight: '400',
 		fontSize: 14,
 		lineHeight: 21,

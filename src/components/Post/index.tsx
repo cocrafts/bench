@@ -62,7 +62,7 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					commentCount={commentCount}
 					isUpVoted={isUpVoted}
 				/>
-			</View>
+			</View> */}
 			{isShortForm && (
 				<TouchableOpacity
 					onPress={() => onThreadPress(true)}
@@ -70,7 +70,7 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 				>
 					<Text style={styles.placeholder}>Write your comment</Text>
 				</TouchableOpacity>
-			)} */}
+			)}
 		</TouchableOpacity>
 	);
 };
