@@ -1,40 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Metacraft Bench</title>
+	<title>Metacraft Bench - A Web3 game builder platform</title>
+	<meta charset="UTF-8">
 	<meta name="viewport"
 	      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="msapplication-tap-highlight" content="no">
+	<meta property="og:title" content="Metacraft Bench - A Web3 game builder platform"/>
+	<meta property="og:type" content="webiste"/>
+	<meta property="og:url" content="https://bench.stormgate.io/"/>
+	<meta property="og:description"
+	content="An virtual experimental framework with the potential to change how games are designed, built and published where anyone can join, co-create & enjoy the journey of developing games, novels and beyond!
+	"/>
 
+	<link rel="icon" type="image/png" href="/favicon.png"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link
 			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,300;1,400;1,700&display=swap"
 			rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;300;500&display=swap" rel="stylesheet">
 
-	<script crossorigin src="https://cdn.stormgate.io/lodash/production.min.js"></script>
-	<script src="https://cdn.stormgate.io/@blocto/sdk/dist/blocto-sdk.umd.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-	<% if (isProduction) { %>
-		<script crossorigin src="https://cdn.stormgate.io/rxjs/rxjs.umd.min.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/amazon-cognito-identity-js/amazon-cognito-identity.min.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/react/production.min.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/react-dom/production.min.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/react-art/production.min.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/@solana/web3.js/lib/index.iife.min.js"></script>
-	<% } else { %>
-		<script crossorigin src="https://cdn.stormgate.io/rxjs/rxjs.umd.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/amazon-cognito-identity-js/amazon-cognito-identity.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/react/development.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/react-dom/development.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/react-art/development.js"></script>
-		<script crossorigin src="https://cdn.stormgate.io/@solana/web3.js/lib/index.iife.js"></script>
-	<% } %>
-
 	<%- get('style') %>
 	<% if (get('isSSR')) { %>
 		<script defer="defer" src="/app.js"></script>
-		<link href="/app.css" rel="stylesheet">
 	<% } %>
 </head>
 <body>

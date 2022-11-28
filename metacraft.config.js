@@ -5,10 +5,12 @@ const setEnvironments = (configs, internal) => {
 	const { webpack } = internal.modules;
 	const { DefinePlugin } = webpack;
 	const env = internal.configs.env();
+	const gitBranch = process.env.gitBranch || 'dev';
 	const isProduction = internal.configs.isProduction(env);
 
 	configs.plugins[0] = new DefinePlugin({
 		process: { env: {} },
+		gitBranch: JSON.stringify(gitBranch),
 		__DEV__: !isProduction,
 		ENV: JSON.stringify(env),
 	});
@@ -37,27 +39,12 @@ const copyAssets = (configs) => {
 	return configs;
 };
 
-const externals = (configs) => {
-	configs.externals = {
-		rxjs: 'rxjs',
-		react: 'React',
-		lodash: '_',
-		'amazon-cognito-identity-js': 'AmazonCognitoIdentity',
-		'react-dom': 'ReactDOM',
-		'react-art': 'ReactART',
-		'@blocto/sdk': 'BloctoSDK',
-		'@solana/web3.js': 'solanaWeb3',
-	};
-
-	return configs;
-};
-
 module.exports = {
 	useBabel: true,
 	publicPath: () => process.env.PUBLIC_URL || '/',
 	keepPreviousBuild: () => true,
 	buildId: () => 'app',
-	webpackMiddlewares: [setEnvironments, copyAssets, externals],
+	webpackMiddlewares: [setEnvironments, copyAssets],
 	moduleAlias: {
 		global: {
 			'react-native': 'react-native-web',

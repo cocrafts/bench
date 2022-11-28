@@ -1,4 +1,11 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
+import React, {
+	FC,
+	Fragment,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import { FlatList, Modal, StyleSheet, TextInput, View } from 'react-native';
 import {
 	NavigationProp,
@@ -31,19 +38,8 @@ const DetailPostScreen: FC<Props> = () => {
 	const [currentReplyActiveIndex, setCurrentReplyActiveIndex] = useState(-1);
 	const commentInputRef = useRef<TextInput>(null);
 
-	const {
-		avatarUrl = '',
-		name = '',
-		postedTime = '',
-		thread = '',
-		nbLikes = 0,
-		nbComments = 0,
-		isPinned = false,
-		isFollowed = false,
-		isLiked = false,
-		replies = [],
-		autoFocus = false,
-	} = route.params;
+	const { item, autoFocus } = route.params;
+	const { comments } = item;
 
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
@@ -90,18 +86,7 @@ const DetailPostScreen: FC<Props> = () => {
 							onAvatarPress={onAvatarPress}
 							onSearchPress={onSearchPress}
 						/>
-						<Post
-							avatarUrl={avatarUrl}
-							name={name}
-							postedTime={postedTime}
-							thread={thread}
-							nbLikes={nbLikes}
-							nbComments={nbComments}
-							isPinned={isPinned}
-							isFollowed={isFollowed}
-							isLiked={isLiked}
-							isShortForm={false}
-						/>
+						<Post item={item} isShortForm={false} />
 					</View>
 				}
 				ListFooterComponent={
@@ -113,20 +98,19 @@ const DetailPostScreen: FC<Props> = () => {
 						/>
 					</View>
 				}
-				data={replies}
+				data={comments}
 				renderItem={({ item, index }) => (
-					<View style={styles.replyContainer}>
-						<Reply
-							isActive={currentReplyActiveIndex === index}
-							onReplyPress={() => onReplyPress(index)}
-							avatarUrl={item.avatarUrl}
-							name={item.name}
-							postedTime={item.postedTime}
-							thread={item.content}
-							nbLikes={item.nbLikes || 0}
-							originReply={item.originReply}
-						/>
-					</View>
+					<Fragment>
+						{item && (
+							<View style={styles.replyContainer}>
+								<Reply
+									isActive={currentReplyActiveIndex === index}
+									onReplyPress={() => onReplyPress(index)}
+									item={item}
+								/>
+							</View>
+						)}
+					</Fragment>
 				)}
 			/>
 		</View>
@@ -138,7 +122,7 @@ export default DetailPostScreen;
 const styles = StyleSheet.create({
 	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
 	replyContainer: {
-		marginTop: 16,
+		marginTop: 5,
 	},
 	container: {
 		width: '100%',

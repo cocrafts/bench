@@ -7,9 +7,16 @@ import {
 	TouchableOpacity,
 	View,
 } from 'react-native';
-import { Text } from '@metacraft/ui';
+import { useQuery } from '@apollo/client';
+import { AnimateDirections, modalActions, Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import SignInOptions from 'components/modals/SignInOptions';
 import SearchModal from 'components/SearchModal';
+import { createThread } from 'utils/graphql';
+import * as queries from 'utils/graphql/query';
+import { useSnapshot } from 'utils/hook';
+import { accountState } from 'utils/state/account';
+import { CreateThreadInput } from 'utils/types';
 
 import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
@@ -24,32 +31,41 @@ import NewsFeedTypingModal from './NewsFeedTypingModal';
 type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
 
 export const BuildDashboard: FC = () => {
+	const { profile } = useSnapshot(accountState);
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 	const navigation = useNavigation<DetailPostStackProp>();
 	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
 		useState(false);
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+	const { data } = useQuery(queries.feedThreads);
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
 	};
 
+	const showSignInOptions = () => {
+		modalActions.show({
+			id: 'signInOptions',
+			component: SignInOptions,
+			animateDirection: AnimateDirections.BottomLeft,
+		});
+	};
+
 	const onQuickThreadPress = () => {
-		setIsQuickThreadModalVisible(true);
+		if (profile.id) {
+			setIsQuickThreadModalVisible(true);
+		} else {
+			showSignInOptions();
+		}
 	};
 
 	const onCloseModal = () => {
 		setIsQuickThreadModalVisible(false);
 	};
 
-	const onPostPress = () => {
+	const onPostPress = (item: CreateThreadInput) => {
+		createThread(item);
 		setIsQuickThreadModalVisible(false);
 	};
-
-	useEffect(() => {
-		setTimeout(() => {
-			setSimpleThreads(threads);
-		}, 1000);
-	}, []);
 
 	const onSearchPress = () => {
 		setIsSearchModalVisible(true);
@@ -57,6 +73,12 @@ export const BuildDashboard: FC = () => {
 	const onCloseSearchModal = () => {
 		setIsSearchModalVisible(false);
 	};
+
+	useEffect(() => {
+		setTimeout(() => {
+			setSimpleThreads(threads);
+		}, 1000);
+	}, []);
 
 	return (
 		<View style={styles.mainContainer}>
@@ -93,21 +115,8 @@ export const BuildDashboard: FC = () => {
 					</View>
 				}
 				ListFooterComponent={<View style={styles.footer} />}
-				data={simpleThreads}
-				renderItem={({ item }) => (
-					<Post
-						avatarUrl={item.avatarUrl}
-						name={item.name}
-						postedTime={item.postedTime}
-						thread={item.thread}
-						nbLikes={item.nbLikes}
-						nbComments={item.nbComments}
-						isPinned={item.isPinned}
-						isFollowed={item.isFollowed}
-						isLiked={item.isLiked}
-						replies={item.replies}
-					/>
-				)}
+				data={data?.feedThreads}
+				renderItem={({ item }) => <Post item={item} />}
 				keyExtractor={(item) => item.id}
 			/>
 		</View>

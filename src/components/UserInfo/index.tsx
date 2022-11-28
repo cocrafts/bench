@@ -1,15 +1,16 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
+import { shortenAddress } from 'utils/helper';
 
 import { blue } from '../../utils/colors';
 import Avatar from '../Avatar';
 import DateDifferenceText from '../DateDifferenceText';
 
 interface Props {
-	avatarUrl: string;
-	name: string;
-	postedTime: Date;
+	avatarUrl?: string;
+	name?: string;
+	postedTime?: Date;
 }
 
 const UserInfo: FC<Props> = ({
@@ -17,11 +18,12 @@ const UserInfo: FC<Props> = ({
 	name = '',
 	postedTime = new Date(),
 }: Props) => {
+	const displayName = name.length > 40 ? shortenAddress(name) : name;
 	return (
 		<View style={styles.container}>
-			<Avatar uri={avatarUrl} size={25} userName={name} />
+			<Avatar imageUri={avatarUrl} size={25} characters={name} />
 			<View style={styles.nameTimeContainer}>
-				<Text style={styles.name}>{name}</Text>
+				<Text style={styles.name}>{displayName}</Text>
 				<DateDifferenceText
 					fromDate={postedTime}
 					style={styles.dateDifference}

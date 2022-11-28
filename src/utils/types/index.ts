@@ -1,3 +1,5 @@
+export * from './graphql';
+
 export type Notification = {
 	id: string;
 	avatarUrl: string;

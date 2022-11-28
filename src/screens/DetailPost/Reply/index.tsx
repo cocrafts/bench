@@ -1,41 +1,32 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from '@metacraft/ui';
-import Avatar from 'components/Avatar';
+import { Markdown, Text } from '@metacraft/ui';
+import { Comment } from 'utils/types';
 
-import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 import UserInfo from '../../../components/UserInfo';
 import { grey, midnightDream, yellow } from '../../../utils/colors';
-import { Reply as ReplyType } from '../../../utils/types/thread';
+
+// temporaly hiding
+// import Avatar from 'components/Avatar';
+// import ThumbsUpNumber from '../../../components/ThumbsUpNumber/index';
 
 interface Props {
-	name: string;
-	avatarUrl: string;
-	postedTime: string;
-	thread: string;
-	nbLikes: number;
-	originReply?: ReplyType;
+	item: Comment;
 	onReplyPress: () => void;
 	isActive: boolean;
 }
 
-const Reply: FC<Props> = ({
-	avatarUrl = '',
-	name = '',
-	postedTime = '',
-	thread = '',
-	nbLikes = 0,
-	originReply,
-	onReplyPress,
-	isActive = false,
-}: Props) => {
+const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
+	const { body, upCount, owner, timestamp } = item;
+	const postedTime = new Date(timestamp || '');
+
 	return (
 		<View style={styles.container}>
-			{originReply && (
+			{/* {originReply && (
 				<View style={styles.originalReplyContainer}>
 					<View style={styles.directionContainer} />
 					<View style={styles.originalShortReplyContainer}>
-						<Avatar uri={originReply.avatarUrl} size={16} />
+						<Avatar imageUri={originReply.avatarUrl} size={16} />
 						<Text style={styles.nameText}>{originReply.name}</Text>
 						<View style={styles.originalReplyContentContainer}>
 							<Text numberOfLines={1} style={styles.originalReplyContent}>
@@ -44,24 +35,24 @@ const Reply: FC<Props> = ({
 						</View>
 					</View>
 				</View>
-			)}
+			)} */}
 			<View
 				style={[styles.mainReplyContainer, isActive && styles.activeBorder]}
 			>
 				<UserInfo
-					avatarUrl={avatarUrl}
-					name={name}
-					postedTime={new Date(postedTime)}
+					avatarUrl={owner?.avatarUrl || ''}
+					name={owner?.name || owner?.address || ''}
+					postedTime={postedTime}
 				/>
 				<View style={styles.textContainer}>
-					<Text style={styles.text}>{thread}</Text>
+					{body && <Markdown configs={{ fontSize: 14 }} content={body} />}
 				</View>
-				<View style={styles.socialContainer}>
-					<ThumbsUpNumber number={nbLikes} />
+				{/* <View style={styles.socialContainer}>
+					<ThumbsUpNumber number={upCount || 0} />
 					<TouchableOpacity onPress={onReplyPress}>
 						<Text style={styles.replyText}>Reply</Text>
 					</TouchableOpacity>
-				</View>
+				</View> */}
 			</View>
 		</View>
 	);
@@ -84,15 +75,15 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		paddingTop: 10,
-		borderRadius: 6,
 	},
 	mainReplyContainer: {
 		paddingHorizontal: 14,
 		paddingVertical: 10,
+		borderRadius: 5,
 		backgroundColor: midnightDream,
 	},
 	text: {
-		color: 'rgba(255,255,255,0.6)',
+		color: 'rgba(255,255,255, 1)',
 		fontWeight: '400',
 		fontSize: 14,
 		lineHeight: 21,
