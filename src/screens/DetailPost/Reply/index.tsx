@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from '@metacraft/ui';
+import { Markdown, Text } from '@metacraft/ui';
 import { Comment } from 'utils/types';
 
 import UserInfo from '../../../components/UserInfo';
@@ -45,7 +45,7 @@ const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
 					postedTime={postedTime}
 				/>
 				<View style={styles.textContainer}>
-					<Text style={styles.text}>{body}</Text>
+					{body && <Markdown configs={{ fontSize: 14 }} content={body} />}
 				</View>
 				{/* <View style={styles.socialContainer}>
 					<ThumbsUpNumber number={upCount || 0} />
