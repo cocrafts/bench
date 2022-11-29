@@ -124,6 +124,7 @@ export type Comment = {
 	id?: Maybe<Scalars['String']>;
 	owner?: Maybe<Profile>;
 	reply?: Maybe<Comment>;
+	replyHistories?: Maybe<Array<Maybe<Comment>>>;
 	timestamp?: Maybe<Scalars['String']>;
 	upCount?: Maybe<Scalars['Int']>;
 	updatedAt?: Maybe<Scalars['String']>;
@@ -728,6 +729,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 	id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	owner?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
 	reply?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType>;
+	replyHistories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType>;
 	timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	upCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
