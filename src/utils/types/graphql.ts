@@ -123,6 +123,7 @@ export type Comment = {
 	histories?: Maybe<Array<Maybe<CommentHistory>>>;
 	id?: Maybe<Scalars['String']>;
 	owner?: Maybe<Profile>;
+	reply?: Maybe<Comment>;
 	timestamp?: Maybe<Scalars['String']>;
 	upCount?: Maybe<Scalars['Int']>;
 	updatedAt?: Maybe<Scalars['String']>;
@@ -350,6 +351,7 @@ export type Query = {
 	personalBuildActivities?: Maybe<Array<Maybe<BuildActivity>>>;
 	personalThreads?: Maybe<Array<Maybe<Thread>>>;
 	profile?: Maybe<Profile>;
+	thread?: Maybe<Thread>;
 	tokenOrders?: Maybe<Array<Maybe<TokenOrder>>>;
 };
 
@@ -386,6 +388,11 @@ export type QueryPersonalThreadsArgs = {
 
 export type QueryProfileArgs = {
 	address?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryThreadArgs = {
+	id?: InputMaybe<Scalars['String']>;
 };
 
 export type SubscribeGameInput = {
@@ -720,6 +727,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
 	histories?: Resolver<Maybe<Array<Maybe<ResolversTypes['CommentHistory']>>>, ParentType, ContextType>;
 	id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	owner?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType>;
+	reply?: Resolver<Maybe<ResolversTypes['Comment']>, ParentType, ContextType>;
 	timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
 	upCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
 	updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -799,6 +807,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 	personalBuildActivities?: Resolver<Maybe<Array<Maybe<ResolversTypes['BuildActivity']>>>, ParentType, ContextType, Partial<QueryPersonalBuildActivitiesArgs>>;
 	personalThreads?: Resolver<Maybe<Array<Maybe<ResolversTypes['Thread']>>>, ParentType, ContextType, Partial<QueryPersonalThreadsArgs>>;
 	profile?: Resolver<Maybe<ResolversTypes['Profile']>, ParentType, ContextType, Partial<QueryProfileArgs>>;
+	thread?: Resolver<Maybe<ResolversTypes['Thread']>, ParentType, ContextType, Partial<QueryThreadArgs>>;
 	tokenOrders?: Resolver<Maybe<Array<Maybe<ResolversTypes['TokenOrder']>>>, ParentType, ContextType>;
 };
 

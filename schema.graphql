@@ -103,6 +103,7 @@ type Comment {
 	histories: [CommentHistory]
 	id: String
 	owner: Profile
+	reply: Comment
 	timestamp: String
 	upCount: Int
 	updatedAt: String
@@ -182,6 +183,7 @@ type Query {
 	personalBuildActivities(address: String): [BuildActivity]
 	personalThreads(id: String): [Thread]
 	profile(address: String): Profile
+	thread(id: String): Thread
 	tokenOrders: [TokenOrder]
 }
 
