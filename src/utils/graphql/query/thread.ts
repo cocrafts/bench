@@ -1,21 +1,10 @@
 import { gql } from '@apollo/client';
 
+import { commentFields } from './comment';
+
 export const threadFields = gql`
 	fragment ThreadFields on Thread {
 		body
-		comments {
-			id
-			owner {
-				id
-				name
-				address
-				avatarUrl
-			}
-			upCount
-			timestamp
-			body
-			upCount
-		}
 		id
 		owner {
 			id
@@ -35,6 +24,20 @@ export const feedThreads = gql`
 	query {
 		feedThreads {
 			...ThreadFields
+		}
+	}
+`;
+
+export const thread = gql`
+	${threadFields}
+	${commentFields}
+	query Thread($input: String!) {
+		thread(id: $input) {
+			...ThreadFields
+			comments {
+				...CommentFields
+				upCount
+			}
 		}
 	}
 `;
