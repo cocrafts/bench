@@ -3,7 +3,6 @@ import {
 	LinkingOptions,
 } from '@react-navigation/native';
 import { StackNavigationOptions } from '@react-navigation/stack';
-import { Thread } from 'utils/types';
 
 export const screenOptions: StackNavigationOptions = {
 	headerShown: false,
@@ -18,7 +17,6 @@ export type RootParamList = {
 	Dashboard: undefined;
 	DetailPost: {
 		id: string;
-		item?: Thread;
 		comment?: boolean;
 	};
 	SignIn: undefined;

@@ -3,7 +3,6 @@ import { themeState } from '@metacraft/ui';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useSnapshot } from 'utils/hook';
-import { Thread } from 'utils/types';
 
 import DashboardScreen from '../screens/Dashboard';
 import DetailPostScreen from '../screens/DetailPost';
@@ -11,16 +10,6 @@ import NotificationScreen from '../screens/Notification';
 import SignInScreen from '../screens/SignIn';
 
 import { linking, navigationRef, RootParamList, screenOptions } from './shared';
-
-export type StackParamList = {
-	Dashboard: undefined;
-	DetailPost: {
-		item: Thread;
-		autoFocus?: boolean;
-	};
-	SignIn: undefined;
-	Notification: undefined;
-};
 
 const Stack = createStackNavigator<RootParamList>();
 
