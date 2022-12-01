@@ -6,40 +6,59 @@ import React, {
 	useRef,
 	useState,
 } from 'react';
-import { FlatList, Modal, StyleSheet, TextInput, View } from 'react-native';
+import {
+	ActivityIndicator,
+	FlatList,
+	Modal,
+	StyleSheet,
+	TextInput,
+	View,
+} from 'react-native';
+import { useQuery } from '@apollo/client';
 import {
 	NavigationProp,
 	RouteProp,
 	useNavigation,
 	useRoute,
 } from '@react-navigation/native';
+import { RootParamList } from 'stacks/shared';
+import { graphQlClient } from 'utils/graphql';
+import * as queries from 'utils/graphql/query';
+import { Thread } from 'utils/types';
 
-import CommentInput from '../../components/CommentInput';
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
 import SearchModal from '../../components/SearchModal';
-import { StackParamList } from '../../stack';
 import { blackPearl, midnightDream } from '../../utils/colors';
 import { MAX_WIDTH } from '../../utils/constants';
 
 import Reply from './Reply';
 
-type DetailPostStackRouteProp = RouteProp<StackParamList, 'DetailPost'>;
-type DetailPostNavigationProp = NavigationProp<StackParamList, 'DetailPost'>;
+type StackRouteProp = RouteProp<RootParamList, 'DetailPost'>;
+type StackProp = NavigationProp<RootParamList>;
 
-interface Props {
-	route?: DetailPostStackRouteProp;
-}
-
-const DetailPostScreen: FC<Props> = () => {
-	const route = useRoute<DetailPostStackRouteProp>();
-	const navigation = useNavigation<DetailPostNavigationProp>();
+const DetailPostScreen: FC = () => {
+	const route = useRoute<StackRouteProp>();
+	const { id, comment } = route.params;
+	const threadId = `thread#${id}`;
+	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 	const [currentReplyActiveIndex, setCurrentReplyActiveIndex] = useState(-1);
 	const commentInputRef = useRef<TextInput>(null);
-
-	const { item, autoFocus } = route.params;
-	const { comments } = item;
+	const threadInCache = graphQlClient.readFragment({
+		id: `Thread:${threadId}`,
+		fragment: queries.threadFields,
+	});
+	const [thread, setThread] = useState<Thread>({
+		...threadInCache,
+		commments: [],
+	});
+	const { loading } = useQuery(queries.thread, {
+		variables: { input: threadId },
+		onCompleted(data) {
+			setThread(data.thread);
+		},
+	});
 
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
@@ -62,8 +81,8 @@ const DetailPostScreen: FC<Props> = () => {
 	);
 
 	useEffect(() => {
-		autoFocus && commentInputRef.current && commentInputRef.current?.focus();
-	}, [autoFocus, commentInputRef.current]);
+		comment && commentInputRef.current && commentInputRef.current?.focus();
+	}, [comment, commentInputRef.current]);
 
 	useEffect(() => {
 		if (!commentInputRef.current?.isFocused && currentReplyActiveIndex !== -1) {
@@ -86,19 +105,11 @@ const DetailPostScreen: FC<Props> = () => {
 							onAvatarPress={onAvatarPress}
 							onSearchPress={onSearchPress}
 						/>
-						<Post item={item} isShortForm={false} />
+						<Post item={thread} isShortForm={false} />
+						{loading && <ActivityIndicator style={{ marginTop: 10 }} />}
 					</View>
 				}
-				ListFooterComponent={
-					<View style={styles.commentInputContainer}>
-						<CommentInput
-							commentInputRef={commentInputRef}
-							autoFocus={autoFocus}
-							containerStyle={styles.commentInput}
-						/>
-					</View>
-				}
-				data={comments}
+				data={thread.comments}
 				renderItem={({ item, index }) => (
 					<Fragment>
 						{item && (
