@@ -16,7 +16,7 @@ import { appState } from 'utils/state/app';
 import { benchTheme } from 'utils/styles';
 import { useSnapshot } from 'valtio';
 
-import BuildStack from './stack';
+import BuildStack from './stacks';
 
 export const AppContainer: FC = () => {
 	const { network } = useSnapshot(appState);
