@@ -36,7 +36,11 @@ export const thread = gql`
 			...ThreadFields
 			comments {
 				...CommentFields
+				timestamp
 				upCount
+				reply {
+					...CommentFields
+				}
 			}
 		}
 	}

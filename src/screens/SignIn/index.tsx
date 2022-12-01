@@ -3,7 +3,7 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack/';
-import { StackParamList } from 'src/stack';
+import { RootParamList } from 'stacks/shared';
 import { appActions } from 'utils/actions';
 
 import { blackPearl } from '../../utils/colors';
@@ -14,7 +14,7 @@ import Header from './Header';
 const windowHeight = Dimensions.get('window').height;
 
 const SignInScreen = () => {
-	const navigation = useNavigation<StackNavigationProp<StackParamList>>();
+	const navigation = useNavigation<StackNavigationProp<RootParamList>>();
 
 	const onPress = () => {
 		appActions.signIn();
