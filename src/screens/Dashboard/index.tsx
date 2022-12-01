@@ -12,13 +12,13 @@ import { AnimateDirections, modalActions, Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import SignInOptions from 'components/modals/SignInOptions';
 import SearchModal from 'components/SearchModal';
+import { RootParamList } from 'stacks/shared';
 import { createThread } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
 import { CreateThreadInput } from 'utils/types';
 
-import { StackParamList } from '../../../src/stack';
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
 import { blackPearl, blueWhale, grey } from '../../utils/colors';
@@ -28,12 +28,12 @@ import { Thread } from '../../utils/types/thread';
 
 import NewsFeedTypingModal from './NewsFeedTypingModal';
 
-type DetailPostStackProp = NavigationProp<StackParamList, 'DetailPost'>;
+type StackProp = NavigationProp<RootParamList>;
 
 export const BuildDashboard: FC = () => {
 	const { profile } = useSnapshot(accountState);
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
-	const navigation = useNavigation<DetailPostStackProp>();
+	const navigation = useNavigation<StackProp>();
 	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
 		useState(false);
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);

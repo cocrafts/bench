@@ -7,7 +7,7 @@ import {
 	View,
 } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { StackParamList } from 'src/stack';
+import { RootParamList } from 'stacks/shared';
 
 import ControllerRow from '../../components/ControllerRow';
 import SearchModal from '../../components/SearchModal';
@@ -18,10 +18,10 @@ import { Notification } from '../../utils/types';
 
 import NotificationItem from './NotificationItem';
 
-type NotificationStackProp = NavigationProp<StackParamList, 'Notification'>;
+type StackProp = NavigationProp<RootParamList>;
 
 const NotificationScreen: FC = () => {
-	const navigation = useNavigation<NotificationStackProp>();
+	const navigation = useNavigation<StackProp>();
 	const [notifications, setNotifications] = useState<Array<Notification>>([]);
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 	const onCloseSearchModal = () => setIsSearchModalVisible(false);
