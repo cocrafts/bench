@@ -3783,10 +3783,10 @@
   resolved "https://registry.yarnpkg.com/@metacraft/tsconfig/-/tsconfig-0.0.10.tgz#a7e3e7c26807acca0eea8607a5f32e9168fa74cf"
   integrity sha512-BG2ZreVA46ZTrTLVlYLw4CgnU4uAULDy5Y24czkgyerNqLOja8EruCmK5Aoio5YADvio6i49AGHVRtjKH3093Q==
 
-"@metacraft/ui@^0.0.58":
-  version "0.0.58"
-  resolved "https://registry.yarnpkg.com/@metacraft/ui/-/ui-0.0.58.tgz#fc36d5fb416be8796be1ecd7ef739f431b61ba4c"
-  integrity sha512-nu/MUfci6qLleXfcLsVNlmWBgpRrJI0+LEgkbEgzw0ZYccTE6ItAnZRxtmFPlDwKXRSgJp/mxeUnCJTOdpL2Kg==
+"@metacraft/ui@^0.0.59":
+  version "0.0.59"
+  resolved "https://registry.yarnpkg.com/@metacraft/ui/-/ui-0.0.59.tgz#ff77be321626ff90a5d57659cb0b1a33ca033981"
+  integrity sha512-aIQSdS0s5HojKVNHMHnUPAGn0lrN/f805G/iV4nhRlAY3s8NQvkUS7ep/+FSPje2ygTId5D637Ys2JNtJ/b6Og==
   dependencies:
     color2k "^2.0.0"
     simple-markdown "^0.7.3"
