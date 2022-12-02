@@ -3,12 +3,14 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
 	AnimateDirections,
 	BindDirections,
+	Button,
 	dimensionState,
 	Markdown,
 	modalActions,
 	Text,
 } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import ReplyIcon from 'components/icons/feather/Reply';
 import ReplyTyping from 'components/modals/ReplyTyping';
 import SignInOptions from 'components/modals/SignInOptions';
 import { RootParamList } from 'stacks/shared';
@@ -51,15 +53,15 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 			if (isShortForm) {
 				onThreadPress(true);
 			}
-
 			modalActions.show({
 				id: 'ReplyTyping',
 				bindingRef,
-				component: () => (
-					<ReplyTyping modalId="ReplyTyping" threadId={id || ''} />
-				),
+				component: ReplyTyping,
 				bindingDirection: BindDirections.Bottom,
 				withoutMask: true,
+				context: {
+					threadId: id || '',
+				},
 			});
 		} else {
 			modalActions.show({
@@ -100,9 +102,10 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					commentCount={commentCount}
 					isUpVoted={isUpVoted}
 				/> */}
-				<TouchableOpacity onPress={onReplyPress}>
-					<Text>Reply</Text>
-				</TouchableOpacity>
+				<Button style={styles.replyBtn} onPress={onReplyPress}>
+					<ReplyIcon style={styles.replyBtnInner} size={22} color="#fafafa" />
+					<Text style={styles.replyBtnInner}>Reply</Text>
+				</Button>
 			</View>
 		</TouchableOpacity>
 	);
@@ -163,6 +166,16 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
+	},
+	replyBtn: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		borderRadius: 5,
+		backgroundColor: midnightDream,
+	},
+	replyBtnInner: {
+		margin: 5,
+		color: '#fafafa',
 	},
 });
 
