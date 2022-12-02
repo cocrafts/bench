@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import {
 	ScrollView,
 	StyleSheet,
@@ -12,18 +12,25 @@ import {
 	dimensionState,
 	Markdown,
 	modalActions,
+	ModalConfigs,
 	Text,
 } from '@metacraft/ui';
+import CloseModal from 'components/modals/CloseWarning';
 import { blueWhale, grey, midnightDream } from 'utils/colors';
 import { createComment } from 'utils/graphql/comment';
 import { useInput, useSnapshot } from 'utils/hook';
 
 interface Props {
-	modalId: string;
+	config: ModalConfigs;
+}
+
+interface ModalContext {
 	threadId: string;
 }
 
-const ReplyTyping: FC<Props> = ({ modalId, threadId }) => {
+const ReplyTyping: FC<Props> = ({ config }) => {
+	const { threadId } = config.context as ModalContext;
+	const inputRef = useRef<TextInput>(null);
 	const input = useInput();
 	const isDisabledComment = input.value === '';
 	const { windowSize, isMobile } = useSnapshot(dimensionState);
@@ -39,7 +46,25 @@ const ReplyTyping: FC<Props> = ({ modalId, threadId }) => {
 
 	const typingWidth = isMobile ? '100%' : '50%';
 
-	const onClosePress = () => modalActions.hide(modalId);
+	const onCloseModal = () => {
+		modalActions.hide(config.id as string);
+	};
+
+	const onClosePress = () => {
+		if (input.value !== '') {
+			modalActions.show({
+				id: 'CloseWarning',
+				component: CloseModal,
+				context: {
+					typeEditing: 'Comment',
+					onDiscard: () => onCloseModal(),
+					onContinueEditing: () => inputRef.current?.focus(),
+				},
+			});
+		} else {
+			onCloseModal();
+		}
+	};
 
 	const onCommentPress = () => {
 		createComment(
@@ -50,8 +75,7 @@ const ReplyTyping: FC<Props> = ({ modalId, threadId }) => {
 			threadId,
 		);
 
-		input.onChangeText('');
-		onClosePress();
+		onCloseModal();
 	};
 
 	return (
@@ -69,6 +93,7 @@ const ReplyTyping: FC<Props> = ({ modalId, threadId }) => {
 						placeholder="Write your comment..."
 						placeholderTextColor={grey}
 						autoFocus
+						ref={inputRef}
 						{...input}
 					/>
 				</View>
