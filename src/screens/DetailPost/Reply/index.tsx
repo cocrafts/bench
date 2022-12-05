@@ -12,13 +12,12 @@ import { grey, midnightDream, yellow } from '../../../utils/colors';
 
 interface Props {
 	item: Comment;
-	onReplyPress: () => void;
-	isActive: boolean;
 }
 
-const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
+const Reply: FC<Props> = ({ item }: Props) => {
 	const { body, upCount, owner, timestamp } = item;
 	const postedTime = new Date(timestamp || '');
+	const isActive = false;
 
 	return (
 		<View style={styles.container}>
