@@ -1,4 +1,4 @@
-import React, { FC, memo, useRef } from 'react';
+import React, { FC, memo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
 	AnimateDirections,
@@ -11,7 +11,7 @@ import {
 } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ReplyIcon from 'components/icons/feather/Reply';
-import ReplyTyping from 'components/modals/ReplyTyping';
+import Editing from 'components/modals/Editing';
 import SignInOptions from 'components/modals/SignInOptions';
 import { RootParamList } from 'stacks/shared';
 import { useSnapshot } from 'utils/hook';
@@ -37,16 +37,14 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	const navigation = useNavigation<StackProp>();
 	const { profile } = useSnapshot(accountState);
 	const { owner, title, body, timestamp, id } = item;
-	const shortenedId = id?.slice(7) || '';
 	const { responsiveLevel } = useSnapshot(dimensionState);
 	const nbContentCharacterDisplay = [100, 100, 100, 30][responsiveLevel];
 	const shortenedBody = `${body?.slice(0, nbContentCharacterDisplay)}...`;
 	const markdownContent = isShortForm ? shortenedBody : body;
+	const shortenedId = id?.slice(7) || '';
 	const onThreadPress = (comment: boolean) => {
 		navigation.navigate('DetailPost', { id: shortenedId, comment });
 	};
-
-	const bindingRef = useRef(null);
 
 	const onReplyPress = () => {
 		if (profile.id) {
@@ -54,13 +52,13 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 				onThreadPress(true);
 			}
 			modalActions.show({
-				id: 'ReplyTyping',
-				bindingRef,
-				component: ReplyTyping,
+				id: 'EditingModal',
+				component: Editing,
 				bindingDirection: BindDirections.Bottom,
 				withoutMask: true,
 				context: {
 					threadId: id || '',
+					isThreadEditing: false,
 				},
 			});
 		} else {

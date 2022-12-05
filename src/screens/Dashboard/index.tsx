@@ -8,16 +8,20 @@ import {
 	View,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
-import { AnimateDirections, modalActions, Text } from '@metacraft/ui';
+import {
+	AnimateDirections,
+	BindDirections,
+	modalActions,
+	Text,
+} from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import Editing from 'components/modals/Editing';
 import SignInOptions from 'components/modals/SignInOptions';
 import SearchModal from 'components/SearchModal';
 import { RootParamList } from 'stacks/shared';
-import { createThread } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
-import { CreateThreadInput } from 'utils/types';
 
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
@@ -26,16 +30,12 @@ import { MAX_WIDTH } from '../../utils/constants';
 import { threads } from '../../utils/mockupData';
 import { Thread } from '../../utils/types/thread';
 
-import NewsFeedTypingModal from './NewsFeedTypingModal';
-
 type StackProp = NavigationProp<RootParamList>;
 
 export const BuildDashboard: FC = () => {
 	const { profile } = useSnapshot(accountState);
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 	const navigation = useNavigation<StackProp>();
-	const [isQuickThreadModalVisible, setIsQuickThreadModalVisible] =
-		useState(false);
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
 	const { data } = useQuery(queries.feedThreads);
 	const onAvatarPress = () => {
@@ -52,19 +52,18 @@ export const BuildDashboard: FC = () => {
 
 	const onQuickThreadPress = () => {
 		if (profile.id) {
-			setIsQuickThreadModalVisible(true);
+			modalActions.show({
+				id: 'EditingModal',
+				component: Editing,
+				bindingDirection: BindDirections.Bottom,
+				withoutMask: true,
+				context: {
+					isThreadEditing: true,
+				},
+			});
 		} else {
 			showSignInOptions();
 		}
-	};
-
-	const onCloseModal = () => {
-		setIsQuickThreadModalVisible(false);
-	};
-
-	const onPostPress = (item: CreateThreadInput) => {
-		createThread(item);
-		setIsQuickThreadModalVisible(false);
 	};
 
 	const onSearchPress = () => {
@@ -87,17 +86,10 @@ export const BuildDashboard: FC = () => {
 				showsVerticalScrollIndicator={false}
 				ListHeaderComponent={
 					<View>
-						<Modal visible={isQuickThreadModalVisible} animationType={'slide'}>
-							<NewsFeedTypingModal
-								onPostPress={onPostPress}
-								onClosePress={onCloseModal}
-							/>
-						</Modal>
 						<Modal visible={isSearchModalVisible} animationType={'slide'}>
 							<SearchModal onCancelSearchModal={onCloseSearchModal} />
 						</Modal>
 						<ControllerRow
-							canGoBack={false}
 							onAvatarPress={onAvatarPress}
 							onSearchPress={onSearchPress}
 						/>
