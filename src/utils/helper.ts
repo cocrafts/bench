@@ -1,7 +1,13 @@
 import { LayoutRectangle } from 'react-native';
+import { AnimateDirections, BindDirections, modalActions } from '@metacraft/ui';
+import Editing from 'components/modals/Editing';
+import SignInOptions from 'components/modals/SignInOptions';
 import dayjs, { Dayjs } from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import numeral from 'numeral';
+import { snapshot } from 'valtio';
+
+import { accountState } from './state/account';
 
 export const shortenAddress = (address: string, length = 11): string => {
 	const innerLength = length - 3;
@@ -43,4 +49,24 @@ export const delay = (timeout: number): Promise<void> => {
 	return new Promise((resolve) => {
 		setTimeout(() => resolve(), timeout);
 	});
+};
+
+export const onReply = (context: unknown) => {
+	const { profile } = snapshot(accountState);
+
+	if (profile.id) {
+		modalActions.show({
+			id: 'EditingModal',
+			component: Editing,
+			bindingDirection: BindDirections.Bottom,
+			withoutMask: true,
+			context,
+		});
+	} else {
+		modalActions.show({
+			id: 'signInOptions',
+			component: SignInOptions,
+			animateDirection: AnimateDirections.BottomLeft,
+		});
+	}
 };

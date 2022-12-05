@@ -1,19 +1,10 @@
 import React, { FC, memo } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import {
-	AnimateDirections,
-	BindDirections,
-	Button,
-	dimensionState,
-	Markdown,
-	modalActions,
-	Text,
-} from '@metacraft/ui';
+import { Button, dimensionState, Markdown, Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ReplyIcon from 'components/icons/feather/Reply';
-import Editing from 'components/modals/Editing';
-import SignInOptions from 'components/modals/SignInOptions';
 import { RootParamList } from 'stacks/shared';
+import { onReply } from 'utils/helper';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
 import { Thread } from 'utils/types';
@@ -47,26 +38,13 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	};
 
 	const onReplyPress = () => {
-		if (profile.id) {
-			if (isShortForm) {
-				onThreadPress(true);
-			}
-			modalActions.show({
-				id: 'EditingModal',
-				component: Editing,
-				bindingDirection: BindDirections.Bottom,
-				withoutMask: true,
-				context: {
-					threadId: id || '',
-					isThreadEditing: false,
-				},
-			});
-		} else {
-			modalActions.show({
-				id: 'signInOptions',
-				component: SignInOptions,
-				animateDirection: AnimateDirections.BottomLeft,
-			});
+		onReply({
+			threadId: id || '',
+			isThreadEditing: false,
+		});
+
+		if (profile.id && isShortForm) {
+			onThreadPress(true);
 		}
 	};
 

@@ -30,7 +30,7 @@ interface ModalContext {
 	isThreadEditing: boolean;
 }
 
-const ReplyTyping: FC<Props> = ({ config }) => {
+const Editing: FC<Props> = ({ config }) => {
 	const { threadId, isThreadEditing } = config.context as ModalContext;
 	const bodyInputRef = useRef<TextInput>(null);
 	const titleInputRef = useRef<TextInput>(null);
@@ -157,7 +157,7 @@ const ReplyTyping: FC<Props> = ({ config }) => {
 	);
 };
 
-export default ReplyTyping;
+export default Editing;
 
 const styles = StyleSheet.create({
 	headerContainer: {
