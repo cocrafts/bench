@@ -5,8 +5,6 @@ import { Button } from '@metacraft/ui';
 import CloseIcon from '../../../../components/icons/feather/Close';
 import { blue, grey } from '../../../../utils/colors';
 
-import CloseModal from './CloseModal';
-
 interface Props {
 	onPostPress: () => void;
 	onClosePress: () => void;
@@ -31,13 +29,6 @@ const ControllerRow: FC<Props> = ({
 
 	return (
 		<View style={styles.container}>
-			<Modal visible={isPopupVisible} transparent={true} animationType={'fade'}>
-				<CloseModal
-					onDiscardPost={onDiscardPost}
-					onContinueEditing={hideClosePopup}
-				/>
-			</Modal>
-
 			<TouchableOpacity
 				onPress={isPostDisable ? onClosePress : displayClosePopup}
 			>
