@@ -12,7 +12,7 @@ import { grey } from 'utils/colors';
 const ICON_SIZE = 25;
 
 interface Props {
-	canGoBack?: boolean;
+	isRoot?: boolean;
 	onAvatarPress: () => void;
 	onSearchPress: () => void;
 	bellIconColor?: string;
@@ -21,7 +21,7 @@ interface Props {
 type StackProp = NavigationProp<RootParamList>;
 
 export const ControllerRow: FC<Props> = ({
-	canGoBack = false,
+	isRoot = true,
 	onSearchPress,
 	bellIconColor = 'white',
 }: Props) => {
@@ -39,9 +39,13 @@ export const ControllerRow: FC<Props> = ({
 
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity onPress={goBack}>
-				<BackIcon size={36} color={grey} />
-			</TouchableOpacity>
+			{isRoot ? (
+				<View />
+			) : (
+				<TouchableOpacity onPress={goBack}>
+					<BackIcon size={36} color={grey} />
+				</TouchableOpacity>
+			)}
 			<View style={styles.mainContainer}>
 				{/* <TouchableOpacity onPress={onSearchPress}>
 					<SearchIcon size={ICON_SIZE} />

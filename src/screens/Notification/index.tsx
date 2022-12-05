@@ -44,7 +44,7 @@ const NotificationScreen: FC = () => {
 				<View style={styles.controllerRowContainer}>
 					<ControllerRow
 						bellIconColor={blue}
-						canGoBack={true}
+						isRoot={false}
 						onAvatarPress={onAvatarPress}
 						onSearchPress={onSearchPress}
 					/>

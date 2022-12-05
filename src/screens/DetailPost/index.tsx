@@ -101,7 +101,7 @@ const DetailPostScreen: FC = () => {
 							<SearchModal onCancelSearchModal={onCloseSearchModal} />
 						</Modal>
 						<ControllerRow
-							canGoBack={true}
+							isRoot={false}
 							onAvatarPress={onAvatarPress}
 							onSearchPress={onSearchPress}
 						/>
