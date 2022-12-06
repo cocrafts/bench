@@ -1,11 +1,5 @@
-import React, { FC, Fragment, useState } from 'react';
-import {
-	ActivityIndicator,
-	FlatList,
-	Modal,
-	StyleSheet,
-	View,
-} from 'react-native';
+import React, { FC, Fragment, useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { Button, Text } from '@metacraft/ui';
 import {
@@ -38,6 +32,7 @@ const DetailPostScreen: FC = () => {
 	const threadId = `thread#${id}`;
 	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
+	const scrollViewRef = useRef<ScrollView>(null);
 	const threadInCache = graphQlClient.readFragment({
 		id: `Thread:${threadId}`,
 		fragment: queries.threadFields,
@@ -74,46 +69,44 @@ const DetailPostScreen: FC = () => {
 
 	return (
 		<View style={styles.mainContainer}>
-			<FlatList
+			<ScrollView
 				style={styles.container}
 				showsVerticalScrollIndicator={false}
-				ListHeaderComponent={
-					<Fragment>
-						<Modal visible={isSearchModalVisible} animationType={'slide'}>
-							<SearchModal onCancelSearchModal={onCloseSearchModal} />
-						</Modal>
-						<ControllerRow
-							isRoot={false}
-							onAvatarPress={onAvatarPress}
-							onSearchPress={onSearchPress}
-						/>
-						<Post item={thread} isShortForm={false} />
-						{loading && <ActivityIndicator style={{ marginTop: 10 }} />}
-					</Fragment>
-				}
-				ListFooterComponent={
-					<View style={styles.footerContainer}>
-						<Button style={styles.replyBtn} onPress={onReplyPress}>
-							<ReplyIcon
-								style={styles.replyBtnInner}
-								size={14}
-								color="#fafafa"
-							/>
-							<Text style={styles.replyBtnInner}>Reply</Text>
-						</Button>
-					</View>
-				}
-				data={thread.comments}
-				renderItem={({ item }) => (
-					<Fragment>
-						{item && (
-							<View style={styles.replyContainer}>
-								<Reply item={item} />
-							</View>
-						)}
-					</Fragment>
-				)}
-			/>
+				ref={scrollViewRef}
+			>
+				<ControllerRow
+					isRoot={false}
+					onAvatarPress={onAvatarPress}
+					onSearchPress={onSearchPress}
+				/>
+				<Post item={thread} isShortForm={false} />
+				{loading && <ActivityIndicator style={{ marginTop: 10 }} />}
+
+				{!loading &&
+					thread.comments &&
+					thread.comments?.map((item) => (
+						<Fragment key={item?.id}>
+							{item && (
+								<View
+									style={styles.replyContainer}
+									onLayout={() => {
+										if (item.id === 'temp-id')
+											scrollViewRef.current?.scrollToEnd();
+									}}
+								>
+									<Reply item={item} />
+								</View>
+							)}
+						</Fragment>
+					))}
+
+				<View style={styles.footerContainer}>
+					<Button style={styles.replyBtn} onPress={onReplyPress}>
+						<ReplyIcon style={styles.replyBtnInner} size={14} color="#fafafa" />
+						<Text style={styles.replyBtnInner}>Reply</Text>
+					</Button>
+				</View>
+			</ScrollView>
 		</View>
 	);
 };
