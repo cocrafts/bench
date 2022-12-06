@@ -51,7 +51,7 @@ export const delay = (timeout: number): Promise<void> => {
 	});
 };
 
-export const onReply = (context: unknown) => {
+export const onEdit = (context: unknown) => {
 	const { profile } = snapshot(accountState);
 
 	if (profile.id) {

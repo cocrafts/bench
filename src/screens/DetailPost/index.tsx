@@ -18,7 +18,7 @@ import ReplyIcon from 'components/icons/feather/Reply';
 import { RootParamList } from 'stacks/shared';
 import { graphQlClient } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
-import { onReply } from 'utils/helper';
+import { onEdit } from 'utils/helper';
 import { Thread } from 'utils/types';
 
 import ControllerRow from '../../components/ControllerRow';
@@ -66,7 +66,7 @@ const DetailPostScreen: FC = () => {
 	};
 
 	const onReplyPress = () => {
-		onReply({
+		onEdit({
 			threadId: threadId || '',
 			isThreadEditing: false,
 		});

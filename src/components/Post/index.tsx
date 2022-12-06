@@ -4,7 +4,7 @@ import { Button, dimensionState, Markdown, Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ReplyIcon from 'components/icons/feather/Reply';
 import { RootParamList } from 'stacks/shared';
-import { onReply } from 'utils/helper';
+import { onEdit } from 'utils/helper';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
 import { Thread } from 'utils/types';
@@ -38,7 +38,7 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	};
 
 	const onReplyPress = () => {
-		onReply({
+		onEdit({
 			threadId: id || '',
 			isThreadEditing: false,
 		});

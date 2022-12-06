@@ -8,20 +8,12 @@ import {
 	View,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
-import {
-	AnimateDirections,
-	BindDirections,
-	modalActions,
-	Text,
-} from '@metacraft/ui';
+import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import Editing from 'components/modals/Editing';
-import SignInOptions from 'components/modals/SignInOptions';
 import SearchModal from 'components/SearchModal';
 import { RootParamList } from 'stacks/shared';
 import * as queries from 'utils/graphql/query';
-import { useSnapshot } from 'utils/hook';
-import { accountState } from 'utils/state/account';
+import { onEdit } from 'utils/helper';
 
 import ControllerRow from '../../components/ControllerRow';
 import Post from '../../components/Post';
@@ -33,7 +25,6 @@ import { Thread } from '../../utils/types/thread';
 type StackProp = NavigationProp<RootParamList>;
 
 export const BuildDashboard: FC = () => {
-	const { profile } = useSnapshot(accountState);
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
 	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
@@ -42,28 +33,10 @@ export const BuildDashboard: FC = () => {
 		navigation.navigate('SignIn');
 	};
 
-	const showSignInOptions = () => {
-		modalActions.show({
-			id: 'signInOptions',
-			component: SignInOptions,
-			animateDirection: AnimateDirections.BottomLeft,
-		});
-	};
-
 	const onQuickThreadPress = () => {
-		if (profile.id) {
-			modalActions.show({
-				id: 'EditingModal',
-				component: Editing,
-				bindingDirection: BindDirections.Bottom,
-				withoutMask: true,
-				context: {
-					isThreadEditing: true,
-				},
-			});
-		} else {
-			showSignInOptions();
-		}
+		onEdit({
+			isThreadEditing: true,
+		});
 	};
 
 	const onSearchPress = () => {
