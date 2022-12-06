@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { modalActions } from '@metacraft/ui';
+import { modalActions, modalState } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AuthenticationBundle from 'components/AuthenticationBundle';
 import BackIcon from 'components/icons/feather/Back';
@@ -8,6 +8,7 @@ import BellIcon from 'components/icons/feather/Bell';
 import SearchIcon from 'components/icons/feather/Search';
 import { RootParamList } from 'stacks/shared';
 import { grey } from 'utils/colors';
+import { useSnapshot } from 'utils/hook';
 
 const ICON_SIZE = 25;
 
@@ -25,6 +26,7 @@ export const ControllerRow: FC<Props> = ({
 	onSearchPress,
 	bellIconColor = 'white',
 }: Props) => {
+	const { hashmap } = useSnapshot(modalState);
 	const navigation = useNavigation<StackProp>();
 
 	const goBack = () => {
@@ -33,7 +35,7 @@ export const ControllerRow: FC<Props> = ({
 		} else {
 			navigation.navigate('Dashboard');
 		}
-		modalActions.hide('ReplyTyping');
+		Object.keys(hashmap).forEach((id) => modalActions.hide(id));
 	};
 	const onNotificationPress = () => navigation.navigate('Notification');
 
