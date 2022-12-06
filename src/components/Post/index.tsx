@@ -139,8 +139,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 	},
 	socialRowContainer: {
-		marginTop: 8,
-		paddingHorizontal: 15,
+		marginTop: 5,
 		flexDirection: 'row',
 		justifyContent: 'flex-end',
 		alignItems: 'center',
