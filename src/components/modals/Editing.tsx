@@ -39,7 +39,7 @@ const Editing: FC<Props> = ({ config }) => {
 	const MAX_CHARACTER_SIZE = 150;
 	const nbCharacterLeft = MAX_CHARACTER_SIZE - (title.value?.length || 0);
 	const color = nbCharacterLeft === 0 ? { color: noti } : { color: grey };
-	const isDisabledComment = isThreadEditing
+	const isDisabledActionBtn = isThreadEditing
 		? title.value === ''
 		: body.value === '';
 	const { windowSize, isMobile } = useSnapshot(dimensionState);
@@ -100,15 +100,15 @@ const Editing: FC<Props> = ({ config }) => {
 
 	const actionBtn = isThreadEditing ? (
 		<Button
-			style={[styles.button, isDisabledComment && styles.disabledButton]}
+			style={[styles.button, isDisabledActionBtn && styles.disabledButton]}
 			title="Post"
-			onPress={isDisabledComment ? undefined : onPostPress}
+			onPress={isDisabledActionBtn ? undefined : onPostPress}
 		/>
 	) : (
 		<Button
-			style={[styles.button, isDisabledComment && styles.disabledButton]}
+			style={[styles.button, isDisabledActionBtn && styles.disabledButton]}
 			title="Comment"
-			onPress={isDisabledComment ? undefined : onCommentPress}
+			onPress={isDisabledActionBtn ? undefined : onCommentPress}
 		/>
 	);
 
