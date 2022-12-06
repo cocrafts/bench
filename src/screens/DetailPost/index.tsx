@@ -96,7 +96,7 @@ const DetailPostScreen: FC = () => {
 						<Button style={styles.replyBtn} onPress={onReplyPress}>
 							<ReplyIcon
 								style={styles.replyBtnInner}
-								size={22}
+								size={14}
 								color="#fafafa"
 							/>
 							<Text style={styles.replyBtnInner}>Reply</Text>

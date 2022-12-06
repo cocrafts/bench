@@ -78,10 +78,12 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					commentCount={commentCount}
 					isUpVoted={isUpVoted}
 				/> */}
-				<Button style={styles.replyBtn} onPress={onReplyPress}>
-					<ReplyIcon style={styles.replyBtnInner} size={22} color="#fafafa" />
-					<Text style={styles.replyBtnInner}>Reply</Text>
-				</Button>
+				{!isShortForm && (
+					<Button style={styles.replyBtn} onPress={onReplyPress}>
+						<ReplyIcon style={styles.replyBtnInner} size={14} color="#fafafa" />
+						<Text style={styles.replyBtnInner}>Reply</Text>
+					</Button>
+				)}
 			</View>
 		</TouchableOpacity>
 	);
