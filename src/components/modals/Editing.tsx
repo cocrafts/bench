@@ -82,6 +82,8 @@ const Editing: FC<Props> = ({ config }) => {
 			title: title.value,
 			body: body.value,
 		});
+
+		onCloseModal();
 	};
 
 	const onCommentPress = () => {
@@ -138,7 +140,7 @@ const Editing: FC<Props> = ({ config }) => {
 					<TextInput
 						multiline
 						style={[styles.input, { flex: 1 }]}
-						placeholder="Write your comment..."
+						placeholder="Enter a message. Use Markdown to format"
 						placeholderTextColor={grey}
 						autoFocus={isThreadEditing ? false : true}
 						ref={bodyInputRef}
