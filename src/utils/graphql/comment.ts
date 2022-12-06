@@ -25,7 +25,6 @@ export const createComment = async (
 			},
 		},
 		update: (cache, { data }) => {
-			console.log('start');
 			cache.modify({
 				id: `Thread:${threadId}`,
 				fields: {
@@ -34,7 +33,6 @@ export const createComment = async (
 							data: data?.createComment,
 							fragment: queries.commentFields,
 						});
-						console.log([...existingComments, newCommentRef]);
 						return [...existingComments, newCommentRef];
 					},
 				},

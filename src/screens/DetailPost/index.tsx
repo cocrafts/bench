@@ -1,29 +1,24 @@
-import React, {
-	FC,
-	Fragment,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from 'react';
+import React, { FC, Fragment, useState } from 'react';
 import {
 	ActivityIndicator,
 	FlatList,
 	Modal,
 	StyleSheet,
-	TextInput,
 	View,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
+import { Button, Text } from '@metacraft/ui';
 import {
 	NavigationProp,
 	RouteProp,
 	useNavigation,
 	useRoute,
 } from '@react-navigation/native';
+import ReplyIcon from 'components/icons/feather/Reply';
 import { RootParamList } from 'stacks/shared';
 import { graphQlClient } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
+import { onEdit } from 'utils/helper';
 import { Thread } from 'utils/types';
 
 import ControllerRow from '../../components/ControllerRow';
@@ -39,12 +34,10 @@ type StackProp = NavigationProp<RootParamList>;
 
 const DetailPostScreen: FC = () => {
 	const route = useRoute<StackRouteProp>();
-	const { id, comment } = route.params;
+	const { id } = route.params;
 	const threadId = `thread#${id}`;
 	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-	const [currentReplyActiveIndex, setCurrentReplyActiveIndex] = useState(-1);
-	const commentInputRef = useRef<TextInput>(null);
 	const threadInCache = graphQlClient.readFragment({
 		id: `Thread:${threadId}`,
 		fragment: queries.threadFields,
@@ -72,23 +65,12 @@ const DetailPostScreen: FC = () => {
 		setIsSearchModalVisible(true);
 	};
 
-	const onReplyPress = useCallback(
-		(index: number) => {
-			commentInputRef.current && commentInputRef.current?.focus();
-			setCurrentReplyActiveIndex(index);
-		},
-		[commentInputRef.current],
-	);
-
-	useEffect(() => {
-		comment && commentInputRef.current && commentInputRef.current?.focus();
-	}, [comment, commentInputRef.current]);
-
-	useEffect(() => {
-		if (!commentInputRef.current?.isFocused && currentReplyActiveIndex !== -1) {
-			setCurrentReplyActiveIndex(-1);
-		}
-	}, [currentReplyActiveIndex, commentInputRef.current?.isFocused]);
+	const onReplyPress = () => {
+		onEdit({
+			threadId: threadId || '',
+			isThreadEditing: false,
+		});
+	};
 
 	return (
 		<View style={styles.mainContainer}>
@@ -96,29 +78,37 @@ const DetailPostScreen: FC = () => {
 				style={styles.container}
 				showsVerticalScrollIndicator={false}
 				ListHeaderComponent={
-					<View>
+					<Fragment>
 						<Modal visible={isSearchModalVisible} animationType={'slide'}>
 							<SearchModal onCancelSearchModal={onCloseSearchModal} />
 						</Modal>
 						<ControllerRow
-							canGoBack={true}
+							isRoot={false}
 							onAvatarPress={onAvatarPress}
 							onSearchPress={onSearchPress}
 						/>
 						<Post item={thread} isShortForm={false} />
 						{loading && <ActivityIndicator style={{ marginTop: 10 }} />}
+					</Fragment>
+				}
+				ListFooterComponent={
+					<View style={styles.footerContainer}>
+						<Button style={styles.replyBtn} onPress={onReplyPress}>
+							<ReplyIcon
+								style={styles.replyBtnInner}
+								size={14}
+								color="#fafafa"
+							/>
+							<Text style={styles.replyBtnInner}>Reply</Text>
+						</Button>
 					</View>
 				}
 				data={thread.comments}
-				renderItem={({ item, index }) => (
+				renderItem={({ item }) => (
 					<Fragment>
 						{item && (
 							<View style={styles.replyContainer}>
-								<Reply
-									isActive={currentReplyActiveIndex === index}
-									onReplyPress={() => onReplyPress(index)}
-									item={item}
-								/>
+								<Reply item={item} />
 							</View>
 						)}
 					</Fragment>
@@ -143,6 +133,20 @@ const styles = StyleSheet.create({
 		paddingTop: 32,
 		paddingHorizontal: 15,
 		backgroundColor: blackPearl,
+	},
+	footerContainer: {
+		marginVertical: 15,
+		flexDirection: 'row',
+	},
+	replyBtn: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		borderRadius: 5,
+		backgroundColor: midnightDream,
+	},
+	replyBtnInner: {
+		margin: 5,
+		color: '#fafafa',
 	},
 	commentInputContainer: {
 		marginVertical: 12,
