@@ -1,5 +1,5 @@
 import { accountState } from 'utils/state/account';
-import { CreateCommentInput } from 'utils/types';
+import { Comment, CreateCommentInput, EditCommentInput } from 'utils/types';
 import { snapshot } from 'valtio';
 
 import { graphQlClient } from './internal';
@@ -52,6 +52,31 @@ export const createComment = async (
 				reply: null,
 				upCount: 0,
 				timestamp: time,
+			},
+		},
+	});
+};
+
+export const editComment = async (
+	originItem: Comment,
+	newValue: EditCommentInput,
+) => {
+	const { owner } = originItem;
+	const { id, body } = newValue;
+	await graphQlClient.mutate({
+		mutation: mutations.editComment,
+		variables: {
+			input: {
+				id,
+				body,
+			},
+		},
+		optimisticResponse: {
+			editComment: {
+				id,
+				__typename: 'Comment',
+				owner,
+				body,
 			},
 		},
 	});

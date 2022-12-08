@@ -1,16 +1,24 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Button, dimensionState, Markdown, Text } from '@metacraft/ui';
+import {
+	BindDirections,
+	Button,
+	dimensionState,
+	Markdown,
+	modalActions,
+	Text,
+} from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ReplyIcon from 'components/icons/feather/Reply';
+import ThreeDots from 'components/icons/feather/ThreeDots';
+import InteractingMenu from 'components/modals/InteractingMenu';
+import UserInfo from 'components/UserInfo';
 import { RootParamList } from 'stacks/shared';
+import { blueWhale, grey, midnightDream } from 'utils/colors';
 import { onEdit } from 'utils/helper';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
 import { Thread } from 'utils/types';
-
-import { blueWhale, grey, midnightDream } from '../../utils/colors';
-import UserInfo from '../UserInfo';
 
 // temporaly hiding
 // import SocialRow from './SocialRow';
@@ -26,6 +34,7 @@ type StackProp = NavigationProp<RootParamList>;
 
 const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	const navigation = useNavigation<StackProp>();
+	const bindingRef = useRef(null);
 	const { profile } = useSnapshot(accountState);
 	const { owner, title, body, timestamp, id } = item;
 	const { responsiveLevel } = useSnapshot(dimensionState);
@@ -33,6 +42,8 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	const shortenedBody = `${body?.slice(0, nbContentCharacterDisplay)}...`;
 	const markdownContent = isShortForm ? shortenedBody : body;
 	const shortenedId = id?.slice(7) || '';
+	const isOwner = profile.id === owner?.id;
+
 	const onThreadPress = (comment: boolean) => {
 		navigation.navigate('DetailPost', { id: shortenedId, comment });
 	};
@@ -48,6 +59,19 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 		}
 	};
 
+	const onThreeDotsPress = () => {
+		modalActions.show({
+			id: 'InteractingMenu',
+			component: InteractingMenu,
+			bindingRef,
+			bindingDirection: BindDirections.BottomRight,
+			maskActiveOpacity: 0,
+			context: {
+				item,
+			},
+		});
+	};
+
 	return (
 		<TouchableOpacity
 			style={styles.container}
@@ -59,10 +83,17 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 					name={owner?.name || owner?.address}
 					postedTime={new Date(timestamp || '')}
 				/>
-				{/* <View style={styles.pinAndAlert}>
-					<BellIcon size={15} isFilled={isFollowed} />
-					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} />
-				</View> */}
+				<View style={styles.pinAndAlert}>
+					{/* <BellIcon size={15} isFilled={isFollowed} />
+					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} /> */}
+
+					{/* Temporarily hide if not owner, permanently show if have more active for user */}
+					{!isShortForm && isOwner && (
+						<TouchableOpacity ref={bindingRef} onPress={onThreeDotsPress}>
+							<ThreeDots size={20} />
+						</TouchableOpacity>
+					)}
+				</View>
 			</View>
 			<View style={styles.shortenedTextContainer}>
 				<Text numberOfLines={2} style={styles.headingText}>
