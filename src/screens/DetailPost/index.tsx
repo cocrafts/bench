@@ -10,6 +10,7 @@ import {
 } from '@react-navigation/native';
 import ControllerRow from 'components/ControllerRow';
 import ReplyIcon from 'components/icons/feather/Reply';
+import ScrollLayout from 'components/layouts/Scroll';
 import Post from 'components/Post';
 import Reply from 'components/Reply';
 import { RootParamList } from 'stacks/shared';
@@ -61,7 +62,10 @@ const DetailPostScreen: FC = () => {
 	};
 
 	return (
-		<View style={styles.mainContainer}>
+		<ScrollLayout
+			style={styles.mainContainer}
+			contentContainerStyle={{ width: '100%' }}
+		>
 			<ScrollView
 				style={styles.container}
 				showsVerticalScrollIndicator={false}
@@ -100,7 +104,7 @@ const DetailPostScreen: FC = () => {
 					</Button>
 				</View>
 			</ScrollView>
-		</View>
+		</ScrollLayout>
 	);
 };
 

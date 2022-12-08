@@ -10,17 +10,17 @@ import {
 import { useQuery } from '@apollo/client';
 import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import ControllerRow from 'components/ControllerRow';
+import ScrollLayout from 'components/layouts/Scroll';
+import Post from 'components/Post';
 import SearchModal from 'components/SearchModal';
 import { RootParamList } from 'stacks/shared';
+import { blackPearl, blueWhale, grey } from 'utils/colors';
+import { MAX_WIDTH } from 'utils/constants';
 import * as queries from 'utils/graphql/query';
 import { onEdit } from 'utils/helper';
-
-import ControllerRow from '../../components/ControllerRow';
-import Post from '../../components/Post';
-import { blackPearl, blueWhale, grey } from '../../utils/colors';
-import { MAX_WIDTH } from '../../utils/constants';
-import { threads } from '../../utils/mockupData';
-import { Thread } from '../../utils/types/thread';
+import { threads } from 'utils/mockupData';
+import { Thread } from 'utils/types/thread';
 
 type StackProp = NavigationProp<RootParamList>;
 
@@ -53,7 +53,10 @@ export const BuildDashboard: FC = () => {
 	}, []);
 
 	return (
-		<View style={styles.mainContainer}>
+		<ScrollLayout
+			style={styles.mainContainer}
+			contentContainerStyle={{ width: '100%' }}
+		>
 			<FlatList
 				style={styles.container}
 				showsVerticalScrollIndicator={false}
@@ -84,7 +87,7 @@ export const BuildDashboard: FC = () => {
 				renderItem={({ item }) => <Post item={item} />}
 				keyExtractor={(item) => item.id}
 			/>
-		</View>
+		</ScrollLayout>
 	);
 };
 
@@ -116,5 +119,10 @@ const styles = StyleSheet.create({
 		paddingVertical: 14,
 		borderRadius: 10,
 	},
-	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
+	mainContainer: {
+		flex: 1,
+		alignItems: 'center',
+		backgroundColor: blackPearl,
+		width: '100%',
+	},
 });
