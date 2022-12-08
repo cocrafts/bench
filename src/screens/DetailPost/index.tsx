@@ -1,5 +1,5 @@
-import React, { FC, Fragment, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import React, { FC, Fragment, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { Button, Text } from '@metacraft/ui';
 import {
@@ -30,7 +30,7 @@ const DetailPostScreen: FC = () => {
 	const threadId = `thread#${id}`;
 	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-	const scrollViewRef = useRef<ScrollView>(null);
+	const [scrollToIndex, setScrollToIndex] = useState(0);
 	const threadInCache = graphQlClient.readFragment({
 		id: `Thread:${threadId}`,
 		fragment: queries.threadFields,
@@ -65,12 +65,9 @@ const DetailPostScreen: FC = () => {
 		<ScrollLayout
 			style={styles.mainContainer}
 			contentContainerStyle={{ width: '100%' }}
+			scrollToIndex={scrollToIndex}
 		>
-			<ScrollView
-				style={styles.container}
-				showsVerticalScrollIndicator={false}
-				ref={scrollViewRef}
-			>
+			<View style={styles.container}>
 				<ControllerRow
 					isRoot={false}
 					onAvatarPress={onAvatarPress}
@@ -86,9 +83,9 @@ const DetailPostScreen: FC = () => {
 							{item && (
 								<View
 									style={styles.replyContainer}
-									onLayout={() => {
+									onLayout={({ nativeEvent }) => {
 										if (item.id === 'temp-id')
-											scrollViewRef.current?.scrollToEnd();
+											setScrollToIndex(nativeEvent.layout.y);
 									}}
 								>
 									<Reply item={item} />
@@ -103,7 +100,7 @@ const DetailPostScreen: FC = () => {
 						<Text style={styles.replyBtnInner}>Reply</Text>
 					</Button>
 				</View>
-			</ScrollView>
+			</View>
 		</ScrollLayout>
 	);
 };

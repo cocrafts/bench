@@ -1,5 +1,5 @@
-import React, { FC, ReactNode } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import React, { FC, ReactNode, useEffect, useRef } from 'react';
+import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, {
 	useAnimatedScrollHandler,
 	useAnimatedStyle,
@@ -15,15 +15,18 @@ interface Props {
 	children?: ReactNode;
 	style?: ViewStyle;
 	contentContainerStyle?: ViewStyle | ViewStyle[];
+	scrollToIndex?: number;
 }
 
 export const ScrollLayout: FC<Props> = ({
 	children,
 	style,
 	contentContainerStyle,
+	scrollToIndex,
 }) => {
 	const { isMobile } = useSnapshot(dimensionState);
 	const scrollOffset = useSharedValue(0);
+	const scrollRef = useRef<ScrollView>(null);
 	const translate = useDerivedValue(() => {
 		if (isMobile) return 0;
 		return scrollOffset.value > navigationHeight.storm
@@ -50,12 +53,17 @@ export const ScrollLayout: FC<Props> = ({
 		transform: [{ translateY: -translate.value }],
 	}));
 
+	useEffect(() => {
+		if (scrollToIndex !== 0) scrollRef.current?.scrollToEnd();
+	}, [scrollToIndex]);
+
 	return (
 		<View style={[styles.container, style]}>
 			<Animated.View style={navigationStyle}>
 				{!isMobile && <StormNavigation />}
 			</Animated.View>
 			<Animated.ScrollView
+				ref={scrollRef}
 				style={[contentContainer, contentContainerStyle]}
 				onScroll={scrollHandler}
 				scrollEventThrottle={5}
