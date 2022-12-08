@@ -110,6 +110,14 @@ const Editing: FC<Props> = ({ config }) => {
 					body: body.value,
 				},
 			);
+		} else if (item?.__typename === 'Comment') {
+			editComment(
+				{ ...item },
+				{
+					id: item.id as string,
+					body: body.value,
+				},
+			);
 		}
 		onCloseModal();
 	};

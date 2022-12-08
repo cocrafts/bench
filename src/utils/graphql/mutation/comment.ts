@@ -15,3 +15,12 @@ export const createComment = gql`
 		}
 	}
 `;
+
+export const editComment = gql`
+	${commentFields}
+	mutation EditComment($input: EditCommentInput!) {
+		editComment(input: $input) {
+			...CommentFields
+		}
+	}
+`;
