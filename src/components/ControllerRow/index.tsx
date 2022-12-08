@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { modalActions, modalState } from '@metacraft/ui';
+import { dimensionState, modalActions, modalState } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AuthenticationBundle from 'components/AuthenticationBundle';
 import BackIcon from 'components/icons/feather/Back';
@@ -27,6 +27,7 @@ export const ControllerRow: FC<Props> = ({
 	bellIconColor = 'white',
 }: Props) => {
 	const { hashmap } = useSnapshot(modalState);
+	const { isMobile } = useSnapshot(dimensionState);
 	const navigation = useNavigation<StackProp>();
 
 	const goBack = () => {
@@ -59,9 +60,11 @@ export const ControllerRow: FC<Props> = ({
 				>
 					<BellIcon size={ICON_SIZE} isFilled={true} color={bellIconColor} />
 				</TouchableOpacity> */}
-				<View style={styles.authBundleContainer}>
-					<AuthenticationBundle />
-				</View>
+				{isMobile && (
+					<View style={styles.authBundleContainer}>
+						<AuthenticationBundle />
+					</View>
+				)}
 			</View>
 		</View>
 	);

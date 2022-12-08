@@ -10,6 +10,7 @@ import {
 } from '@react-navigation/native';
 import ControllerRow from 'components/ControllerRow';
 import ReplyIcon from 'components/icons/feather/Reply';
+import ScrollLayout from 'components/layouts/Scroll';
 import Post from 'components/Post';
 import Reply from 'components/Reply';
 import { RootParamList } from 'stacks/shared';
@@ -24,12 +25,12 @@ type StackRouteProp = RouteProp<RootParamList, 'DetailPost'>;
 type StackProp = NavigationProp<RootParamList>;
 
 const DetailPostScreen: FC = () => {
+	const scrollRef = useRef<ScrollView>(null);
 	const route = useRoute<StackRouteProp>();
 	const { id } = route.params;
 	const threadId = `thread#${id}`;
 	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-	const scrollViewRef = useRef<ScrollView>(null);
 	const threadInCache = graphQlClient.readFragment({
 		id: `Thread:${threadId}`,
 		fragment: queries.threadFields,
@@ -61,12 +62,12 @@ const DetailPostScreen: FC = () => {
 	};
 
 	return (
-		<View style={styles.mainContainer}>
-			<ScrollView
-				style={styles.container}
-				showsVerticalScrollIndicator={false}
-				ref={scrollViewRef}
-			>
+		<ScrollLayout
+			style={styles.mainContainer}
+			contentContainerStyle={{ width: '100%' }}
+			scrollRef={scrollRef}
+		>
+			<View style={styles.container}>
 				<ControllerRow
 					isRoot={false}
 					onAvatarPress={onAvatarPress}
@@ -80,14 +81,8 @@ const DetailPostScreen: FC = () => {
 					thread.comments?.map((item) => (
 						<Fragment key={item?.id}>
 							{item && (
-								<View
-									style={styles.replyContainer}
-									onLayout={() => {
-										if (item.id === 'temp-id')
-											scrollViewRef.current?.scrollToEnd();
-									}}
-								>
-									<Reply item={item} />
+								<View style={styles.replyContainer}>
+									<Reply item={item} scrollRef={scrollRef} />
 								</View>
 							)}
 						</Fragment>
@@ -99,8 +94,8 @@ const DetailPostScreen: FC = () => {
 						<Text style={styles.replyBtnInner}>Reply</Text>
 					</Button>
 				</View>
-			</ScrollView>
-		</View>
+			</View>
+		</ScrollLayout>
 	);
 };
 
