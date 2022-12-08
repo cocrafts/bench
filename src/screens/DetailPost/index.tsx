@@ -1,4 +1,4 @@
-import React, { FC, Fragment, useEffect, useRef, useState } from 'react';
+import React, { FC, Fragment, useRef, useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { Button, Text } from '@metacraft/ui';
@@ -8,20 +8,17 @@ import {
 	useNavigation,
 	useRoute,
 } from '@react-navigation/native';
+import ControllerRow from 'components/ControllerRow';
 import ReplyIcon from 'components/icons/feather/Reply';
+import Post from 'components/Post';
+import Reply from 'components/Reply';
 import { RootParamList } from 'stacks/shared';
+import { blackPearl, midnightDream } from 'utils/colors';
+import { MAX_WIDTH } from 'utils/constants';
 import { graphQlClient } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
 import { onEdit } from 'utils/helper';
 import { Thread } from 'utils/types';
-
-import ControllerRow from '../../components/ControllerRow';
-import Post from '../../components/Post';
-import SearchModal from '../../components/SearchModal';
-import { blackPearl, midnightDream } from '../../utils/colors';
-import { MAX_WIDTH } from '../../utils/constants';
-
-import Reply from './Reply';
 
 type StackRouteProp = RouteProp<RootParamList, 'DetailPost'>;
 type StackProp = NavigationProp<RootParamList>;
@@ -50,10 +47,6 @@ const DetailPostScreen: FC = () => {
 
 	const onAvatarPress = () => {
 		navigation.navigate('SignIn');
-	};
-
-	const onCloseSearchModal = () => {
-		setIsSearchModalVisible(false);
 	};
 
 	const onSearchPress = () => {
