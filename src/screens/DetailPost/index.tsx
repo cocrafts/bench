@@ -81,13 +81,8 @@ const DetailPostScreen: FC = () => {
 					thread.comments?.map((item) => (
 						<Fragment key={item?.id}>
 							{item && (
-								<View
-									style={styles.replyContainer}
-									onLayout={() => {
-										if (item.id === 'temp-id') scrollRef.current?.scrollToEnd();
-									}}
-								>
-									<Reply item={item} />
+								<View style={styles.replyContainer}>
+									<Reply item={item} scrollRef={scrollRef} />
 								</View>
 							)}
 						</Fragment>

@@ -1,5 +1,5 @@
-import React, { FC, useRef } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { FC, RefObject, useEffect, useRef } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { BindDirections, Markdown, modalActions, Text } from '@metacraft/ui';
 import ThreeDots from 'components/icons/feather/ThreeDots';
 import InteractingMenu from 'components/modals/InteractingMenu';
@@ -15,9 +15,10 @@ import { Comment } from 'utils/types';
 
 interface Props {
 	item: Comment;
+	scrollRef?: RefObject<ScrollView>;
 }
 
-const Reply: FC<Props> = ({ item }: Props) => {
+const Reply: FC<Props> = ({ item, scrollRef }: Props) => {
 	const bindingRef = useRef(null);
 	const { body, upCount, owner, timestamp } = item;
 	const postedTime = new Date(timestamp || '');
@@ -37,6 +38,10 @@ const Reply: FC<Props> = ({ item }: Props) => {
 			},
 		});
 	};
+
+	useEffect(() => {
+		if (item.id === 'temp-id') scrollRef?.current?.scrollToEnd();
+	}, []);
 
 	return (
 		<View style={styles.container}>
