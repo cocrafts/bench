@@ -1,5 +1,5 @@
-import React, { FC, Fragment, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import React, { FC, Fragment, useRef, useState } from 'react';
+import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
 import { useQuery } from '@apollo/client';
 import { Button, Text } from '@metacraft/ui';
 import {
@@ -25,12 +25,12 @@ type StackRouteProp = RouteProp<RootParamList, 'DetailPost'>;
 type StackProp = NavigationProp<RootParamList>;
 
 const DetailPostScreen: FC = () => {
+	const scrollRef = useRef<ScrollView>(null);
 	const route = useRoute<StackRouteProp>();
 	const { id } = route.params;
 	const threadId = `thread#${id}`;
 	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-	const [scrollToIndex, setScrollToIndex] = useState(0);
 	const threadInCache = graphQlClient.readFragment({
 		id: `Thread:${threadId}`,
 		fragment: queries.threadFields,
@@ -65,7 +65,7 @@ const DetailPostScreen: FC = () => {
 		<ScrollLayout
 			style={styles.mainContainer}
 			contentContainerStyle={{ width: '100%' }}
-			scrollToIndex={scrollToIndex}
+			scrollRef={scrollRef}
 		>
 			<View style={styles.container}>
 				<ControllerRow
@@ -83,9 +83,8 @@ const DetailPostScreen: FC = () => {
 							{item && (
 								<View
 									style={styles.replyContainer}
-									onLayout={({ nativeEvent }) => {
-										if (item.id === 'temp-id')
-											setScrollToIndex(nativeEvent.layout.y);
+									onLayout={() => {
+										if (item.id === 'temp-id') scrollRef.current?.scrollToEnd();
 									}}
 								>
 									<Reply item={item} />

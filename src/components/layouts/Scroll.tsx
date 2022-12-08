@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useEffect, useRef } from 'react';
+import React, { FC, ReactNode, RefObject, useEffect, useRef } from 'react';
 import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, {
 	useAnimatedScrollHandler,
@@ -15,18 +15,17 @@ interface Props {
 	children?: ReactNode;
 	style?: ViewStyle;
 	contentContainerStyle?: ViewStyle | ViewStyle[];
-	scrollToIndex?: number;
+	scrollRef?: RefObject<ScrollView>;
 }
 
 export const ScrollLayout: FC<Props> = ({
 	children,
 	style,
 	contentContainerStyle,
-	scrollToIndex,
+	scrollRef,
 }) => {
 	const { isMobile } = useSnapshot(dimensionState);
 	const scrollOffset = useSharedValue(0);
-	const scrollRef = useRef<ScrollView>(null);
 	const translate = useDerivedValue(() => {
 		if (isMobile) return 0;
 		return scrollOffset.value > navigationHeight.storm
@@ -52,10 +51,6 @@ export const ScrollLayout: FC<Props> = ({
 		right: 0,
 		transform: [{ translateY: -translate.value }],
 	}));
-
-	useEffect(() => {
-		if (scrollToIndex !== 0) scrollRef.current?.scrollToEnd();
-	}, [scrollToIndex]);
 
 	return (
 		<View style={[styles.container, style]}>
