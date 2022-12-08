@@ -1,4 +1,4 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import {
 	ScrollView,
 	StyleSheet,
@@ -17,9 +17,10 @@ import {
 } from '@metacraft/ui';
 import CloseModal from 'components/modals/CloseWarning';
 import { blueWhale, grey, midnightDream, noti } from 'utils/colors';
-import { createThread } from 'utils/graphql';
-import { createComment } from 'utils/graphql/comment';
+import { createThread, editThread } from 'utils/graphql';
+import { createComment, editComment } from 'utils/graphql/comment';
 import { useInput, useSnapshot } from 'utils/hook';
+import { Comment, Thread } from 'utils/types';
 
 interface Props {
 	config: ModalConfigs;
@@ -28,10 +29,11 @@ interface Props {
 interface ModalContext {
 	threadId?: string;
 	isThreadEditing: boolean;
+	item?: Thread | Comment;
 }
 
 const Editing: FC<Props> = ({ config }) => {
-	const { threadId, isThreadEditing } = config.context as ModalContext;
+	const { threadId, isThreadEditing, item } = config.context as ModalContext;
 	const bodyInputRef = useRef<TextInput>(null);
 	const titleInputRef = useRef<TextInput>(null);
 	const body = useInput();
@@ -98,7 +100,27 @@ const Editing: FC<Props> = ({ config }) => {
 		onCloseModal();
 	};
 
-	const actionBtn = isThreadEditing ? (
+	const onUpdatePress = () => {
+		if (item?.__typename === 'Thread') {
+			editThread(
+				{ ...item },
+				{
+					id: item.id,
+					title: title.value,
+					body: body.value,
+				},
+			);
+		}
+		onCloseModal();
+	};
+
+	const actionBtn = item ? (
+		<Button
+			style={[styles.button, isDisabledActionBtn && styles.disabledButton]}
+			title="Update"
+			onPress={isDisabledActionBtn ? undefined : onUpdatePress}
+		/>
+	) : isThreadEditing ? (
 		<Button
 			style={[styles.button, isDisabledActionBtn && styles.disabledButton]}
 			title="Post"
@@ -111,6 +133,15 @@ const Editing: FC<Props> = ({ config }) => {
 			onPress={isDisabledActionBtn ? undefined : onCommentPress}
 		/>
 	);
+
+	useEffect(() => {
+		if (item) {
+			if (item.__typename === 'Thread') {
+				title.onChangeText(item.title as string);
+			}
+			body.onChangeText(item.body as string);
+		}
+	}, [item]);
 
 	return (
 		<View style={container} pointerEvents="box-none">
