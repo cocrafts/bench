@@ -3770,10 +3770,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@metacraft/icons@^0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@metacraft/icons/-/icons-0.0.21.tgz#7e370b78865d75c098b2807aa721bb691b75c789"
-  integrity sha512-TNU/kdIqN1Nls5KFm/sONV2GouBRXMYka4C6xqLdTtUU75gYh5wH25bcUs+GHrmOMPlABpP2YLWRhb5uP25DIQ==
+"@metacraft/icons@^0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@metacraft/icons/-/icons-0.0.23.tgz#04718efa69007f159b8d3837ef05295884798ec1"
+  integrity sha512-GCJ+YWqMQJ9tpTtZl50/WjRUzb4whmdLmp1/Zb+bC3P7NRb+Jwrw4zCvcx5NIreGhqQlF2E9zLfmKEBz7lD/3g==
   dependencies:
     react "^18.0.0"
     react-native-svg "^13.0.0"
