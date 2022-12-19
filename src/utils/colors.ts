@@ -7,3 +7,4 @@ export const gray = '#A6A6A6';
 export const grey = '#809099';
 export const noti = '#D13838';
 export const yellow = '#F4F19C';
+export const lightBlueWhale = '#002E46';

@@ -37,5 +37,5 @@ export const stormNavigations: NavigationConfig[] = [
 
 export const navigationHeight = {
 	storm: 40,
-	local: 68,
+	local: 59,
 };
