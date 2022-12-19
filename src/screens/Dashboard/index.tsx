@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import {
 	ActivityIndicator,
 	FlatList,
+	ImageBackground,
 	Modal,
 	StyleSheet,
 	TouchableOpacity,
@@ -20,6 +21,7 @@ import { MAX_WIDTH } from 'utils/constants';
 import * as queries from 'utils/graphql/query';
 import { onEdit } from 'utils/helper';
 import { threads } from 'utils/mockupData';
+import resources from 'utils/resources';
 import { Thread } from 'utils/types/thread';
 
 type StackProp = NavigationProp<RootParamList>;
@@ -57,6 +59,17 @@ export const BuildDashboard: FC = () => {
 			style={styles.mainContainer}
 			contentContainerStyle={{ width: '100%' }}
 		>
+			<ImageBackground
+				source={resources.bannerBackground}
+				style={styles.bannerContainer}
+			>
+				<Text style={styles.bannerTitle}>Welcome to Metacraft Bench</Text>
+				<Text style={styles.bannerSubText}>
+					A virtual game-centric social collaboration platform where Game devs,
+					devs, Fictional storytellers, artists, or simply anyone interested in
+					joining opensource game development process
+				</Text>
+			</ImageBackground>
 			<FlatList
 				style={styles.container}
 				showsVerticalScrollIndicator={false}
@@ -124,5 +137,18 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: blackPearl,
 		width: '100%',
+	},
+	bannerContainer: {
+		paddingVertical: 40,
+		alignItems: 'center',
+	},
+	bannerTitle: {
+		fontSize: 30,
+		fontWeight: '600',
+		marginBottom: 10,
+	},
+	bannerSubText: {
+		maxWidth: 800,
+		textAlign: 'center',
 	},
 });

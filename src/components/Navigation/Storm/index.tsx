@@ -50,12 +50,11 @@ const styles = StyleSheet.create({
 	},
 	contentContainer: {
 		flexDirection: 'row',
+		paddingHorizontal: 15,
 	},
 	brandingIcon: {
 		justifyContent: 'center',
-		marginLeft: 62,
 		marginRight: 24,
-		paddingHorizontal: 8,
 		height: navigationHeight.storm,
 	},
 	navContainer: {

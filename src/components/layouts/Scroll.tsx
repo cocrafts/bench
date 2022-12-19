@@ -7,6 +7,7 @@ import Animated, {
 	useSharedValue,
 } from 'react-native-reanimated';
 import { dimensionState } from '@metacraft/ui';
+import InternalNav from 'components/Navigation/Internal';
 import { navigationHeight } from 'components/Navigation/shared';
 import StormNavigation from 'components/Navigation/Storm';
 import { useSnapshot } from 'utils/hook';
@@ -27,7 +28,7 @@ export const ScrollLayout: FC<Props> = ({
 	const { isMobile } = useSnapshot(dimensionState);
 	const scrollOffset = useSharedValue(0);
 	const translate = useDerivedValue(() => {
-		if (isMobile) return 0;
+		if (isMobile) return navigationHeight.local;
 		return scrollOffset.value > navigationHeight.storm
 			? navigationHeight.storm
 			: scrollOffset.value;
@@ -38,7 +39,8 @@ export const ScrollLayout: FC<Props> = ({
 		},
 	});
 
-	const dualHeight = isMobile ? 0 : navigationHeight.storm;
+	const dualHeight =
+		(isMobile ? 0 : navigationHeight.storm) + navigationHeight.local;
 	const contentContainer = {
 		paddingTop: dualHeight,
 	};
@@ -56,6 +58,7 @@ export const ScrollLayout: FC<Props> = ({
 		<View style={[styles.container, style]}>
 			<Animated.View style={navigationStyle}>
 				{!isMobile && <StormNavigation />}
+				<InternalNav />
 			</Animated.View>
 			<Animated.ScrollView
 				ref={scrollRef}
