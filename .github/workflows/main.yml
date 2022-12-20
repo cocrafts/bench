@@ -58,6 +58,8 @@ jobs:
 
       - name: Build
         run: metacraft bundle
+        env:
+          gitBranch: ${{ steps.branch.outputs.BRANCH_NAME }}
 
       - uses: shallwefootball/s3-upload-action@master
         with:
