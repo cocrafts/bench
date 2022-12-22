@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, Fragment } from 'react';
 import { Linking, StyleSheet, View } from 'react-native';
 import { Text } from '@metacraft/ui';
 import Avatar from 'components/Avatar';
@@ -26,7 +26,7 @@ export const BuildItem: FC<ItemProps> = ({
 	];
 
 	return (
-		<>
+		<Fragment>
 			{!dayContinued && (
 				<Text style={styles.daySeparator}>
 					{day(item.timestamp).format('MMM DD, YYYY')}
@@ -57,7 +57,7 @@ export const BuildItem: FC<ItemProps> = ({
 					<Text style={styles.timestamp}>{day(item.timestamp).fromNow()}</Text>
 				</View>
 			</View>
-		</>
+		</Fragment>
 	);
 };
 
