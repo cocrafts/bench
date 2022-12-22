@@ -3,37 +3,35 @@ import {
 	ActivityIndicator,
 	FlatList,
 	ImageBackground,
+	Linking,
 	Modal,
 	StyleSheet,
 	TouchableOpacity,
 	View,
 } from 'react-native';
 import { useQuery } from '@apollo/client';
-import { Text } from '@metacraft/ui';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import ControllerRow from 'components/ControllerRow';
+import { dimensionState, Text } from '@metacraft/ui';
 import ScrollLayout from 'components/layouts/Scroll';
 import Post from 'components/Post';
 import SearchModal from 'components/SearchModal';
-import { RootParamList } from 'stacks/shared';
-import { blackPearl, blueWhale, grey } from 'utils/colors';
-import { MAX_WIDTH } from 'utils/constants';
+import { blackPearl, blueWhale, grey, midnightDream } from 'utils/colors';
 import * as queries from 'utils/graphql/query';
 import { onEdit } from 'utils/helper';
+import { useBuildActivities, useSnapshot } from 'utils/hook';
 import { threads } from 'utils/mockupData';
 import resources from 'utils/resources';
+import { iStyles } from 'utils/styles';
 import { Thread } from 'utils/types/thread';
 
-type StackProp = NavigationProp<RootParamList>;
+import BuildHistory from './History';
 
 export const BuildDashboard: FC = () => {
+	const buildActivities = useBuildActivities();
 	const [simpleThreads, setSimpleThreads] = useState<Array<Thread>>([]);
-	const navigation = useNavigation<StackProp>();
 	const [isSearchModalVisible, setIsSearchModalVisible] = useState(false);
-	const { data } = useQuery(queries.feedThreads);
-	const onAvatarPress = () => {
-		navigation.navigate('SignIn');
-	};
+	const { windowSize } = useSnapshot(dimensionState);
+	const isHidingBuildHistory = windowSize.width < 1280 ? true : false;
+	const { data, loading } = useQuery(queries.feedThreads);
 
 	const onQuickThreadPress = () => {
 		onEdit({
@@ -41,11 +39,12 @@ export const BuildDashboard: FC = () => {
 		});
 	};
 
-	const onSearchPress = () => {
-		setIsSearchModalVisible(true);
-	};
 	const onCloseSearchModal = () => {
 		setIsSearchModalVisible(false);
+	};
+
+	const onStartedPress = () => {
+		Linking.openURL('https://docs.stormgate.io/guide/community/bench');
 	};
 
 	useEffect(() => {
@@ -70,36 +69,52 @@ export const BuildDashboard: FC = () => {
 					joining opensource game development process
 				</Text>
 			</ImageBackground>
-			<FlatList
-				style={styles.container}
-				showsVerticalScrollIndicator={false}
-				ListHeaderComponent={
-					<View>
-						<Modal visible={isSearchModalVisible} animationType={'slide'}>
-							<SearchModal onCancelSearchModal={onCloseSearchModal} />
-						</Modal>
-						<ControllerRow
-							onAvatarPress={onAvatarPress}
-							onSearchPress={onSearchPress}
-						/>
-						<TouchableOpacity
-							style={styles.quickThreadContainer}
-							onPress={onQuickThreadPress}
-						>
-							<Text style={styles.placeHolderText}>
-								What{"'"}s your thoughts
-							</Text>
-						</TouchableOpacity>
-						<View style={styles.activityIndicatorContainer}>
-							{simpleThreads.length === 0 && <ActivityIndicator />}
+			<View style={[iStyles.contentContainer, styles.rowContainer]}>
+				<FlatList
+					style={styles.container}
+					showsVerticalScrollIndicator={false}
+					ListHeaderComponent={
+						<View>
+							<Modal visible={isSearchModalVisible} animationType={'slide'}>
+								<SearchModal onCancelSearchModal={onCloseSearchModal} />
+							</Modal>
+							<TouchableOpacity
+								style={styles.quickThreadContainer}
+								onPress={onQuickThreadPress}
+							>
+								<Text style={styles.placeHolderText}>
+									What{"'"}s your thoughts
+								</Text>
+							</TouchableOpacity>
+							<View style={styles.activityIndicatorContainer}>
+								{loading && <ActivityIndicator />}
+							</View>
 						</View>
+					}
+					ListFooterComponent={<View style={styles.footer} />}
+					data={data?.feedThreads}
+					renderItem={({ item }) => <Post item={item} />}
+					keyExtractor={(item) => item.id}
+				/>
+				{!isHidingBuildHistory && (
+					<View style={styles.buildHistoryContainer}>
+						<View style={styles.titleBackground}>
+							<TouchableOpacity onPress={onStartedPress}>
+								<Text style={styles.buildHistoryTitle}>
+									🎓 How to get started
+								</Text>
+							</TouchableOpacity>
+						</View>
+						<Text style={[styles.titleBackground, styles.buildHistoryTitle]}>
+							🎬 Build Activities
+						</Text>
+						<BuildHistory
+							data={buildActivities}
+							style={{ height: windowSize.height }}
+						/>
 					</View>
-				}
-				ListFooterComponent={<View style={styles.footer} />}
-				data={data?.feedThreads}
-				renderItem={({ item }) => <Post item={item} />}
-				keyExtractor={(item) => item.id}
-			/>
+				)}
+			</View>
 		</ScrollLayout>
 	);
 };
@@ -118,14 +133,11 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		width: '100%',
-		maxWidth: MAX_WIDTH,
-		alignSelf: 'center',
 		paddingTop: 32,
 		paddingHorizontal: 15,
 		backgroundColor: blackPearl,
 	},
 	quickThreadContainer: {
-		marginTop: 10,
 		backgroundColor: blueWhale,
 		justifyContent: 'center',
 		paddingLeft: 15,
@@ -140,6 +152,7 @@ const styles = StyleSheet.create({
 	},
 	bannerContainer: {
 		paddingVertical: 40,
+		paddingHorizontal: 15,
 		alignItems: 'center',
 	},
 	bannerTitle: {
@@ -150,5 +163,23 @@ const styles = StyleSheet.create({
 	bannerSubText: {
 		maxWidth: 800,
 		textAlign: 'center',
+	},
+	rowContainer: {
+		flexDirection: 'row',
+	},
+	buildHistoryContainer: {
+		width: 300,
+		marginTop: 32,
+		marginRight: 15,
+		marginLeft: 40,
+	},
+	titleBackground: {
+		backgroundColor: midnightDream,
+		borderRadius: 5,
+		marginBottom: 15,
+	},
+	buildHistoryTitle: {
+		padding: 15,
+		fontWeight: '500',
 	},
 });

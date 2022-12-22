@@ -15,10 +15,10 @@ import Post from 'components/Post';
 import Reply from 'components/Reply';
 import { RootParamList } from 'stacks/shared';
 import { blackPearl, midnightDream } from 'utils/colors';
-import { MAX_WIDTH } from 'utils/constants';
 import { graphQlClient } from 'utils/graphql';
 import * as queries from 'utils/graphql/query';
 import { onEdit } from 'utils/helper';
+import { iStyles } from 'utils/styles';
 import { Thread } from 'utils/types';
 
 type StackRouteProp = RouteProp<RootParamList, 'DetailPost'>;
@@ -62,12 +62,8 @@ const DetailPostScreen: FC = () => {
 	};
 
 	return (
-		<ScrollLayout
-			style={styles.mainContainer}
-			contentContainerStyle={{ width: '100%' }}
-			scrollRef={scrollRef}
-		>
-			<View style={styles.container}>
+		<ScrollLayout style={styles.mainContainer} scrollRef={scrollRef}>
+			<View style={[iStyles.contentContainer, styles.container]}>
 				<ControllerRow
 					isRoot={false}
 					onAvatarPress={onAvatarPress}
@@ -102,14 +98,16 @@ const DetailPostScreen: FC = () => {
 export default DetailPostScreen;
 
 const styles = StyleSheet.create({
-	mainContainer: { flex: 1, alignItems: 'center', backgroundColor: blackPearl },
+	mainContainer: {
+		flex: 1,
+		backgroundColor: blackPearl,
+	},
 	replyContainer: {
 		marginTop: 5,
 	},
 	container: {
 		width: '100%',
 		height: '100%',
-		maxWidth: MAX_WIDTH,
 		alignSelf: 'center',
 		paddingTop: 32,
 		paddingHorizontal: 15,
