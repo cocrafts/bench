@@ -1,10 +1,13 @@
-import React, { FC } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Markdown, Text } from '@metacraft/ui';
+import React, { FC, RefObject, useEffect, useRef } from 'react';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { BindDirections, Markdown, modalActions, Text } from '@metacraft/ui';
+import ThreeDots from 'components/icons/feather/ThreeDots';
+import InteractingMenu from 'components/modals/InteractingMenu';
+import UserInfo from 'components/UserInfo';
+import { grey, midnightDream, yellow } from 'utils/colors';
+import { useSnapshot } from 'utils/hook';
+import { accountState } from 'utils/state/account';
 import { Comment } from 'utils/types';
-
-import UserInfo from '../../../components/UserInfo';
-import { grey, midnightDream, yellow } from '../../../utils/colors';
 
 // temporaly hiding
 // import Avatar from 'components/Avatar';
@@ -12,13 +15,33 @@ import { grey, midnightDream, yellow } from '../../../utils/colors';
 
 interface Props {
 	item: Comment;
-	onReplyPress: () => void;
-	isActive: boolean;
+	scrollRef?: RefObject<ScrollView>;
 }
 
-const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
+const Reply: FC<Props> = ({ item, scrollRef }: Props) => {
+	const bindingRef = useRef(null);
 	const { body, upCount, owner, timestamp } = item;
 	const postedTime = new Date(timestamp || '');
+	const isActive = false;
+	const { profile } = useSnapshot(accountState);
+	const isOwner = profile.id === owner?.id;
+
+	const onThreeDotsPress = () => {
+		modalActions.show({
+			id: 'InteractingMenu',
+			component: InteractingMenu,
+			bindingRef,
+			bindingDirection: BindDirections.BottomRight,
+			maskActiveOpacity: 0,
+			context: {
+				item,
+			},
+		});
+	};
+
+	useEffect(() => {
+		if (item.id === 'temp-id') scrollRef?.current?.scrollToEnd();
+	}, []);
 
 	return (
 		<View style={styles.container}>
@@ -39,11 +62,18 @@ const Reply: FC<Props> = ({ item, onReplyPress, isActive = false }: Props) => {
 			<View
 				style={[styles.mainReplyContainer, isActive && styles.activeBorder]}
 			>
-				<UserInfo
-					avatarUrl={owner?.avatarUrl || ''}
-					name={owner?.name || owner?.address || ''}
-					postedTime={postedTime}
-				/>
+				<View style={styles.headerRow}>
+					<UserInfo
+						avatarUrl={owner?.avatarUrl || ''}
+						name={owner?.name || owner?.address || ''}
+						postedTime={postedTime}
+					/>
+					{isOwner && (
+						<TouchableOpacity ref={bindingRef} onPress={onThreeDotsPress}>
+							<ThreeDots size={20} />
+						</TouchableOpacity>
+					)}
+				</View>
 				<View style={styles.textContainer}>
 					{body && <Markdown configs={{ fontSize: 14 }} content={body} />}
 				</View>
@@ -81,6 +111,13 @@ const styles = StyleSheet.create({
 		paddingVertical: 10,
 		borderRadius: 5,
 		backgroundColor: midnightDream,
+	},
+	headerRow: {
+		width: '100%',
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
 	},
 	text: {
 		color: 'rgba(255,255,255, 1)',

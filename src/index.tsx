@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useMemo } from 'react';
 import { ApolloProvider } from '@apollo/client/react';
-import { Provider as MetacraftProvider, themeState } from '@metacraft/ui';
-import { NavigationContainer } from '@react-navigation/native';
+import { Provider as MetacraftProvider } from '@metacraft/ui';
 import { WalletError } from '@solana/wallet-adapter-base';
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-phantom';
 import {
@@ -17,12 +16,11 @@ import { appState } from 'utils/state/app';
 import { benchTheme } from 'utils/styles';
 import { useSnapshot } from 'valtio';
 
-import BuildStack from './stack';
+import BuildStack from './stacks';
 
 export const AppContainer: FC = () => {
 	const { network } = useSnapshot(appState);
 	const endpoint = useMemo(() => clusterApiUrl(network), [network]);
-	const theme = useSnapshot(themeState);
 
 	const wallets = useMemo(
 		() => [new PhantomWalletAdapter(), new SolflareWalletAdapter()],
@@ -47,15 +45,7 @@ export const AppContainer: FC = () => {
 			<ConnectionProvider endpoint={endpoint}>
 				<WalletProvider autoConnect wallets={wallets} onError={useError}>
 					<MetacraftProvider theme={benchTheme}>
-						<NavigationContainer
-							theme={theme}
-							documentTitle={{
-								formatter: () =>
-									`Metacraft Bench - A Web3 game builder platform`,
-							}}
-						>
-							<BuildStack />
-						</NavigationContainer>
+						<BuildStack />
 					</MetacraftProvider>
 				</WalletProvider>
 			</ConnectionProvider>

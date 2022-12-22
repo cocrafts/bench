@@ -1,41 +1,53 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { dimensionState, modalActions, modalState } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AuthenticationBundle from 'components/AuthenticationBundle';
 import BackIcon from 'components/icons/feather/Back';
 import BellIcon from 'components/icons/feather/Bell';
 import SearchIcon from 'components/icons/feather/Search';
-import { StackParamList } from 'src/stack';
+import { RootParamList } from 'stacks/shared';
 import { grey } from 'utils/colors';
+import { useSnapshot } from 'utils/hook';
 
 const ICON_SIZE = 25;
 
 interface Props {
-	canGoBack?: boolean;
+	isRoot?: boolean;
 	onAvatarPress: () => void;
 	onSearchPress: () => void;
 	bellIconColor?: string;
 }
-type DashBoardStackProp = NavigationProp<StackParamList, 'Dashboard'>;
+
+type StackProp = NavigationProp<RootParamList>;
 
 export const ControllerRow: FC<Props> = ({
-	canGoBack = false,
+	isRoot = true,
 	onSearchPress,
 	bellIconColor = 'white',
 }: Props) => {
-	const navigation = useNavigation<DashBoardStackProp>();
+	const { hashmap } = useSnapshot(modalState);
+	const { isMobile } = useSnapshot(dimensionState);
+	const navigation = useNavigation<StackProp>();
 
-	const goBack = () => navigation.goBack();
+	const goBack = () => {
+		if (navigation.canGoBack()) {
+			navigation.goBack();
+		} else {
+			navigation.navigate('Dashboard');
+		}
+		Object.keys(hashmap).forEach((id) => modalActions.hide(id));
+	};
 	const onNotificationPress = () => navigation.navigate('Notification');
 
 	return (
 		<View style={styles.container}>
-			{canGoBack ? (
+			{isRoot ? (
+				<View />
+			) : (
 				<TouchableOpacity onPress={goBack}>
 					<BackIcon size={36} color={grey} />
 				</TouchableOpacity>
-			) : (
-				<View />
 			)}
 			<View style={styles.mainContainer}>
 				{/* <TouchableOpacity onPress={onSearchPress}>
@@ -48,9 +60,11 @@ export const ControllerRow: FC<Props> = ({
 				>
 					<BellIcon size={ICON_SIZE} isFilled={true} color={bellIconColor} />
 				</TouchableOpacity> */}
-				<View style={styles.authBundleContainer}>
-					<AuthenticationBundle />
-				</View>
+				{isMobile && (
+					<View style={styles.authBundleContainer}>
+						<AuthenticationBundle />
+					</View>
+				)}
 			</View>
 		</View>
 	);

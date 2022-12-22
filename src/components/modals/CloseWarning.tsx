@@ -1,30 +1,52 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Text } from '@metacraft/ui';
+import { modalActions, ModalConfigs, Text } from '@metacraft/ui';
 import { grey, midnightDream, noti } from 'utils/colors';
 
 interface Props {
-	onDiscardPost: () => void;
-	onContinueEditing: () => void;
+	config: ModalConfigs;
 }
 
-const CloseModal: FC<Props> = ({ onDiscardPost, onContinueEditing }: Props) => {
+interface ModalContext {
+	onDiscard: () => void;
+	onContinueEditing?: () => void;
+	typeEditing: string;
+}
+
+const CloseModal: FC<Props> = ({ config }) => {
+	const { onDiscard, onContinueEditing, typeEditing } =
+		config.context as ModalContext;
+
+	const onCloseModal = () => {
+		modalActions.hide(config.id as string);
+	};
+
+	const onDiscardPress = () => {
+		onDiscard();
+		onCloseModal();
+	};
+
+	const onKeepEditingPress = () => {
+		onContinueEditing?.();
+		onCloseModal();
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.alertContainer}>
 				<Text style={styles.alertTitle}>
-					If you close now, {'\n'}you will lose this post
+					If you close now, {'\n'}you will lose this {typeEditing}
 				</Text>
 				<View style={styles.divider} />
 				<TouchableOpacity
-					onPress={onDiscardPost}
+					onPress={onDiscardPress}
 					style={styles.buttonContainer}
 				>
-					<Text style={styles.discardPostText}>Discard Post</Text>
+					<Text style={styles.discardPostText}>Discard {typeEditing}</Text>
 				</TouchableOpacity>
 				<View style={styles.divider} />
 				<TouchableOpacity
-					onPress={onContinueEditing}
+					onPress={onKeepEditingPress}
 					style={styles.buttonContainer}
 				>
 					<Text style={styles.keepEditingText}>Keep Editing</Text>
@@ -37,38 +59,27 @@ const CloseModal: FC<Props> = ({ onDiscardPost, onContinueEditing }: Props) => {
 const styles = StyleSheet.create({
 	keepEditingText: {
 		color: 'white',
-		fontSize: 16,
-		fontWeight: '400',
 	},
 	discardPostText: {
 		color: noti,
-		fontSize: 14,
-		fontWeight: '400',
 	},
 	container: {
 		flex: 1,
 		alignSelf: 'center',
 		alignItems: 'center',
 		justifyContent: 'center',
-		backgroundColor: 'transparent',
-		height: '100%',
-		width: '100%',
 	},
 	alertContainer: {
-		height: 172,
-		width: 276,
 		backgroundColor: midnightDream,
 		borderRadius: 5,
 	},
 	alertTitle: {
-		marginHorizontal: 33,
-		marginVertical: 12,
+		marginHorizontal: 20,
+		marginVertical: 15,
 		textAlign: 'center',
 		fontSize: 16,
 		lineHeight: 24,
 		color: 'white',
-		fontWeight: '400',
-		fontFamily: 'Poppins',
 	},
 	divider: {
 		height: 1,

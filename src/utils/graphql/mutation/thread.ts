@@ -10,3 +10,12 @@ export const createThread = gql`
 		}
 	}
 `;
+
+export const editThread = gql`
+	${threadFields}
+	mutation EditThread($input: EditThreadInput!) {
+		editThread(input: $input) {
+			...ThreadFields
+		}
+	}
+`;

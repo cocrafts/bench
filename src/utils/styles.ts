@@ -15,20 +15,20 @@ export const iStyles = StyleSheet.create({
 });
 
 export const benchTheme: ThemeState = {
-	id: 'paper',
+	id: 'fantasy',
 	dark: false,
 	defaultFontFamily: 'Poppins',
 	defaultFontSize: 14,
 	colors: {
 		primary: '#2C879B',
 		secondary: '#EB5757',
-		background: '#FFFFFF',
+		background: '#002E46',
 		card: '#FFFFFF',
 		border: '#D8D8D8',
 		notification: '#FF3B30',
-		text: '#222222',
+		text: '#FFFFFF',
 		link: '#2C879B',
-		alt: '#8f8f9d',
+		alt: '#FFFFFF',
 		altText: '#222222',
 	},
 	sizes: {

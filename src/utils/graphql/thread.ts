@@ -1,5 +1,5 @@
 import { accountState } from 'utils/state/account';
-import { Thread } from 'utils/types';
+import { EditThreadInput, Thread } from 'utils/types';
 import { snapshot } from 'valtio';
 
 import { graphQlClient } from './internal';
@@ -54,6 +54,36 @@ export const createThread = async (item: Thread) => {
 				comments: [],
 				upCount: 0,
 				updatedAt: time,
+			},
+		},
+	});
+};
+
+export const editThread = async (
+	originItem: Thread,
+	newValue: EditThreadInput,
+) => {
+	const { owner, timestamp, upCount, updatedAt } = originItem;
+	const { id, title, body } = newValue;
+	await graphQlClient.mutate({
+		mutation: mutations.editThread,
+		variables: {
+			input: {
+				id,
+				title,
+				body,
+			},
+		},
+		optimisticResponse: {
+			editThread: {
+				id,
+				__typename: 'Thread',
+				title,
+				body,
+				owner,
+				timestamp,
+				upCount,
+				updatedAt,
 			},
 		},
 	});
