@@ -15,11 +15,14 @@ import {
 	ModalConfigs,
 	Text,
 } from '@metacraft/ui';
-import CloseModal from 'components/modals/CloseWarning';
 import { blueWhale, grey, midnightDream, noti } from 'utils/colors';
 import { createThread, editThread } from 'utils/graphql';
 import { createComment, editComment } from 'utils/graphql/comment';
 import { useInput, useSnapshot } from 'utils/hook';
+import {
+	editingModalActions,
+	editingModalState,
+} from 'utils/state/editingModal';
 import { Comment, Thread } from 'utils/types';
 
 interface Props {
@@ -56,28 +59,23 @@ const Editing: FC<Props> = ({ config }) => {
 		backgroundColor: midnightDream,
 	} as ViewStyle;
 
-	const onCloseModal = () => {
+	// Valtio state
+	editingModalState.isThreadEditing = isThreadEditing;
+	editingModalState.title = {
+		focus: () => titleInputRef.current?.focus(),
+		value: title.value,
+	};
+	editingModalState.body = {
+		focus: () => bodyInputRef.current?.focus(),
+		value: body.value,
+	};
+
+	const closeModal = () => {
 		modalActions.hide(config.id as string);
 	};
 
-	const onClosePress = () => {
-		if (body.value !== '' || title.value !== '') {
-			modalActions.show({
-				id: 'CloseWarning',
-				component: CloseModal,
-				context: {
-					typeEditing: isThreadEditing ? 'Post' : 'Comment',
-					onDiscard: () => onCloseModal(),
-					onContinueEditing: () =>
-						isThreadEditing
-							? titleInputRef.current?.focus()
-							: bodyInputRef.current?.focus(),
-				},
-			});
-		} else {
-			onCloseModal();
-		}
-	};
+	const onClosePress = () =>
+		editingModalActions.onCloseEditingModal(closeModal);
 
 	const onPostPress = () => {
 		createThread({
@@ -85,7 +83,7 @@ const Editing: FC<Props> = ({ config }) => {
 			body: body.value,
 		});
 
-		onCloseModal();
+		closeModal();
 	};
 
 	const onCommentPress = () => {
@@ -97,7 +95,7 @@ const Editing: FC<Props> = ({ config }) => {
 			threadId || '',
 		);
 
-		onCloseModal();
+		closeModal();
 	};
 
 	const onUpdatePress = () => {
@@ -119,7 +117,7 @@ const Editing: FC<Props> = ({ config }) => {
 				},
 			);
 		}
-		onCloseModal();
+		closeModal();
 	};
 
 	const actionBtn = item ? (

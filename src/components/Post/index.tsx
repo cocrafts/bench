@@ -15,9 +15,10 @@ import InteractingMenu from 'components/modals/InteractingMenu';
 import UserInfo from 'components/UserInfo';
 import { RootParamList } from 'stacks/shared';
 import { blueWhale, grey, midnightDream } from 'utils/colors';
-import { onEdit } from 'utils/helper';
+import { closeAllModal, onEdit } from 'utils/helper';
 import { useSnapshot } from 'utils/hook';
 import { accountState } from 'utils/state/account';
+import { editingModalActions } from 'utils/state/editingModal';
 import { Thread } from 'utils/types';
 
 // temporaly hiding
@@ -43,10 +44,13 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	const markdownContent = isShortForm ? shortenedBody : body;
 	const shortenedId = id?.slice(7) || '';
 	const isOwner = profile.id === owner?.id;
-
-	const onThreadPress = (comment: boolean) => {
-		navigation.navigate('DetailPost', { id: shortenedId, comment });
+	const closeModal = () => {
+		closeAllModal();
+		navigation.navigate('DetailPost', { id: shortenedId });
 	};
+
+	const onThreadPress = () =>
+		isShortForm && editingModalActions.onCloseEditingModal(closeModal);
 
 	const onReplyPress = () => {
 		onEdit({
@@ -55,7 +59,7 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 		});
 
 		if (profile.id && isShortForm) {
-			onThreadPress(true);
+			onThreadPress();
 		}
 	};
 
@@ -73,50 +77,53 @@ const Post: FC<Props> = ({ item, isShortForm = true }: Props) => {
 	};
 
 	return (
-		<TouchableOpacity
-			style={styles.container}
-			onPress={() => onThreadPress(false)}
-		>
-			<View style={styles.headerRow}>
-				<UserInfo
-					avatarUrl={owner?.avatarUrl || ''}
-					name={owner?.name || owner?.address}
-					postedTime={new Date(timestamp || '')}
-				/>
-				<View style={styles.pinAndAlert}>
-					{/* <BellIcon size={15} isFilled={isFollowed} />
+		<View pointerEvents="box-none">
+			<TouchableOpacity style={styles.container} onPress={onThreadPress}>
+				<View style={styles.headerRow}>
+					<UserInfo
+						avatarUrl={owner?.avatarUrl || ''}
+						name={owner?.name || owner?.address}
+						postedTime={new Date(timestamp || '')}
+					/>
+					<View style={styles.pinAndAlert}>
+						{/* <BellIcon size={15} isFilled={isFollowed} />
 					<PinIcon size={15} isFilled={isPinned} style={styles.pinIcon} /> */}
 
-					{/* Temporarily hide if not owner, permanently show if have more active for user */}
-					{!isShortForm && isOwner && (
-						<TouchableOpacity ref={bindingRef} onPress={onThreeDotsPress}>
-							<ThreeDots size={20} />
-						</TouchableOpacity>
+						{/* Temporarily hide if not owner, permanently show if have more active for user */}
+						{!isShortForm && isOwner && (
+							<TouchableOpacity ref={bindingRef} onPress={onThreeDotsPress}>
+								<ThreeDots size={20} />
+							</TouchableOpacity>
+						)}
+					</View>
+				</View>
+				<View style={styles.shortenedTextContainer}>
+					<Text numberOfLines={2} style={styles.headingText}>
+						{title}
+					</Text>
+					{markdownContent && (
+						<Markdown content={markdownContent} configs={{ fontSize: 14 }} />
 					)}
 				</View>
-			</View>
-			<View style={styles.shortenedTextContainer}>
-				<Text numberOfLines={2} style={styles.headingText}>
-					{title}
-				</Text>
-				{markdownContent && (
-					<Markdown content={markdownContent} configs={{ fontSize: 14 }} />
-				)}
-			</View>
-			<View style={styles.socialRowContainer}>
-				{/* <SocialRow
+				<View style={styles.socialRowContainer}>
+					{/* <SocialRow
 					upCount={upCount || 0}
 					commentCount={commentCount}
 					isUpVoted={isUpVoted}
 				/> */}
-				{!isShortForm && (
-					<Button style={styles.replyBtn} onPress={onReplyPress}>
-						<ReplyIcon style={styles.replyBtnInner} size={14} color="#fafafa" />
-						<Text style={styles.replyBtnInner}>Reply</Text>
-					</Button>
-				)}
-			</View>
-		</TouchableOpacity>
+					{!isShortForm && (
+						<Button style={styles.replyBtn} onPress={onReplyPress}>
+							<ReplyIcon
+								style={styles.replyBtnInner}
+								size={14}
+								color="#fafafa"
+							/>
+							<Text style={styles.replyBtnInner}>Reply</Text>
+						</Button>
+					)}
+				</View>
+			</TouchableOpacity>
+		</View>
 	);
 };
 
