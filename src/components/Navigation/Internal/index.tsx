@@ -4,13 +4,19 @@ import { Text } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootParamList } from 'stacks/shared';
 import { lightBlueWhale } from 'utils/colors';
+import { closeAllModal } from 'utils/helper';
+import { editingModalActions } from 'utils/state/editingModal';
 import { iStyles } from 'utils/styles';
 
 type StackProp = NavigationProp<RootParamList>;
 
 const InternalNav = () => {
 	const navigation = useNavigation<StackProp>();
-	const onBenchLogoPress = () => navigation.navigate('Dashboard');
+	const onBenchLogoPress = () =>
+		editingModalActions.onCloseEditingModal(() => {
+			closeAllModal();
+			navigation.navigate('Dashboard');
+		});
 
 	return (
 		<View style={styles.container}>
@@ -33,5 +39,6 @@ const styles = StyleSheet.create({
 	benchLogo: {
 		fontSize: 26,
 		fontWeight: '600',
+		textAlign: 'center',
 	},
 });

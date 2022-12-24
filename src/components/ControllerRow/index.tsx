@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { dimensionState, modalActions, modalState } from '@metacraft/ui';
+import { dimensionState, modalState } from '@metacraft/ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import AuthenticationBundle from 'components/AuthenticationBundle';
 import BackIcon from 'components/icons/feather/Back';
@@ -8,7 +8,9 @@ import BellIcon from 'components/icons/feather/Bell';
 import SearchIcon from 'components/icons/feather/Search';
 import { RootParamList } from 'stacks/shared';
 import { grey } from 'utils/colors';
+import { closeAllModal } from 'utils/helper';
 import { useSnapshot } from 'utils/hook';
+import { editingModalActions } from 'utils/state/editingModal';
 
 const ICON_SIZE = 25;
 
@@ -29,15 +31,20 @@ export const ControllerRow: FC<Props> = ({
 	const { hashmap } = useSnapshot(modalState);
 	const { isMobile } = useSnapshot(dimensionState);
 	const navigation = useNavigation<StackProp>();
-
-	const goBack = () => {
+	const closeModal = () => {
 		if (navigation.canGoBack()) {
 			navigation.goBack();
 		} else {
 			navigation.navigate('Dashboard');
 		}
-		Object.keys(hashmap).forEach((id) => modalActions.hide(id));
+
+		closeAllModal();
 	};
+
+	const goBack = () => {
+		editingModalActions.onCloseEditingModal(closeModal);
+	};
+
 	const onNotificationPress = () => navigation.navigate('Notification');
 
 	return (

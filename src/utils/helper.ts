@@ -1,5 +1,10 @@
 import { LayoutRectangle } from 'react-native';
-import { AnimateDirections, BindDirections, modalActions } from '@metacraft/ui';
+import {
+	AnimateDirections,
+	BindDirections,
+	modalActions,
+	modalState,
+} from '@metacraft/ui';
 import Editing from 'components/modals/Editing';
 import SignInOptions from 'components/modals/SignInOptions';
 import dayjs, { Dayjs } from 'dayjs';
@@ -69,4 +74,9 @@ export const onEdit = (context: unknown) => {
 			animateDirection: AnimateDirections.BottomLeft,
 		});
 	}
+};
+
+export const closeAllModal = () => {
+	const { hashmap } = snapshot(modalState);
+	Object.keys(hashmap).forEach((id) => modalActions.hide(id));
 };
