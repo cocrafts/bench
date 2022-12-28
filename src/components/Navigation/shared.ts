@@ -18,6 +18,10 @@ export const stormNavigations: NavigationConfig[] = [
 		url: 'https://underrealm.stormgate.io',
 	},
 	{
+		title: 'Bench',
+		url: 'https://bench.stormgate.io',
+	},
+	{
 		title: 'Tokenomic',
 		url: 'https://docs.stormgate.io/whitepaper/tokenomic',
 	},
