@@ -28,7 +28,7 @@ export const ScrollLayout: FC<Props> = ({
 	const { isMobile } = useSnapshot(dimensionState);
 	const scrollOffset = useSharedValue(0);
 	const translate = useDerivedValue(() => {
-		if (isMobile) return navigationHeight.local;
+		if (isMobile) return 0;
 		return scrollOffset.value > navigationHeight.storm
 			? navigationHeight.storm
 			: scrollOffset.value;
