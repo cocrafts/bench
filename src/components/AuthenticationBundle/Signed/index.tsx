@@ -1,6 +1,12 @@
 import React, { FC, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { AnimateDirections, BindDirections, modalActions } from '@metacraft/ui';
+import {
+	AnimateDirections,
+	BindDirections,
+	dimensionState,
+	modalActions,
+} from '@metacraft/ui';
+import { useSnapshot } from 'utils/hook';
 import { Profile } from 'utils/types';
 
 import Account from './Account';
@@ -19,6 +25,7 @@ interface Props {
 
 export const Signed: FC<Props> = ({ profile }) => {
 	const containerRef = useRef<View>(null);
+	const { isMobile } = useSnapshot(dimensionState);
 
 	const onPress = () => {
 		console.log('navigate');
@@ -36,7 +43,7 @@ export const Signed: FC<Props> = ({ profile }) => {
 
 	return (
 		<View ref={containerRef} style={styles.container}>
-			<Balance profile={profile} />
+			{!isMobile && <Balance profile={profile} />}
 			<Account
 				profile={profile}
 				onPress={onPress}

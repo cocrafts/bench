@@ -1,16 +1,19 @@
-import React, { FC, useRef } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { FC, Fragment, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import {
 	AnimateDirections,
 	Button,
+	dimensionState,
 	modalActions,
 	themeState,
 } from '@metacraft/ui';
+import UserSolidIcon from 'components/icons/feather/UserSolid';
 import SignInOptions from 'components/modals/SignInOptions';
 import { useSnapshot } from 'utils/hook';
 
 export const SignIn: FC = () => {
 	const { id: themeId } = useSnapshot(themeState);
+	const { isMobile } = useSnapshot(dimensionState);
 	const isFantasy = themeId === 'fantasy';
 	const containerRef = useRef<View>(null);
 
@@ -22,8 +25,8 @@ export const SignIn: FC = () => {
 		});
 	};
 
-	return (
-		<View ref={containerRef} style={styles.container}>
+	const desktopRender = (
+		<Fragment>
 			{isFantasy ? (
 				<Button
 					style={styles.fantasyButton}
@@ -39,6 +42,21 @@ export const SignIn: FC = () => {
 					onPress={showSignInOptions}
 				/>
 			)}
+		</Fragment>
+	);
+
+	const mobileRender = (
+		<TouchableOpacity
+			style={styles.mobileSignInContainer}
+			onPress={showSignInOptions}
+		>
+			<UserSolidIcon size={26} color="#fff" />
+		</TouchableOpacity>
+	);
+
+	return (
+		<View ref={containerRef} style={styles.container}>
+			{isMobile ? mobileRender : desktopRender}
 		</View>
 	);
 };
@@ -56,5 +74,11 @@ const styles = StyleSheet.create({
 	buttonTitle: {
 		paddingHorizontal: 0,
 		paddingVertical: 0,
+	},
+	mobileSignInContainer: {
+		width: 32,
+		height: 32,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
