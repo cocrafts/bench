@@ -1,5 +1,5 @@
-import React, { FC, ReactNode, RefObject, useEffect, useRef } from 'react';
-import { ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import React, { FC, ReactNode, RefObject } from 'react';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import Animated, {
 	useAnimatedScrollHandler,
 	useAnimatedStyle,
@@ -16,7 +16,7 @@ interface Props {
 	children?: ReactNode;
 	style?: ViewStyle;
 	contentContainerStyle?: ViewStyle | ViewStyle[];
-	scrollRef?: RefObject<ScrollView>;
+	scrollRef?: RefObject<Animated.ScrollView>;
 }
 
 export const ScrollLayout: FC<Props> = ({
@@ -28,7 +28,7 @@ export const ScrollLayout: FC<Props> = ({
 	const { isMobile } = useSnapshot(dimensionState);
 	const scrollOffset = useSharedValue(0);
 	const translate = useDerivedValue(() => {
-		if (isMobile) return navigationHeight.local;
+		if (isMobile) return 0;
 		return scrollOffset.value > navigationHeight.storm
 			? navigationHeight.storm
 			: scrollOffset.value;

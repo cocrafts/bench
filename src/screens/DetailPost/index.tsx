@@ -1,5 +1,6 @@
 import React, { FC, Fragment, useRef, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import Animated from 'react-native-reanimated';
 import { useQuery } from '@apollo/client';
 import { Button, Text } from '@metacraft/ui';
 import {
@@ -25,7 +26,7 @@ type StackRouteProp = RouteProp<RootParamList, 'DetailPost'>;
 type StackProp = NavigationProp<RootParamList>;
 
 const DetailPostScreen: FC = () => {
-	const scrollRef = useRef<ScrollView>(null);
+	const scrollRef = useRef<Animated.ScrollView>(null);
 	const route = useRoute<StackRouteProp>();
 	const { id } = route.params;
 	const threadId = `thread#${id}`;

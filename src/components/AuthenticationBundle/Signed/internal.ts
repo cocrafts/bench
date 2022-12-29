@@ -43,4 +43,9 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
+	mobileContainer: {
+		margin: 0,
+		padding: 0,
+		backgroundColor: 'transparent',
+	},
 });

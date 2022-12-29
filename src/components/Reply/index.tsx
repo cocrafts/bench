@@ -1,6 +1,7 @@
 import React, { FC, RefObject, useEffect, useRef } from 'react';
-import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { BindDirections, Markdown, modalActions, Text } from '@metacraft/ui';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import Animated from 'react-native-reanimated';
+import { BindDirections, Markdown, modalActions } from '@metacraft/ui';
 import ThreeDots from 'components/icons/feather/ThreeDots';
 import InteractingMenu from 'components/modals/InteractingMenu';
 import UserInfo from 'components/UserInfo';
@@ -15,7 +16,7 @@ import { Comment } from 'utils/types';
 
 interface Props {
 	item: Comment;
-	scrollRef?: RefObject<ScrollView>;
+	scrollRef?: RefObject<Animated.ScrollView>;
 }
 
 const Reply: FC<Props> = ({ item, scrollRef }: Props) => {
