@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 		height: navigationHeight.storm,
 	},
 	title: {
-		color: '#BBBBBB',
+		color: '#474747',
 	},
 	activeTitle: {
 		color: '#F8F8F8',
