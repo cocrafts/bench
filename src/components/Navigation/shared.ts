@@ -5,6 +5,7 @@ export interface NavigationConfig {
 	url?: string;
 	route?: keyof RootParamList;
 	params?: RootParamList[keyof RootParamList];
+	active?: boolean;
 }
 
 export const stormGateNav = {
@@ -20,6 +21,7 @@ export const stormNavigations: NavigationConfig[] = [
 	{
 		title: 'Bench',
 		url: 'https://bench.stormgate.io',
+		active: true,
 	},
 	{
 		title: 'Tokenomic',

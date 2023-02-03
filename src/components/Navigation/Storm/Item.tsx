@@ -16,7 +16,9 @@ export const NavigationItem: FC<Props> = ({ item, onNavigate }) => {
 			style={styles.container}
 			onPress={() => onNavigate?.(item)}
 		>
-			<Text style={styles.title}>{item.title}</Text>
+			<Text style={[styles.title, item.active && styles.activeTitle]}>
+				{item.title}
+			</Text>
 		</TouchableOpacity>
 	);
 };
@@ -31,6 +33,9 @@ const styles = StyleSheet.create({
 		height: navigationHeight.storm,
 	},
 	title: {
-		color: '#BBBBBB',
+		color: '#474747',
+	},
+	activeTitle: {
+		color: '#F8F8F8',
 	},
 });
